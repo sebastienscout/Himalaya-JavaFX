@@ -2,6 +2,7 @@ package ihm;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -16,15 +17,18 @@ import javafx.scene.layout.BorderPane;
  */
 public class Main extends Application {
 
+
+    private final BorderPaneController BPController = new BorderPaneController();
+
+
     @Override
     public void start(Stage primaryStage) {
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("BorderPane.fxml"));
         BorderPane border = new BorderPane();
-        
 
-       // border.setCenter(addGridPane());
-       // border.setRight(addFlowPane());
-
+        // border.setCenter(addGridPane());
+        // border.setRight(addFlowPane());
         Button btn = new Button();
         btn.setText("Dire 'Bonjour'");
 
@@ -33,6 +37,7 @@ public class Main extends Application {
         });
 
         StackPane pane = new StackPane();
+        StackPane menuPane = new StackPane();
 
         float width = 1500;
         float height = 920;
@@ -41,7 +46,8 @@ public class Main extends Application {
         ImageView iv = new ImageView(background);
 
         pane.getChildren().add(iv);
-        pane.getChildren().add(btn);
+        menuPane.getChildren().add(btn);
+        pane.getChildren().add(menuPane);
 
         Scene scene = new Scene(pane, width, height);
 
@@ -49,8 +55,6 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-
 
     /**
      * @param args the command line arguments

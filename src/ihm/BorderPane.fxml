@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.BorderPaneController">
+    <stylesheets>
+        <URL value="@borderpane.css"/>
+    </stylesheets>
+
+    <BorderPane>
+        <center>
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                <tabs>
+                    <Tab text="Untitled Tab 1">
+                        <content>
+                            <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                <center>
+                                    <TableView prefHeight="200.0" prefWidth="200.0">
+                                        <columns>
+                                            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="147.0" text="Column X" />
+                                            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="151.0" text="Column X" />
+                                            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="200.0" text="Column X" />
+                                        </columns>
+                                    </TableView>
+                                </center>
+                                <top>
+                                    <AnchorPane prefHeight="110.0" prefWidth="456.0" style="-fx-background-color:green;">
+                                        <children>
+                                            <Label layoutX="14.0" layoutY="20.0" text="Label" textFill="WHITE">
+                                                <font>
+                                                    <Font size="15.0" />
+                                                </font>
+                                            </Label>
+                                            <TextField layoutX="71.0" layoutY="17.0" prefWidth="200.0" />
+                                        </children>
+                                    </AnchorPane>
+                                </top>
+                            </BorderPane>
+                        </content>
+                    </Tab>
+                    <Tab text="Untitled Tab 2">
+                        <content>
+                            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                    </Tab>
+                </tabs>
+            </TabPane>
+        </center>
+        <right>
+            <ScrollBar orientation="VERTICAL" />
+        </right>
+        <top>
+            <VBox minHeight="54.0" prefHeight="67.0" prefWidth="665.0">
+                <children>
+                    <MenuBar>
+                        <menus>
+                            <Menu mnemonicParsing="false" text="File">
+                                <items>
+                                    <MenuItem mnemonicParsing="false" text="Close" />
+                                </items>
+                            </Menu>
+                            <Menu mnemonicParsing="false" text="Edit">
+                                <items>
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                </items>
+                            </Menu>
+                            <Menu mnemonicParsing="false" text="Help">
+                                <items>
+                                    <MenuItem mnemonicParsing="false" text="About" />
+                                </items>
+                            </Menu>
+                        </menus>
+                    </MenuBar>
+                    <ToolBar prefHeight="44.0" prefWidth="665.0">
+                        <items>
+                            <Button mnemonicParsing="false" prefHeight="31.0" text="B1" />
+                            <Button mnemonicParsing="false" prefHeight="31.0" text="B2" />
+                            <Button mnemonicParsing="false" prefHeight="31.0" text="B3" />
+                        </items>
+                    </ToolBar>
+                </children>
+            </VBox>
+        </top>
+    </BorderPane>
+</AnchorPane>
