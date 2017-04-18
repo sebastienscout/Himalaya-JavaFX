@@ -7,23 +7,27 @@ package ihm;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
  * FXML Controller class
  *
- * @author Alexis
+ * @author sebastien
  */
-public class BorderPaneController implements Initializable {
+public class MainFXMLController implements Initializable {
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("BorderPane.fxml"));
-
+        // TODO
+    }    
+    
+    @FXML
+    private void play(){
+        System.out.println("Clic sur le bouton 'Jouer'.");
     }
-
+    
 }

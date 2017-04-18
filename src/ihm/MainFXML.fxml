@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="ihm.MainFXMLController">
+  <children>
+    <Pane layoutX="0.0" layoutY="0.0" prefHeight="600.0" prefWidth="800.0">
+      <children>
+        <ImageView fitHeight="540.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="false" smooth="true" visible="true">
+          <image>
+            <Image url="file:resources/board.jpg" />
+          </image>
+          <rotationAxis>
+            <Point3D z="1.0" />
+          </rotationAxis>
+        </ImageView>
+        <Button layoutX="5.0" layoutY="545.0" minWidth="150.0" mnemonicParsing="false" onAction="#play" prefHeight="50.0" text="Jouer" />
+        <Button layoutX="160.0" layoutY="545.0" minWidth="150.0" mnemonicParsing="false" prefHeight="50.0" text="Pas jouer" />
+        <Button layoutX="315.0" layoutY="545.0" minWidth="150.0" mnemonicParsing="false" prefHeight="50.0" text="Je ne sais pas" />
+      </children>
+    </Pane>
+  </children>
+</AnchorPane>
