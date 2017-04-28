@@ -1,28 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="ihm.MainFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.MainFXMLController">
   <children>
     <Pane layoutX="0.0" layoutY="0.0" prefHeight="600.0" prefWidth="800.0">
       <children>
-        <ImageView fitHeight="540.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="false" smooth="true" visible="true">
-          <image>
-            <Image url="file:resources/board.jpg" />
-          </image>
+        <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="false" smooth="true" visible="true">
           <rotationAxis>
             <Point3D z="1.0" />
           </rotationAxis>
+               <image>
+                  <Image url="@board.jpg" />
+               </image>
         </ImageView>
-        <Button layoutX="5.0" layoutY="545.0" minWidth="150.0" mnemonicParsing="false" onAction="#play" prefHeight="50.0" text="Jouer" />
-        <Button layoutX="160.0" layoutY="545.0" minWidth="150.0" mnemonicParsing="false" prefHeight="50.0" text="Pas jouer" />
-        <Button layoutX="315.0" layoutY="545.0" minWidth="150.0" mnemonicParsing="false" prefHeight="50.0" text="Je ne sais pas" />
+            <MenuButton layoutX="723.0" layoutY="2.0" mnemonicParsing="false" opacity="0.5" text="Menu">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Jouer" />
+                <MenuItem mnemonicParsing="false" text="Bouffer Ressource" />
+                  <Menu mnemonicParsing="false" text="Unspecified Menu">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                    </items>
+                  </Menu>
+              </items>
+            </MenuButton>
+        <Button layoutX="195.0" layoutY="523.0" minWidth="150.0" mnemonicParsing="false" onAction="#play" prefHeight="50.0" text="Jouer" />
+            <ImageView fitHeight="95.0" fitWidth="104.0" layoutX="7.0" layoutY="444.0" onMouseClicked="#clickOnVillage" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/village_1_bleu.png" />
+               </image>
+            </ImageView>
+            <Pane layoutX="2.0" layoutY="450.0" onMouseClicked="#clickOnVillage" prefHeight="107.0" prefWidth="105.0" />
       </children>
     </Pane>
   </children>

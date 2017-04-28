@@ -1,5 +1,6 @@
 package ihm;
 
+import core.Board;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +19,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+        
             
         try {
             Parent root = FXMLLoader.load(getClass().getResource("MainFXML.fxml"));
@@ -36,6 +38,9 @@ public class Main extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        Board board = new Board();
+        
         launch(args);
     }
 

@@ -23,11 +23,25 @@ public class MainFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
     @FXML
-    private void play(){
+    private void play() {
         System.out.println("Clic sur le bouton 'Jouer'.");
     }
+
+    @FXML
+    private void clickOnVillage() {
+        
+        System.out.println("Clic sur le bouton Village." );
+    }
     
+    @FXML
+    private void displayImage() {
+        
+        
+    }
+    
+   
+
 }

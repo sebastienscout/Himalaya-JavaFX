@@ -1,26 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package core;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Sébastien
- */
 public class Board {
     
     private ArrayList<Player> players;
-    private ArrayList<Town> towns;
+    private ArrayList<Village> villages;
+    private int nbTurn;
+    private BagResources bagResources;
+    private BagOrders bagOrders;
 
     public Board() {
         
+        nbTurn = 1;
         players = new ArrayList<>();
-        towns = new ArrayList<>();
+        villages = new ArrayList<>();
+        bagResources = new BagResources();
+        bagOrders = new BagOrders();
+        
+        System.out.println("Ca m'a l'air pas mal.");
         
     }
-        
+    
 }
