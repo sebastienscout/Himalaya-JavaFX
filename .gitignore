@@ -16,3 +16,9 @@ nb-configuration.xml
 *.ear
 /nbproject/project.properties
 /nbproject/*.properties
+
+build\.xml
+
+nbproject/build-impl\.xml
+
+*.properties
