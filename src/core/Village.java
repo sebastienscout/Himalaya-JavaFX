@@ -34,5 +34,24 @@ public class Village {
     public void addResource(Resource r) {
         resources.add(r);
     }
+    
+    public Village getDestVillage(Road type){
+        
+        Village v = roads.get(type);
+        System.out.println("Village : " + v);
+        
+        return v;
+    }
+
+    @Override
+    public String toString() {
+        return "Village{" + "id=" + id + ", type=" + type + '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+    
+    
 
 }

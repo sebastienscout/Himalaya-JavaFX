@@ -8,6 +8,7 @@ public class Region {
     private int id;
 
     public Region(int id) {
+        neighbors = new ArrayList<>();
         this.id = id;
     }
 
