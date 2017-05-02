@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class Village {
 
-    private enum Type {
+    public enum Type {
         house,
         temple,
         monastery
