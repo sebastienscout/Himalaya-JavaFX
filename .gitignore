@@ -23,3 +23,8 @@ nbproject/build-impl\.xml
 
 *.properties
 /nbproject/licenseheader.txt
+/nbproject/build-impl.xml
+/nbproject/configs/Run_as_WebStart.properties
+/nbproject/configs/Run_in_Browser.properties
+/nbproject/genfiles.properties
+/build.xml

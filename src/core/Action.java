@@ -1,7 +1,7 @@
 package core;
 
 public enum Action {
-    
+
     soil,
     stone,
     ice,
@@ -9,5 +9,5 @@ public enum Action {
     offering,
     delegation,
     pause
-    
+
 }

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Village {
-    
-    private enum Type{
+
+    private enum Type {
         house,
         temple,
         monastery
@@ -22,19 +22,17 @@ public class Village {
         roads = new HashMap<>();
         this.type = type;
     }
-    
-    public void addRoad(Road r, Village v){
+
+    public void addRoad(Road r, Village v) {
         roads.put(r, v);
     }
-    
-    public void setOrder(Order o){
+
+    public void setOrder(Order o) {
         order = o;
     }
-    
-    public void addResource(Resource r){
+
+    public void addResource(Resource r) {
         resources.add(r);
     }
-    
-    
-    
+
 }
