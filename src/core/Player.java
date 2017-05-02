@@ -40,4 +40,8 @@ public class Player {
         return economicScore;
     }
 
+    public String getColor() {
+        return color;
+    }
+
 }
