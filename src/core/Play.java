@@ -91,6 +91,58 @@ public class Play {
         village20.addRoad(Road.soil, village19);
         village20.addRoad(Road.ice, village16);
 
+        //Initialisation des Régions
+        Region region1 = new Region(1);
+        Region region2 = new Region(2);
+        Region region3 = new Region(3);
+        Region region4 = new Region(4);
+        Region region5 = new Region(5);
+        Region region6 = new Region(6);
+        Region region7 = new Region(7);
+        Region region8 = new Region(8);
+        
+        // Add regions to villages
+        village1.addRegion(region2);
+        village1.addRegion(region3);
+        village2.addRegion(region2);
+        village3.addRegion(region2);
+        village3.addRegion(region1);
+        village4.addRegion(region1);
+        village5.addRegion(region1);
+        village5.addRegion(region4);
+        village6.addRegion(region1);
+        village6.addRegion(region2);
+        village6.addRegion(region4);
+        village7.addRegion(region2);
+        village7.addRegion(region3);
+        village7.addRegion(region4);
+        village8.addRegion(region3);
+        village9.addRegion(region3);
+        village9.addRegion(region6);
+        village10.addRegion(region4);
+        village10.addRegion(region5);
+        village10.addRegion(region3);
+        village11.addRegion(region4);
+        village11.addRegion(region5);
+        village12.addRegion(region5);
+        village12.addRegion(region7);
+        village13.addRegion(region5);
+        village13.addRegion(region6);
+        village13.addRegion(region7);
+        village14.addRegion(region3);
+        village14.addRegion(region5);
+        village14.addRegion(region6);
+        village15.addRegion(region6);
+        village16.addRegion(region6);
+        village16.addRegion(region8);
+        village17.addRegion(region6);
+        village17.addRegion(region7);
+        village17.addRegion(region8);
+        village18.addRegion(region7);
+        village18.addRegion(region8);
+        village19.addRegion(region8);
+        village20.addRegion(region8);
+
         //Affection villages
         board.addVillage(village1);
         board.addVillage(village2);
@@ -112,44 +164,6 @@ public class Play {
         board.addVillage(village18);
         board.addVillage(village19);
         board.addVillage(village20);
-
-        //Initialisation des Régions
-        Region region1 = new Region(1);
-        Region region2 = new Region(2);
-        Region region3 = new Region(3);
-        Region region4 = new Region(4);
-        Region region5 = new Region(5);
-        Region region6 = new Region(6);
-        Region region7 = new Region(7);
-        Region region8 = new Region(8);
-
-        //Ajout des régions voisines
-        region1.addNeighbor(region2);
-        region1.addNeighbor(region4);
-        region2.addNeighbor(region1);
-        region2.addNeighbor(region4);
-        region2.addNeighbor(region3);
-        region3.addNeighbor(region2);
-        region3.addNeighbor(region4);
-        region3.addNeighbor(region5);
-        region3.addNeighbor(region6);
-        region4.addNeighbor(region1);
-        region4.addNeighbor(region2);
-        region4.addNeighbor(region3);
-        region4.addNeighbor(region5);
-        region5.addNeighbor(region4);
-        region5.addNeighbor(region3);
-        region5.addNeighbor(region6);
-        region5.addNeighbor(region7);
-        region6.addNeighbor(region3);
-        region6.addNeighbor(region5);
-        region6.addNeighbor(region7);
-        region6.addNeighbor(region8);
-        region7.addNeighbor(region5);
-        region7.addNeighbor(region6);
-        region7.addNeighbor(region8);
-        region8.addNeighbor(region7);
-        region8.addNeighbor(region8);
 
         //Affectation Régions
         board.addRegion(region1);

@@ -85,12 +85,20 @@ public class BoardTest {
 //    }
     
     @Test
-    public void regionsTest(){
-        Region region6 = board.getRegionById(6);
-        assertEquals(true, region6.getNeighbors().contains(board.getRegionById(3)));
-        assertEquals(true, region6.getNeighbors().contains(board.getRegionById(5)));
-        assertEquals(true, region6.getNeighbors().contains(board.getRegionById(7)));
-        assertEquals(true, region6.getNeighbors().contains(board.getRegionById(8)));
+    public void deleguationTest(){
+        Player player1 = new Player("rouge", board.getVillageById(14));
+        board.addPlayer(player1);
+        
+        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
+        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.ice);
+        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.soil);
+        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
+        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.ice);
+        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.delegation);
+        board.executeActions();
+        
+        assertEquals(board.getVillageById(11), player1.getPosition());
+        assertEquals(2, board.getRegionById(4).getDelegations().get(player1).intValue());
     }
     
     @Test
@@ -107,6 +115,8 @@ public class BoardTest {
         board.executeActions();
         
         assertNotEquals(null, player1.getPosition().getStupa());
+        assertNotEquals(null, board.getVillageById(12));
+        assertEquals(board.getVillageById(12), player1.getPosition());
     }
 
 }

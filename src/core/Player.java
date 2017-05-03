@@ -1,6 +1,7 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Player {
 
@@ -9,9 +10,11 @@ public class Player {
     private int religiousScore;
     private int economicScore;
     private int nbStupa;
+    private int nbDelegation;
     private Village currentPosition;
     private ArrayList<Resource> resources;
     private ArrayList<Action> actions;
+    private HashMap<Region, Integer> delegations;
 
     public Player(String color, Village v) {
         this.color = color;
@@ -20,8 +23,19 @@ public class Player {
         religiousScore = 0;
         economicScore = 0;
         nbStupa = 5;
+        nbDelegation = 15;
         resources = new ArrayList<>();
         actions = new ArrayList<>();
+        delegations = new HashMap<>();
+    }
+
+    public HashMap<Region, Integer> getDelegations() {
+        return delegations;
+    }
+
+    public void addDelegations(Region r, Integer nb) {
+        nbDelegation -= nb;
+        delegations.put(r, nb);
     }
     
     public void putStupa(){

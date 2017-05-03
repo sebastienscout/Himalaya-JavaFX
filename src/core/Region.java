@@ -1,27 +1,26 @@
 package core;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Region {
 
-    private ArrayList<Region> neighbors;
     private int id;
+    private HashMap<Player, Integer> delegations;
 
     public Region(int id) {
-        neighbors = new ArrayList<>();
         this.id = id;
-    }
-
-    public void addNeighbor(Region r) {
-        neighbors.add(r);
+        delegations = new HashMap<>();
     }
 
     public int getId() {
         return id;
     }
-
-    public ArrayList<Region> getNeighbors() {
-        return neighbors;
+    
+    public HashMap<Player, Integer> getDelegations() {
+        return delegations;
     }
 
+    public void addDelegations(Player r, Integer nb) {
+        delegations.put(r, nb);
+    }
 }
