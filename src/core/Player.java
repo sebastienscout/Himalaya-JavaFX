@@ -8,6 +8,7 @@ public class Player {
     private int politicalScore;
     private int religiousScore;
     private int economicScore;
+    private int nbStupa;
     private Village currentPosition;
     private ArrayList<Resource> resources;
     private ArrayList<Action> actions;
@@ -18,8 +19,19 @@ public class Player {
         politicalScore = 0;
         religiousScore = 0;
         economicScore = 0;
+        nbStupa = 5;
         resources = new ArrayList<>();
         actions = new ArrayList<>();
+    }
+    
+    public void putStupa(){
+        if(nbStupa > 0 && currentPosition.getStupa() == null){
+            nbStupa--;
+            currentPosition.setStupa(this);
+        }
+        else {
+            System.out.println("Vous n'avez plus de Stupa.");
+        }
     }
 
     public void addResource(Resource resource) {

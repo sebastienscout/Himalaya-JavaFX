@@ -15,14 +15,24 @@ public class Village {
     private HashMap<Road, Village> roads;
     private Order order;
     private Type type;
+    private Player stupa;
 
     public Village(int id, Type type) {
         this.id = id;
+        this.type = type;
         resources = new ArrayList<>();
         roads = new HashMap<>();
-        this.type = type;
+        stupa = null;
     }
 
+    public Player getStupa() {
+        return stupa;
+    }
+
+    public void setStupa(Player stupa) {
+        this.stupa = stupa;
+    }
+    
     public void addRoad(Road r, Village v) {
         roads.put(r, v);
     }
