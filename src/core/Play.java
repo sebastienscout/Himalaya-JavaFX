@@ -189,4 +189,9 @@ public class Play {
             }
         }
     }
+
+    public Board getBoard() {
+        return board;
+    }
+    
 }
