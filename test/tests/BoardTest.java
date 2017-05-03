@@ -36,8 +36,6 @@ public class BoardTest {
 
         assertEquals(board.getVillageById(6), player1.getPosition());
 
-        System.out.println(player1.getPosition());
-
         board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
         board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.ice);
         board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.soil);
@@ -89,6 +87,22 @@ public class BoardTest {
         assertEquals(true, region6.getNeighbors().contains(board.getRegionById(5)));
         assertEquals(true, region6.getNeighbors().contains(board.getRegionById(7)));
         assertEquals(true, region6.getNeighbors().contains(board.getRegionById(8)));
+    }
+    
+    @Test
+    public void stupaTest(){
+        Player player1 = new Player("rouge", board.getVillageById(14));
+        board.addPlayer(player1);
+        
+        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
+        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.ice);
+        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.soil);
+        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
+        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.offering);
+        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.offering);
+        board.executeActions();
+        
+        assertNotEquals(null, player1.getPosition().getStupa());
     }
 
 }

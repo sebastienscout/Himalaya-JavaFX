@@ -5,9 +5,7 @@ import java.util.ArrayList;
 public class Board {
 
     private ArrayList<Player> players;
-    private ArrayList<Village> villages;
-    private ArrayList<Region> regions;
-    private BagResources bagResources;
+    private ArrayList<Village> villages;                                           private ArrayList<Region> regions;    private BagResources bagResources;
     private BagOrders bagOrders;
     private int nbTurn;
     private int currentPlayer;
@@ -19,10 +17,9 @@ public class Board {
         villages = new ArrayList<>();
         regions = new ArrayList<>();
         bagResources = new BagResources();
-        bagOrders = new BagOrders();
-    }
+        bagOrders = new BagOrders();    }
 
-    public ArrayList<Player> getPlayers() {
+       public ArrayList<Player> getPlayers() {
         return players;
     }
 
@@ -79,15 +76,7 @@ public class Board {
     public void addPlayer(Player p){
         players.add(p);
     }
-
-    public void addVillage(Village v) {
-        villages.add(v);
-    }
-
-    public void addRegion(Region r) {
-        regions.add(r);
-    }
-
+ 	public void addVillage(Village v) {        villages.add(v);    }    public void addRegion(Region r) {        regions.add(r);    } 
     public void executeActions() {
         for (int i = 0; i < 6; i++) {
             for(Player p : players){
@@ -106,7 +95,7 @@ public class Board {
                         break;
                     case offering:
                         System.out.println("Offrande");
-                        break;
+                        if(p.getPosition().getStupa() == null){                            p.putStupa();                        }                        else {                            System.out.println("Il y a déjà une stupa sur ce village.");                        }                        break;
                     case transaction:
                         System.out.println("Transaction");
                         break;
