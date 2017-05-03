@@ -26,9 +26,6 @@ public class BoardTest {
 
     @Test
     public void playerTests() {
-
-        board.initVillagesAndRegions();
-
         Player player1 = new Player("rouge", board.getVillageById(6));
         board.addPlayer(player1);
 
@@ -54,7 +51,6 @@ public class BoardTest {
 
     @Test
     public void bagResourcesTest() {
-        board.initVillagesAndRegions();
         
         //Test sur les cartes resources
         BagResources br = new BagResources();
@@ -69,6 +65,11 @@ public class BoardTest {
         village1.addResource(br.takeRandom());
         assertEquals(58, br.getResources().size());
         assertEquals(1, village1.getResources().size());
+    }
+    
+    @Test
+    public void bagOrdersTest(){
+        
     }
 
 }

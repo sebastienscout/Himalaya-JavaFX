@@ -20,6 +20,7 @@ public class Board {
         regions = new ArrayList<>();
         bagResources = new BagResources();
         bagOrders = new BagOrders();
+        initVillagesAndRegions();
     }
 
     //Initialisation du plateau
