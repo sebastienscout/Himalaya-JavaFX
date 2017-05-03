@@ -10,7 +10,9 @@ public class Play {
         initFirstTurn();
     }
 
-    //Initialisation du plateau
+    /**
+     * Initialisation du plateau
+     */
     public void initVillagesAndRegions() {
 
         //Initialisation des villages
@@ -177,6 +179,10 @@ public class Play {
 
     }
 
+    /**
+     * Initialisation au premier tour Remplissage des villages de resources et
+     * commandes
+     */
     public void initFirstTurn() {
         int nbVillagesToAffectation = 5;
         int randVillage;
@@ -204,8 +210,30 @@ public class Play {
         }
     }
 
+    /**
+     * Quand un village n'a plus de resources on en remet dans un autre
+     */
+    public void reFillVillageResource() {
+        int randVillage = (int) (Math.random() * 20 + 1);
+        Village village = board.getVillageById(randVillage);
+        if (village.getResources().isEmpty() && village.getOrder() == null) {
+            village.addResource(board.getBagResources().takeRandom());
+        }
+    }
+
+    /**
+     * Quand un village n'a plus de commande on en remet dans un autre
+     */
+    public void reFillVillageOrder() {
+        int randVillage = (int) (Math.random() * 20 + 1);
+        Village village = board.getVillageById(randVillage);
+        if (village.getResources().isEmpty() && village.getOrder() == null) {
+            village.setOrder(board.getBagOrders().takeRandom());
+        }
+    }
+
     public Board getBoard() {
         return board;
     }
-    
+
 }
