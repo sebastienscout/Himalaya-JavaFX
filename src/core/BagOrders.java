@@ -18,4 +18,8 @@ public class BagOrders {
         orders.remove(result);
         return result;
     }
+
+    public ArrayList<Order> getOrders() {
+        return orders;
+    } 
 }
