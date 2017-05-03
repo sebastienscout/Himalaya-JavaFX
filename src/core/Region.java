@@ -16,4 +16,12 @@ public class Region {
         neighbors.add(r);
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public ArrayList<Region> getNeighbors() {
+        return neighbors;
+    }
+
 }

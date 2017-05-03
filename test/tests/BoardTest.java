@@ -4,6 +4,7 @@ import core.Action;
 import core.BagResources;
 import core.Board;
 import core.Player;
+import core.Region;
 import core.Village;
 import org.junit.Before;
 import org.junit.Test;
@@ -70,6 +71,15 @@ public class BoardTest {
     @Test
     public void bagOrdersTest(){
         
+    }
+    
+    @Test
+    public void regionsTest(){
+        Region region6 = board.getRegionById(6);
+        assertEquals(true, region6.getNeighbors().contains(board.getRegionById(3)));
+        assertEquals(true, region6.getNeighbors().contains(board.getRegionById(5)));
+        assertEquals(true, region6.getNeighbors().contains(board.getRegionById(7)));
+        assertEquals(true, region6.getNeighbors().contains(board.getRegionById(8)));
     }
 
 }
