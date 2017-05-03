@@ -34,12 +34,12 @@ public class Village {
     public void addResource(Resource r) {
         resources.add(r);
     }
-    
-    public Village getDestVillage(Road type){
-        
+
+    public Village getDestVillage(Road type) {
+
         Village v = roads.get(type);
         System.out.println("Village : " + v);
-        
+
         return v;
     }
 
@@ -51,7 +51,9 @@ public class Village {
     public int getId() {
         return id;
     }
-    
-    
+
+    public ArrayList<Resource> getResources() {
+        return resources;
+    }
 
 }

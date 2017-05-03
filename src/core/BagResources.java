@@ -4,17 +4,16 @@ import java.util.ArrayList;
 
 public class BagResources {
 
-    private ArrayList<Resource> resources = new ArrayList<>();
+    private ArrayList<Resource> resources;
 
     public BagResources() {
+        resources = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
-
-            resources.add(Resource.sel);
-            resources.add(Resource.orge);
-            resources.add(Resource.the);
-            resources.add(Resource.or);
-            resources.add(Resource.jade);
-
+            resources.add(new Resource(Resource.Type.sel));
+            resources.add(new Resource(Resource.Type.orge));
+            resources.add(new Resource(Resource.Type.the));
+            resources.add(new Resource(Resource.Type.or));
+            resources.add(new Resource(Resource.Type.jade));
         }
     }
 
@@ -23,5 +22,9 @@ public class BagResources {
         Resource result = resources.get(rand);
         resources.remove(result);
         return result;
+    }
+    
+    public ArrayList<Resource> getResources(){
+        return resources;
     }
 }

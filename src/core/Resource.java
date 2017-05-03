@@ -5,21 +5,31 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public enum Resource {
+public class Resource {
 
-    sel,
-    orge,
-    the,
-    jade,
-    or;
-
-    private static final List<Resource> VALUES
-            = Collections.unmodifiableList(Arrays.asList(values()));
-    private static final int SIZE = VALUES.size();
-    private static final Random RANDOM = new Random();
+    public enum Type {
+        sel,
+        orge,
+        the,
+        jade,
+        or
+    }
+    private Type type;
 
     public static Resource getRandomResource() {
-        return VALUES.get(RANDOM.nextInt(SIZE));
+        return null; //TODO
     }
 
+    public Resource(Type type) {
+        this.type = type;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    @Override
+    public String toString() {
+        return "Resource{" + "type=" + type + '}';
+    }
 }
