@@ -56,4 +56,7 @@ public class Village {
         return resources;
     }
 
+    public Order getOrder() {
+        return order;
+    }
 }

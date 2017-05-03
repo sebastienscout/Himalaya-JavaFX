@@ -1,6 +1,7 @@
 package tests;
 
 import core.Action;
+import core.BagOrders;
 import core.BagResources;
 import core.Board;
 import core.Player;
@@ -60,7 +61,6 @@ public class BoardTest {
 
         //Test pour affecter des resources aux villages
         Village village1 = board.getVillageById(1);
-        System.out.println("id Village " + village1);
         
         village1.addResource(br.takeRandom());
         assertEquals(58, br.getResources().size());
@@ -70,6 +70,15 @@ public class BoardTest {
     @Test
     public void bagOrdersTest(){
         
+        //Test sur les cartes Commande
+        BagOrders bo = new BagOrders();
+        assertEquals(40, bo.getOrders().size());
+        
+        //Test affectation Commande à un village
+        Village v1 = board.getVillageById(1);
+        v1.setOrder(bo.takeRandom());
+        assertEquals(39, bo.getOrders().size());
+        assertNotEquals(null, v1.getOrder());
     }
 
 }
