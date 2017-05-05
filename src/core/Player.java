@@ -11,6 +11,8 @@ public class Player {
     private int economicScore;
     private int nbStupa;
     private int nbDelegation;
+    private int nbTransactionDone;
+    private boolean completedOrder;
     private Village currentPosition;
     private ArrayList<Resource> resources;
     private ArrayList<Action> actions;
@@ -24,6 +26,8 @@ public class Player {
         economicScore = 0;
         nbStupa = 5;
         nbDelegation = 15;
+        completedOrder = false;
+        nbTransactionDone = 0;
         resources = new ArrayList<>();
         actions = new ArrayList<>();
         delegations = new HashMap<>();
@@ -37,7 +41,15 @@ public class Player {
         nbDelegation -= nb;
         delegations.put(r, nb);
     }
-    
+
+    public int getNbTransactionDone() {
+        return nbTransactionDone;
+    }
+
+    public void setNbTransactionDone(int nbTransactionDone) {
+        this.nbTransactionDone = nbTransactionDone;
+    }
+        
     public void putStupa(){
         if(nbStupa > 0 && currentPosition.getStupa() == null){
             nbStupa--;
@@ -48,6 +60,14 @@ public class Player {
         }
     }
 
+    public boolean asCompletedOrder() {
+        return completedOrder;
+    }
+
+    public void setCompletedOrder(boolean completedOrder) {
+        this.completedOrder = completedOrder;
+    }
+    
     public void addResource(Resource resource) {
         this.resources.add(resource);
     }

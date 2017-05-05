@@ -1,13 +1,11 @@
 package tests;
 
 import core.Action;
-import core.BagOrders;
-import core.BagResources;
 import core.Board;
 import core.Play;
 import core.Player;
 import core.Region;
-import core.Village;
+import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -40,12 +38,12 @@ public class BoardTest {
 
         assertEquals(board.getVillageById(6), player1.getPosition());
 
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.ice);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.soil);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.soil);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.ice);
+        player1.addAction(new Action(Action.Type.stone));
+        player1.addAction(new Action(Action.Type.ice));
+        player1.addAction(new Action(Action.Type.soil));
+        player1.addAction(new Action(Action.Type.stone));
+        player1.addAction(new Action(Action.Type.soil));
+        player1.addAction(new Action(Action.Type.ice));
 
         board.executeActions();
 
@@ -89,16 +87,21 @@ public class BoardTest {
         Player player1 = new Player("rouge", board.getVillageById(14));
         board.addPlayer(player1);
         
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.ice);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.soil);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.ice);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.delegation);
+        player1.addAction(new Action(Action.Type.stone));
+        player1.addAction(new Action(Action.Type.ice));
+        player1.addAction(new Action(Action.Type.soil));
+        player1.addAction(new Action(Action.Type.stone));
+        player1.addAction(new Action(Action.Type.ice));
+        
+        ArrayList<Region> neighbors = player1.getPosition().getRegions();
+        int regionID = neighbors.get(0).getId();
+        
+        player1.addAction(new Action(Action.Type.delegation, regionID));
+        
         board.executeActions();
         
         assertEquals(board.getVillageById(11), player1.getPosition());
-        assertEquals(2, board.getRegionById(4).getDelegations().get(player1).intValue());
+        assertEquals(2, board.getRegionById(regionID).getDelegations().get(player1).intValue());
     }
     
     @Test
@@ -106,12 +109,12 @@ public class BoardTest {
         Player player1 = new Player("rouge", board.getVillageById(14));
         board.addPlayer(player1);
         
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.ice);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.soil);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.offering);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.offering);
+        player1.addAction(new Action(Action.Type.stone));
+        player1.addAction(new Action(Action.Type.ice));
+        player1.addAction(new Action(Action.Type.soil));
+        player1.addAction(new Action(Action.Type.stone));
+        player1.addAction(new Action(Action.Type.offering));
+        player1.addAction(new Action(Action.Type.offering));
         board.executeActions();
         
         assertNotEquals(null, player1.getPosition().getStupa());
