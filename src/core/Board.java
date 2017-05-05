@@ -86,73 +86,9 @@ public class Board {
     
     public void addRegion(Region r) {
         regions.add(r);
-    }
-    
-    public void transaction(Player p) {
-        System.out.println("Transaction");
-        Village village = p.getPosition();
-        int value = 0;
-        Resource resSelected = null;
-
-        //Pour faire une Commande
-        if (village.getResources().isEmpty() && village.getOrder() != null) {
-            
-            ArrayList<Resource> resourceNew = new ArrayList<>();
-            ArrayList<Resource> resourcesCopy = new ArrayList<>();
-            int nbResourcesInOrder = 0;
-            int counterForPlayer = 0;
-            
-            nbResourcesInOrder = village.getOrder().getResources().size();
-            
-            for (Resource res : p.getResources()) {
-                resourcesCopy.add(res);
-            }
-            
-            for (Resource res : village.getOrder().getResources()) {
-                int k = 0;
-                boolean resourceGiven = false;
-                while (k < resourcesCopy.size() && resourceGiven == false) {
-                    if (resourcesCopy.get(k).getType().equals(res.getType())) {
-                        resourcesCopy.remove(res);
-                        resourceNew.add(res);
-                        counterForPlayer++;
-                        resourceGiven = true;
-                        System.out.println("nbCounter = " + counterForPlayer + "/" + nbResourcesInOrder);
-                    }
-                    k++;
-                }
-            }
-
-            //Si le joueur a bien honoré sa commande
-            if (counterForPlayer == nbResourcesInOrder) {
-                //Pour chaque resource on l'enlève au joueur et rajoute dans le sac 
-                for (Resource res : resourceNew) {
-                    p.getResources().remove(res);
-                    this.getBagResources().addResource(res);
-                }
-                village.removeOrder();
-            }
-        } //Pour prendre resources du village
-        else if (village.getResources().size() > 0 && village.getOrder() == null) {
-            value = village.getResources().get(0).getValue();
-            for (Resource villResource : village.getResources()) {
-                if (villResource.getValue() <= value) {
-                    value = villResource.getValue();
-                    resSelected = villResource;
-                }
-            }
-            if (resSelected != null) {
-                p.addResource(resSelected);
-                village.removeResource(resSelected);
-            }
-        }
-    }
-    
-    public void executeActions() {
-        for (int i = 0; i < 6; i++) {
-            for (Player p : players) {
-                switch (p.getAction(i)) {
-                    case stone:
+    }        public void transaction(Player p) {        System.out.println("Transaction");        Village village = p.getPosition();        int value = 0;        Resource resSelected = null;        //Pour faire une Commande        if (village.getResources().isEmpty() && village.getOrder() != null) {                        ArrayList<Resource> resourceNew = new ArrayList<>();            ArrayList<Resource> resourcesCopy = new ArrayList<>();            int nbResourcesInOrder = 0;            int counterForPlayer = 0;                        nbResourcesInOrder = village.getOrder().getResources().size();                        for (Resource res : p.getResources()) {                resourcesCopy.add(res);            }                        for (Resource res : village.getOrder().getResources()) {                int k = 0;                boolean resourceGiven = false;                while (k < resourcesCopy.size() && resourceGiven == false) {                    if (resourcesCopy.get(k).getType().equals(res.getType())) {                        resourcesCopy.remove(res);                        resourceNew.add(res);                        counterForPlayer++;                        resourceGiven = true;                        System.out.println("nbCounter = " + counterForPlayer + "/" + nbResourcesInOrder);                    }                    k++;                }            }            //Si le joueur a bien honoré sa commande            if (counterForPlayer == nbResourcesInOrder) {                //Pour chaque resource on l'enlève au joueur et rajoute dans le sac                 for (Resource res : resourceNew) {                    p.getResources().remove(res);                    this.getBagResources().addResource(res);                }                village.removeOrder();            }        } //Pour prendre resources du village        else if (village.getResources().size() > 0 && village.getOrder() == null) {            value = village.getResources().get(0).getValue();            for (Resource villResource : village.getResources()) {                if (villResource.getValue() <= value) {                    value = villResource.getValue();                    resSelected = villResource;                }            }            if (resSelected != null) {                p.addResource(resSelected);                village.removeResource(resSelected);            }        }    }        public void executeActions() {
+        for (Player p : players) {            p.setCompletedOrder(true);            p.setNbTransactionDone(0);        }        for (int i = 0; i < 6; i++) {
+            for(Player p : players){                switch(p.getAction(i).getType()){                    case stone:
                         System.out.println("Déplacement chemin de pierre");
                         p.move(p.getPosition().getDestVillage(Road.stone));
                         break;
@@ -166,12 +102,11 @@ public class Board {
                         break;
                     case offering:
                         System.out.println("Offrande");
-                        if (p.getPosition().getStupa() == null) {
-                            p.putStupa();
+                        if(p.asCompletedOrder() && p.getNbTransactionDone() < 2){                            p.setNbTransactionDone(p.getNbTransactionDone()+1);                            if(p.getPosition().getStupa() == null){                            p.putStupa();
                         } else {
                             System.out.println("Il y a déjà une stupa sur ce village.");
                         }
-                        break;
+                        }                        else {                            System.out.println("Vous devez avoir complété une commande, et moins de 2 transactions.");                        }                        break;
                     case transaction:
                         transaction(p);
                         break;
@@ -180,7 +115,7 @@ public class Board {
                         break;
                     case delegation:
                         System.out.println("Délégation");
-                        break;
+                        if(p.asCompletedOrder() && p.getNbTransactionDone() < 2){                            p.setNbTransactionDone(p.getNbTransactionDone()+1);                            Region choice = getRegionById(p.getAction(i).getId());                            Integer nbDeleg = 0;                            switch(p.getPosition().getType()){                                case house: nbDeleg = 1; break;                                case temple: nbDeleg = 2; break;                                case monastery: nbDeleg = 3; break;                            }                            choice.addDelegations(p, nbDeleg);                            p.addDelegations(choice, nbDeleg);                        }                        else {                            System.out.println("Vous devez avoir complété une commande, et moins de 2 transactions.");                        }                        break;
                 }
             }
         }

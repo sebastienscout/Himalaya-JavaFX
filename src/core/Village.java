@@ -16,6 +16,7 @@ public class Village {
     private Order order;
     private Type type;
     private Player stupa;
+    private ArrayList<Region> regions;
 
     public Village(int id, Type type) {
         this.id = id;
@@ -24,6 +25,19 @@ public class Village {
         roads = new HashMap<>();
         stupa = null;
         order = null;
+		regions = new ArrayList<>();
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public ArrayList<Region> getRegions() {
+        return regions;
+    }
+
+    public void addRegion(Region region) {
+        regions.add(region);
     }
 
     public Player getStupa() {

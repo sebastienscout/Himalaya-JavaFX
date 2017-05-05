@@ -1,13 +1,12 @@
 package tests;
 
 import core.Action;
-import core.BagOrders;
-import core.BagResources;
 import core.Board;
 import core.Play;
 import core.Player;
 import core.Region;
 import core.Village;
+import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -40,12 +39,12 @@ public class BoardTest {
 
         assertEquals(board.getVillageById(6), player1.getPosition());
 
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.ice);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.soil);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.soil);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.ice);
+        player1.addAction(new Action(Action.Type.stone));
+        player1.addAction(new Action(Action.Type.ice));
+        player1.addAction(new Action(Action.Type.soil));
+        player1.addAction(new Action(Action.Type.stone));
+        player1.addAction(new Action(Action.Type.soil));
+        player1.addAction(new Action(Action.Type.ice));
 
         board.executeActions();
 
@@ -84,12 +83,25 @@ public class BoardTest {
 //        assertNotEquals(null, v1.getOrder());
 //    }
     @Test
-    public void regionsTest() {
-        Region region6 = board.getRegionById(6);
-        assertEquals(true, region6.getNeighbors().contains(board.getRegionById(3)));
-        assertEquals(true, region6.getNeighbors().contains(board.getRegionById(5)));
-        assertEquals(true, region6.getNeighbors().contains(board.getRegionById(7)));
-        assertEquals(true, region6.getNeighbors().contains(board.getRegionById(8)));
+    public void deleguationTest(){
+        Player player1 = new Player("rouge", board.getVillageById(14));
+        board.addPlayer(player1);
+        
+        player1.addAction(new Action(Action.Type.stone));
+        player1.addAction(new Action(Action.Type.ice));
+        player1.addAction(new Action(Action.Type.soil));
+        player1.addAction(new Action(Action.Type.stone));
+        player1.addAction(new Action(Action.Type.ice));
+        
+        ArrayList<Region> neighbors = player1.getPosition().getRegions();
+        int regionID = neighbors.get(0).getId();
+        
+        player1.addAction(new Action(Action.Type.delegation, regionID));
+        
+        board.executeActions();
+        
+        assertEquals(board.getVillageById(11), player1.getPosition());
+        assertEquals(2, board.getRegionById(regionID).getDelegations().get(player1).intValue());
     }
 
     @Test
@@ -97,15 +109,17 @@ public class BoardTest {
         Player player1 = new Player("rouge", board.getVillageById(14));
         board.addPlayer(player1);
 
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.ice);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.soil);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.offering);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.offering);
+        player1.addAction(new Action(Action.Type.stone));
+        player1.addAction(new Action(Action.Type.ice));
+        player1.addAction(new Action(Action.Type.soil));
+        player1.addAction(new Action(Action.Type.stone));
+        player1.addAction(new Action(Action.Type.offering));
+        player1.addAction(new Action(Action.Type.offering));
         board.executeActions();
 
         assertNotEquals(null, player1.getPosition().getStupa());
+        assertNotEquals(null, board.getVillageById(12));
+        assertEquals(board.getVillageById(12), player1.getPosition());
     }
 
     @Test
@@ -129,12 +143,12 @@ public class BoardTest {
 //        for (int i = 0; i < 10; i++) {
 //            player1.addResource(board.getBagResources().takeRandom());
 //        }
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.ice);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.soil);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.pause);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.pause);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.transaction);
+        player1.addAction(new Action(Action.Type.stone));
+        player1.addAction(new Action(Action.Type.ice));
+        player1.addAction(new Action(Action.Type.soil));
+        player1.addAction(new Action(Action.Type.pause));
+        player1.addAction(new Action(Action.Type.pause));
+        player1.addAction(new Action(Action.Type.transaction));
         board.executeActions();
 
         assertEquals(1, player1.getResources().size());
@@ -166,12 +180,12 @@ public class BoardTest {
         }
         assertEquals(10, player1.getResources().size());
         
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.stone);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.ice);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.soil);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.pause);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.pause);
-        board.getPlayers().get(board.getCurrentPlayer()).addAction(Action.transaction);
+        player1.addAction(new Action(Action.Type.stone));
+        player1.addAction(new Action(Action.Type.ice));
+        player1.addAction(new Action(Action.Type.soil));
+        player1.addAction(new Action(Action.Type.pause));
+        player1.addAction(new Action(Action.Type.pause));
+        player1.addAction(new Action(Action.Type.transaction));
         board.executeActions();
         
         assertNotEquals(10-nbResourcesInOrder, player1.getResources().size());
