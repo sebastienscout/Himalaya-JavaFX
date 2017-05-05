@@ -52,46 +52,25 @@ public class BoardTest {
 
     }
 
-//    @Test
-//    public void bagResourcesTest() {
-//        
-//        //Test sur les cartes resources
-//        BagResources br = new BagResources();
-//        assertEquals(60, br.getResources().size());
-//        br.takeRandom(); //On prend une carte random dans le sac
-//        assertEquals(59, br.getResources().size());
-//
-//        //Test pour affecter des resources aux villages
-//        Village village1 = board.getVillageById(1);
-//        
-//        village1.addResource(br.takeRandom());
-//        assertEquals(58, br.getResources().size());
-//        assertEquals(1, village1.getResources().size());
-//    }
-//    
-//    @Test
-//    public void bagOrdersTest(){
-//        
-//        //Test sur les cartes Commande
-//        BagOrders bo = new BagOrders();
-//        assertEquals(40, bo.getOrders().size());
-//        
-//        //Test affectation Commande à un village
-//        Village v1 = board.getVillageById(1);
-//        v1.setOrder(bo.takeRandom());
-//        assertEquals(39, bo.getOrders().size());
-//        assertNotEquals(null, v1.getOrder());
-//    }
     @Test
     public void deleguationTest(){
         Player player1 = new Player("rouge", board.getVillageById(14));
         board.addPlayer(player1);
         
+        Village village = board.getVillageById(18);
+        village.removeOrder();
+        village.getResources().clear();
+        village.setOrder(board.getBagOrders().takeRandom());
+
+        for (int i = 0; i < 20; i++) {
+            player1.addResource(board.getBagResources().takeRandom());
+        }
+        
         player1.addAction(new Action(Action.Type.stone));
         player1.addAction(new Action(Action.Type.ice));
         player1.addAction(new Action(Action.Type.soil));
-        player1.addAction(new Action(Action.Type.stone));
-        player1.addAction(new Action(Action.Type.ice));
+        player1.addAction(new Action(Action.Type.transaction));
+        player1.addAction(new Action(Action.Type.pause));
         
         ArrayList<Region> neighbors = player1.getPosition().getRegions();
         int regionID = neighbors.get(0).getId();
@@ -100,7 +79,7 @@ public class BoardTest {
         
         board.executeActions();
         
-        assertEquals(board.getVillageById(11), player1.getPosition());
+        assertEquals(board.getVillageById(18), player1.getPosition());
         assertEquals(2, board.getRegionById(regionID).getDelegations().get(player1).intValue());
     }
 
@@ -108,18 +87,24 @@ public class BoardTest {
     public void stupaTest() {
         Player player1 = new Player("rouge", board.getVillageById(14));
         board.addPlayer(player1);
+        
+        Village village = board.getVillageById(18);
+        village.removeOrder();
+        village.getResources().clear();
+        village.addResource(board.getBagResources().takeRandom());
+        
+        assertEquals(1, village.getResources().size());
 
         player1.addAction(new Action(Action.Type.stone));
         player1.addAction(new Action(Action.Type.ice));
         player1.addAction(new Action(Action.Type.soil));
-        player1.addAction(new Action(Action.Type.stone));
+        player1.addAction(new Action(Action.Type.transaction));
         player1.addAction(new Action(Action.Type.offering));
-        player1.addAction(new Action(Action.Type.offering));
+        player1.addAction(new Action(Action.Type.pause));
         board.executeActions();
 
         assertNotEquals(null, player1.getPosition().getStupa());
-        assertNotEquals(null, board.getVillageById(12));
-        assertEquals(board.getVillageById(12), player1.getPosition());
+        assertEquals(board.getVillageById(18), player1.getPosition());
     }
 
     @Test
@@ -139,10 +124,6 @@ public class BoardTest {
         village.addResource(board.getBagResources().takeRandom());
         assertEquals(1, village.getResources().size());
 
-//        //Pour ajouter resource au player pour test action
-//        for (int i = 0; i < 10; i++) {
-//            player1.addResource(board.getBagResources().takeRandom());
-//        }
         player1.addAction(new Action(Action.Type.stone));
         player1.addAction(new Action(Action.Type.ice));
         player1.addAction(new Action(Action.Type.soil));

@@ -13,7 +13,7 @@ public class Play {
     /**
      * Initialisation du plateau
      */
-    public void initVillagesAndRegions() {
+    private void initVillagesAndRegions() {
 
         //Initialisation des villages
         Village village1 = new Village(1, Village.Type.temple);
@@ -183,7 +183,7 @@ public class Play {
      * Initialisation au premier tour Remplissage des villages de resources et
      * commandes
      */
-    public void initFirstTurn() {
+    private void initFirstTurn() {
         int nbVillagesToAffectation = 5;
         int randVillage;
         int i = 1;

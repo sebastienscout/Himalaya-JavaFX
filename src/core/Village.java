@@ -69,16 +69,7 @@ public class Village {
     }
 
     public Village getDestVillage(Road type) {
-
-        Village v = roads.get(type);
-        System.out.println("Village : " + v);
-
-        return v;
-    }
-
-    @Override
-    public String toString() {
-        return "Village{" + "id=" + id + ", type=" + type + '}';
+        return roads.get(type);
     }
 
     public int getId() {
