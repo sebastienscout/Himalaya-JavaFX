@@ -27,4 +27,8 @@ public class BagResources {
     public ArrayList<Resource> getResources(){
         return resources;
     }
+    
+    public void addResource(Resource r){
+        resources.add(r);
+    }
 }

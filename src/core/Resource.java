@@ -1,10 +1,5 @@
 package core;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 public class Resource {
 
     public enum Type {
@@ -15,10 +10,6 @@ public class Resource {
         or
     }
     private Type type;
-
-    public static Resource getRandomResource() {
-        return null; //TODO
-    }
 
     public Resource(Type type) {
         this.type = type;
@@ -31,5 +22,28 @@ public class Resource {
     @Override
     public String toString() {
         return "Resource{" + "type=" + type + '}';
+    }
+
+    //Valeur des resources
+    public int getValue() {
+        int valeur = 0;
+        switch (type) {
+            case sel:
+                valeur = 1;
+                break;
+            case orge:
+                valeur = 2;
+                break;
+            case the:
+                valeur = 3;
+                break;
+            case jade:
+                valeur = 4;
+                break;
+            case or:
+                valeur = 5;
+                break;
+        }
+        return valeur;
     }
 }

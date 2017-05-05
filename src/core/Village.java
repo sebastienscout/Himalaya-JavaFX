@@ -23,6 +23,7 @@ public class Village {
         resources = new ArrayList<>();
         roads = new HashMap<>();
         stupa = null;
+        order = null;
     }
 
     public Player getStupa() {
@@ -32,7 +33,7 @@ public class Village {
     public void setStupa(Player stupa) {
         this.stupa = stupa;
     }
-    
+
     public void addRoad(Road r, Village v) {
         roads.put(r, v);
     }
@@ -43,6 +44,14 @@ public class Village {
 
     public void addResource(Resource r) {
         resources.add(r);
+    }
+
+    public void removeResource(Resource r) {
+        resources.remove(r);
+    }
+    
+    public void removeOrder() {
+        order = null;
     }
 
     public Village getDestVillage(Road type) {

@@ -74,4 +74,7 @@ public class Player {
         currentPosition = dest;
     }
 
+    public ArrayList<Resource> getResources() {
+        return resources;
+    }
 }
