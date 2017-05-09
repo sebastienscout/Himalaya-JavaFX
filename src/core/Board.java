@@ -209,13 +209,19 @@ public class Board {
             for (Player p : players) {
                 switch (p.getAction(i).getType()) {
                     case stone:
-                        p.move(p.getPosition().getDestVillage(Road.stone));
+                        if (p.getPosition().getDestVillage(Road.stone) != null) {
+                            p.move(p.getPosition().getDestVillage(Road.stone));
+                        }
                         break;
                     case soil:
-                        p.move(p.getPosition().getDestVillage(Road.soil));
+                        if (p.getPosition().getDestVillage(Road.soil) != null) {
+                            p.move(p.getPosition().getDestVillage(Road.soil));
+                        }
                         break;
                     case ice:
-                        p.move(p.getPosition().getDestVillage(Road.ice));
+                        if (p.getPosition().getDestVillage(Road.ice) != null) {
+                            p.move(p.getPosition().getDestVillage(Road.ice));
+                        }
                         break;
                     case offering:
                         offering(p);
@@ -231,6 +237,43 @@ public class Board {
                 }
             }
         }
+
+        if (nbTurn % 4 == 0) {
+            calculateInventory();
+        }
+        nbTurn++;
     }
 
+    private void calculateInventory() {
+        ArrayList<Resource.Type> resourceType = new ArrayList<>();
+        resourceType.add(Resource.Type.sel);
+        resourceType.add(Resource.Type.orge);
+        resourceType.add(Resource.Type.the);
+        resourceType.add(Resource.Type.jade);
+        resourceType.add(Resource.Type.or);
+
+        resourceType.stream().map((type) -> {
+            Player winner = players.get(0);
+            for (Player p : players) {
+                if (p.getNbResources(type) > winner.getNbResources(type)) {
+                    winner = p;
+                }
+            }
+            return winner;
+        }).forEachOrdered((winner) -> {
+            winner.setEconomicScore(winner.getEconomicScore() + 3);
+        });
+    }
+
+    private void calculatePoliticalScore() {
+        // TODO
+    }
+
+    private void calculateReligiousScore() {
+        // TODO
+    }
+
+    void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
 }

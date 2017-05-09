@@ -1,7 +1,7 @@
 package core;
 
-public class Action{
-    
+public class Action {
+
     public enum Type {
 
         soil,
@@ -13,7 +13,7 @@ public class Action{
         pause
 
     }
-    
+
     private Type type;
     private int id;
 
@@ -30,7 +30,7 @@ public class Action{
     }
 
     public void setId(int id) {
-        if(type.equals(Type.delegation)){
+        if (type.equals(Type.delegation)) {
             this.id = id;
         }
     }
@@ -42,9 +42,14 @@ public class Action{
 
     public Action(Type type, int id) {
         this.type = type;
-        if(type.equals(Type.delegation)){
+        if (type.equals(Type.delegation)) {
             this.id = id;
         }
     }
-}
 
+    @Override
+    public String toString() {
+        return "Action{" + "type=" + type + ", id=" + id + '}';
+    }
+
+}

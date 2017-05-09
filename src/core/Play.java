@@ -1,5 +1,8 @@
 package core;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Play {
 
     private Board board;
@@ -8,6 +11,56 @@ public class Play {
         board = new Board();
         initVillagesAndRegions();
         initFirstTurn();
+    }
+
+    public void addPlayer(String color, int villageID) {
+        board.addPlayer(new Player(color, board.getVillageById(villageID)));
+    }
+
+    public void run() {
+        Scanner sc = new Scanner(System.in);
+        while (board.getNbTurn() <= 12) {
+            for (Player p : board.getPlayers()) {
+                for (int i = 0; i < 6; i++) {
+                    int choice = (int) (Math.random() * 6);
+                    System.out.println("choice = " + choice);
+                    /*System.out.println("1 : ice");
+                    System.out.println("2 : stone");
+                    System.out.println("3 : soil");
+                    System.out.println("4 : delegation");
+                    System.out.println("5 : offering");
+                    System.out.println("6 : transaction");
+                    System.out.println("0 : pause");*/
+                    Action action = null;
+                    switch (choice) {
+                        case 1:
+                            action = new Action(Action.Type.ice);
+                            break;
+                        case 2:
+                            action = new Action(Action.Type.stone);
+                            break;
+                        case 3:
+                            action = new Action(Action.Type.soil);
+                            break;
+                        case 4:
+                            action = new Action(Action.Type.delegation);
+                            break;
+                        case 5:
+                            action = new Action(Action.Type.offering);
+                            break;
+                        case 6:
+                            action = new Action(Action.Type.transaction);
+                            break;
+                        case 0:
+                            action = new Action(Action.Type.pause);
+                            break;
+                    }
+                    System.out.println(action);
+                    p.addAction(action);
+                }
+            }
+            board.executeActions();
+        }
     }
 
     /**
@@ -102,7 +155,7 @@ public class Play {
         Region region6 = new Region(6);
         Region region7 = new Region(7);
         Region region8 = new Region(8);
-        
+
         // Add regions to villages
         village1.addRegion(region2);
         village1.addRegion(region3);

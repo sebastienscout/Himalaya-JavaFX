@@ -37,6 +37,18 @@ public class Player {
         return delegations;
     }
 
+    public void setPoliticalScore(int politicalScore) {
+        this.politicalScore = politicalScore;
+    }
+
+    public void setReligiousScore(int religiousScore) {
+        this.religiousScore = religiousScore;
+    }
+
+    public void setEconomicScore(int economicScore) {
+        this.economicScore = economicScore;
+    }
+
     public void addDelegations(Region r, Integer nb) {
         nbDelegation -= nb;
         delegations.put(r, nb);
@@ -49,13 +61,12 @@ public class Player {
     public void setNbTransactionDone(int nbTransactionDone) {
         this.nbTransactionDone = nbTransactionDone;
     }
-        
-    public void putStupa(){
-        if(nbStupa > 0 && currentPosition.getStupa() == null){
+
+    public void putStupa() {
+        if (nbStupa > 0 && currentPosition.getStupa() == null) {
             nbStupa--;
             currentPosition.setStupa(this);
-        }
-        else {
+        } else {
             System.out.println("Vous n'avez plus de Stupa.");
         }
     }
@@ -67,7 +78,7 @@ public class Player {
     public void setCompletedOrder(boolean completedOrder) {
         this.completedOrder = completedOrder;
     }
-    
+
     public void addResource(Resource resource) {
         this.resources.add(resource);
     }
@@ -91,24 +102,34 @@ public class Player {
     public String getColor() {
         return color;
     }
-    
-    public Village getPosition(){
+
+    public Village getPosition() {
         return currentPosition;
     }
-    
-    public void resetActions(){
+
+    public void resetActions() {
         actions.clear();
     }
-    
-    public Action getAction(int i){
+
+    public Action getAction(int i) {
         return actions.get(i);
     }
-    
-    public void move(Village dest){
+
+    public void move(Village dest) {
         currentPosition = dest;
     }
 
     public ArrayList<Resource> getResources() {
         return resources;
+    }
+
+    public int getNbResources(Resource.Type type) {
+        int result = 0;
+        for (Resource resource : resources) {
+            if (resource.getType().equals(type)) {
+                result++;
+            }
+        }
+        return result;
     }
 }
