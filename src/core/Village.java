@@ -25,7 +25,7 @@ public class Village {
         roads = new HashMap<>();
         stupa = null;
         order = null;
-		regions = new ArrayList<>();
+	regions = new ArrayList<>();
     }
 
     public Type getType() {
