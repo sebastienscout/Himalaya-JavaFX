@@ -126,7 +126,7 @@ public class Board {
             if (counterForPlayer == nbResourcesInOrder) {
                 //Pour chaque resource on l'enlève au joueur et rajoute dans le sac 
                 for (Resource res : resourceNew) {
-                    p.getResources().remove(res);
+                    p.removeResource(p.getSpecificResource(res.getType()));
                     this.getBagResources().addResource(res);
                 }
                 village.removeOrder();

@@ -5,6 +5,7 @@ import core.Board;
 import core.Play;
 import core.Player;
 import core.Region;
+import core.Resource;
 import core.Village;
 import java.util.ArrayList;
 import org.junit.Before;
@@ -163,6 +164,7 @@ public class BoardTest {
             player1.addResource(board.getBagResources().takeRandom());
         }
         assertEquals(10, player1.getResources().size());
+        assertEquals(25, board.getBagResources().getResources().size());
         
         player1.addAction(new Action(Action.Type.stone));
         player1.addAction(new Action(Action.Type.ice));
@@ -172,7 +174,9 @@ public class BoardTest {
         player1.addAction(new Action(Action.Type.transaction));
         board.executeActions();
         
-        assertNotEquals(10-nbResourcesInOrder, player1.getResources().size());
+        assertEquals(10-nbResourcesInOrder, player1.getResources().size());
+        assertEquals(25+nbResourcesInOrder, board.getBagResources().getResources().size());
+        
         assertEquals(null, village.getOrder());
     }
 
