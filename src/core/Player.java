@@ -111,4 +111,17 @@ public class Player {
     public ArrayList<Resource> getResources() {
         return resources;
     }
+    
+    public void removeResource(Resource r){
+        resources.remove(r);
+    }
+    
+    public Resource getSpecificResource(Resource.Type type){
+        for (Resource res : resources) {
+          if(res.getType().equals(type)){
+              return res;
+          }
+        }
+        return null;    
+    }
 }
