@@ -144,7 +144,6 @@ public class Board {
             if (resSelected != null) {
                 p.addResource(resSelected);
                 village.removeResource(resSelected);
-                p.setCompletedOrder(true);
             }
         }
     }

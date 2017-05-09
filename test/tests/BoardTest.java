@@ -88,23 +88,26 @@ public class BoardTest {
         Player player1 = new Player("rouge", board.getVillageById(14));
         board.addPlayer(player1);
         
-        Village village = board.getVillageById(18);
+        Village village = board.getVillageById(18);        
         village.removeOrder();
         village.getResources().clear();
-        village.addResource(board.getBagResources().takeRandom());
-        
-        assertEquals(1, village.getResources().size());
+        village.setOrder(board.getBagOrders().takeRandom());
+
+        for (int i = 0; i < 20; i++) {
+            player1.addResource(board.getBagResources().takeRandom());
+        }
 
         player1.addAction(new Action(Action.Type.stone));
         player1.addAction(new Action(Action.Type.ice));
         player1.addAction(new Action(Action.Type.soil));
         player1.addAction(new Action(Action.Type.transaction));
-        player1.addAction(new Action(Action.Type.offering));
         player1.addAction(new Action(Action.Type.pause));
+        player1.addAction(new Action(Action.Type.offering));
+        
         board.executeActions();
 
-        assertNotEquals(null, player1.getPosition().getStupa());
         assertEquals(board.getVillageById(18), player1.getPosition());
+        assertNotEquals(null, player1.getPosition().getStupa());
     }
 
     @Test
