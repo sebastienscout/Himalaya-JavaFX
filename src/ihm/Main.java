@@ -1,7 +1,5 @@
 package ihm;
 
-import core.Board;
-import core.Player;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,23 +10,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 
-/**
- *
- * @author sebastien
- */
 public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        
-            
         try {
             Parent root = FXMLLoader.load(getClass().getResource("MainFXML.fxml"));
-            
             Scene scene = new Scene(root,Color.TRANSPARENT);
-            
             stage.setScene(scene);
-            
             stage.show();
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -42,9 +31,11 @@ public class Main extends Application {
         PlayConsole play = new PlayConsole();
         //play.addPlayer("Rouge", 1);
         play.addAI("Bleu", 5);
+        play.addAI("Rouge", 5);
+        play.addAI("Vert", 5);
         play.run();
         
-//        launch(args);
+        //launch(args);
     }
 
 }

@@ -11,6 +11,8 @@ import ia.RandomAI;
 import java.util.Scanner;
 
 public class PlayConsole extends Play {
+    
+    private static int nbTurnMax = 12;
 
     public PlayConsole() {
         super();
@@ -47,7 +49,7 @@ public class PlayConsole extends Play {
         }
 
         //Les 12 tours
-        while (board.getNbTurn() <= 3) {
+        while (board.getNbTurn() <= nbTurnMax) {
             displayInfoBoard();
             //Pour tous les joueurs
             for (Player p : board.getPlayers()) {
@@ -139,10 +141,14 @@ public class PlayConsole extends Play {
             }
             board.executeActions();
         }
+        
+        System.out.println("Econnomie : " + board.winnerEconnomicScore().getColor());
+        System.out.println("Political : " + board.winnerPoliticalScore().getColor());
+        System.out.println("Regligieux : " + board.winnerReligiousScore().getColor());
     }
 
     public void displayInfoBoard() {
-        System.out.println("******* ETAT DU PLATEAU *******");
+        System.out.println("******* ETAT DU PLATEAU TOUR : " + board.getNbTurn() + " *******");
         for (Village village : board.getVillages()) {
             if (!village.getResources().isEmpty()) {
                 System.out.print("Village " + village.getId() + " -> Resource[");

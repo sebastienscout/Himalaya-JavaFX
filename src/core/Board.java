@@ -241,21 +241,21 @@ public class Board {
                         if (p.getPosition().getDestVillage(Road.stone) != null) {
                             p.move(p.getPosition().getDestVillage(Road.stone));
                         } else {
-                            System.out.println("Erreur ! Il n'a pas de routes de ce type ...");
+                            System.out.println("Erreur ! Il n'a pas de route <stone> pour le village " + p.getPosition().getId());
                         }
                         break;
                     case soil:
                         if (p.getPosition().getDestVillage(Road.soil) != null) {
                             p.move(p.getPosition().getDestVillage(Road.soil));
                         } else {
-                            System.out.println("Erreur ! Il n'a pas de routes de ce type ...");
+                            System.out.println("Erreur ! Il n'a pas de route <soil> pour le village " + p.getPosition().getId());
                         }
                         break;
                     case ice:
                         if (p.getPosition().getDestVillage(Road.ice) != null) {
                             p.move(p.getPosition().getDestVillage(Road.ice));
                         } else {
-                            System.out.println("Erreur ! Il n'a pas de routes de ce type ...");
+                            System.out.println("Erreur ! Il n'a pas de route <ice> pour le village " + p.getPosition().getId());
                         }
                         break;
                     case offering:
@@ -275,12 +275,15 @@ public class Board {
                 }
             }
         }
-
+        
         if (nbTurn % 4 == 0) {
             System.out.println("Calcul de l'inventaire...");
             calculateInventory();
         }
         nbTurn++;
+        for (Player p : players) {
+            p.clearActions();
+        }
     }
 
     private void calculateInventory() {
