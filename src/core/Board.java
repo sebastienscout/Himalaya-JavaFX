@@ -191,13 +191,19 @@ public class Board {
                 // Verification : pas de stupa deja placée
                 if (p.getPosition().getStupa() == null) {
                     p.putStupa();
-                int nbPoints = 0;
-                switch(p.getPosition().getType()){
-                    case house: nbPoints = 1; break;
-                    case temple: nbPoints = 2; break;
-                    case monastery: nbPoints = 3; break;
-                }
-                p.setReligiousScore(p.getReligiousScore() + nbPoints);
+                    int nbPoints = 0;
+                    switch (p.getPosition().getType()) {
+                        case house:
+                            nbPoints = 1;
+                            break;
+                        case temple:
+                            nbPoints = 2;
+                            break;
+                        case monastery:
+                            nbPoints = 3;
+                            break;
+                    }
+                    p.setReligiousScore(p.getReligiousScore() + nbPoints);
                 } else {
                     System.out.println("Il y a déjà une stupa sur ce village.");
                 }
@@ -275,7 +281,7 @@ public class Board {
                 }
             }
         }
-        
+
         if (nbTurn % 4 == 0) {
             System.out.println("Calcul de l'inventaire...");
             calculateInventory();
@@ -296,28 +302,43 @@ public class Board {
 
         for (Resource.Type type : resourceType) {
             Player winner = players.get(0);
+            boolean equal = false;
             for (Player p : players) {
                 if (p.getNbResources(type) > winner.getNbResources(type)) {
+                    equal = false;
                     winner = p;
+                } else if (p.getNbResources(type) == winner.getNbResources(type)) {
+                    equal = true;
                 }
             }
-            winner.setEconomicScore(winner.getEconomicScore() + 3);
+            if (equal == false) {
+                winner.setEconomicScore(winner.getEconomicScore() + 3);
+            }
         }
     }
 
     public Player winnerPoliticalScore() {
-        for(Region r : regions){
+        for (Region r : regions) {
             Player p = r.getMaxDelegationPlayer();
-            if(p != null){
+            if (p != null) {
                 p.setPoliticalScore(p.getPoliticalScore() + 1);
-    }
-        }
-        
-        Player winner = players.get(0);
-        for (Player p : players) {
-            if(winner.getPoliticalScore() < p.getPoliticalScore()){
-                winner = p;
             }
+        }
+
+        Player winner = players.get(0);
+        boolean equal = false;
+        for (Player p : players) {
+            if (p.getPoliticalScore() > winner.getPoliticalScore()) {
+                winner = p;
+                equal = false;
+            }
+            else if(p.getPoliticalScore() == winner.getPoliticalScore()) {
+                equal = true;
+            }
+        }
+
+        if(equal == true){
+            return null;
         }
         
         return winner;
@@ -325,21 +346,41 @@ public class Board {
 
     public Player winnerReligiousScore() {
         Player winner = players.get(0);
+        boolean equal = false;
         for (Player p : players) {
-            if(winner.getReligiousScore() < p.getReligiousScore()){
+            if (p.getReligiousScore() > winner.getReligiousScore()) {
                 winner = p;
-    }
-        }
-        return winner;
-    }
-    
-    public Player winnerEconnomicScore() {
-        Player winner = players.get(0);
-        for (Player p : players) {
-            if(winner.getEconomicScore() < p.getEconomicScore()){
-                winner = p;
+                equal = false;
+            }
+            else if(p.getReligiousScore() == winner.getReligiousScore()) {
+                equal = true;
             }
         }
+
+        if(equal == true){
+            return null;
+        }
+        
+        return winner;
+    }
+
+    public Player winnerEconnomicScore() {
+        Player winner = players.get(0);
+        boolean equal = false;
+        for (Player p : players) {
+            if (p.getEconomicScore() > winner.getEconomicScore()) {
+                winner = p;
+                equal = false;
+            }
+            else if(p.getEconomicScore() == winner.getEconomicScore()) {
+                equal = true;
+            }
+        }
+
+        if(equal == true){
+            return null;
+        }
+        
         return winner;
     }
 

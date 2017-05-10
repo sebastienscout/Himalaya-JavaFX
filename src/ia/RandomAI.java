@@ -36,7 +36,7 @@ public class RandomAI extends Player {
                 action = new Action(Action.Type.pause);
                 break;
             case 0:
-                action = new Action(Action.Type.delegation);
+                action = new Action(Action.Type.delegation, 5);
                 break;
         }
         

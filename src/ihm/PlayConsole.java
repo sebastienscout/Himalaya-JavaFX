@@ -11,7 +11,7 @@ import ia.RandomAI;
 import java.util.Scanner;
 
 public class PlayConsole extends Play {
-    
+
     private static int nbTurnMax = 12;
 
     public PlayConsole() {
@@ -133,7 +133,7 @@ public class PlayConsole extends Play {
                     }
                 } else {
                     for (int i = 0; i < 6; i++) {
-                        Action action = ((RandomAI)p).getRandomAction();
+                        Action action = ((RandomAI) p).getRandomAction();
                         System.out.println(action);
                         p.addAction(action);
                     }
@@ -141,10 +141,25 @@ public class PlayConsole extends Play {
             }
             board.executeActions();
         }
-        
-        System.out.println("Econnomie : " + board.winnerEconnomicScore().getColor());
-        System.out.println("Political : " + board.winnerPoliticalScore().getColor());
-        System.out.println("Regligieux : " + board.winnerReligiousScore().getColor());
+
+        if (board.winnerEconnomicScore() != null) {
+            System.out.println("Econnomie : " + board.winnerEconnomicScore().getColor());
+        }
+        else {
+            System.out.println("Egalité du score Econnomie.");
+        }
+        if (board.winnerPoliticalScore() != null) {
+            System.out.println("Political : " + board.winnerPoliticalScore().getColor());
+        }
+        else {
+            System.out.println("Egalité du score Political.");
+        }
+        if (board.winnerReligiousScore() != null) {
+            System.out.println("Regligieux : " + board.winnerReligiousScore().getColor());
+        }
+        else {
+            System.out.println("Egalité du score Regligieux.");
+        }
     }
 
     public void displayInfoBoard() {
