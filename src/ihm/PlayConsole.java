@@ -8,10 +8,11 @@ import core.Resource;
 import core.Road;
 import core.Village;
 import ia.RandomAI;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PlayConsole extends Play {
-    
+
     private static int nbTurnMax = 12;
 
     public PlayConsole() {
@@ -50,6 +51,7 @@ public class PlayConsole extends Play {
 
         //Les 12 tours
         while (board.getNbTurn() <= nbTurnMax) {
+            testVillages();
             displayInfoBoard();
             //Pour tous les joueurs
             for (Player p : board.getPlayers()) {
@@ -133,7 +135,7 @@ public class PlayConsole extends Play {
                     }
                 } else {
                     for (int i = 0; i < 6; i++) {
-                        Action action = ((RandomAI)p).getRandomAction();
+                        Action action = ((RandomAI) p).getRandomAction();
                         System.out.println(action);
                         p.addAction(action);
                     }
@@ -141,7 +143,7 @@ public class PlayConsole extends Play {
             }
             board.executeActions();
         }
-        
+
         System.out.println("Econnomie : " + board.winnerEconnomicScore().getColor());
         System.out.println("Political : " + board.winnerPoliticalScore().getColor());
         System.out.println("Regligieux : " + board.winnerReligiousScore().getColor());
@@ -163,6 +165,42 @@ public class PlayConsole extends Play {
                 }
                 System.out.println("]");
             }
+        }
+    }
+
+    //Test si il manque une commande ou moins de 5 villages avec resources
+    public void testVillages() {
+
+        int nbVillagesWithResources = 0;
+        int nbVillagesWithOrders = 0;
+        int max = 5;
+        for (Village village : board.getVillages()) {
+            if (village.getOrder() != null) {
+                nbVillagesWithOrders++;
+            }
+            if (!village.getResources().isEmpty()) {
+                nbVillagesWithResources++;
+            }
+        }
+        
+        ArrayList<Village> villagesToIgnore = new ArrayList<>();
+        for (Village village : board.getVillages()) {
+            if (!village.getResources().isEmpty() || village.getOrder() != null) {
+                villagesToIgnore.add(village);
+            }
+        }
+        for (Player player : board.getPlayers()) {
+            villagesToIgnore.add(player.getPosition());
+        }
+
+        while (nbVillagesWithResources < max) {
+            System.out.println("Village a remplir  : " + (max - nbVillagesWithResources));
+            reFillVillageResource(villagesToIgnore);
+            nbVillagesWithResources++;
+        }
+        while (nbVillagesWithOrders < max) {
+            reFillVillageOrder(villagesToIgnore);
+            nbVillagesWithOrders++;
         }
     }
 

@@ -17,8 +17,7 @@ public class Play {
     public void addPlayer(String color, int villageID) {
         board.addPlayer(new Player(color, board.getVillageById(villageID)));
     }
-    
-    
+
     public void addAI(String color, int villageID) {
         board.addPlayer(new RandomAI(color, board.getVillageById(villageID)));
     }
@@ -226,22 +225,36 @@ public class Play {
     /**
      * Quand un village n'a plus de resources on en remet dans un autre
      */
-    public void reFillVillageResource() {
-        int randVillage = (int) (Math.random() * 20 + 1);
-        Village village = board.getVillageById(randVillage);
-        if (village.getResources().isEmpty() && village.getOrder() == null) {
-            village.addResource(board.getBagResources().takeRandom());
+    public void reFillVillageResource(ArrayList<Village> villagesToIgnore) {
+        boolean test = false;
+        //Tant qu'on a pas de village
+        while (!test) {
+            int randVillage = (int) (Math.random() * 20 + 1);
+            Village village = board.getVillageById(randVillage);
+            if (!villagesToIgnore.contains(village)) {
+                for (int i = 0; i < 5; i++) {
+                    village.addResource(board.getBagResources().takeRandom());
+                }
+                villagesToIgnore.add(village);
+                test = true;
+            }
         }
     }
 
     /**
      * Quand un village n'a plus de commande on en remet dans un autre
      */
-    public void reFillVillageOrder() {
-        int randVillage = (int) (Math.random() * 20 + 1);
-        Village village = board.getVillageById(randVillage);
-        if (village.getResources().isEmpty() && village.getOrder() == null) {
-            village.setOrder(board.getBagOrders().takeRandom());
+    public void reFillVillageOrder(ArrayList<Village> villagesToIgnore) {
+        boolean test = false;
+        //Tant qu'on a pas de village
+        while (!test) {
+            int randVillage = (int) (Math.random() * 20 + 1);
+            Village village = board.getVillageById(randVillage);
+            if (!villagesToIgnore.contains(village)) {
+                village.setOrder(board.getBagOrders().takeRandom());
+                villagesToIgnore.add(village);
+                test = true;
+            }
         }
     }
 

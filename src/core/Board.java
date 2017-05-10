@@ -129,9 +129,10 @@ public class Board {
                     p.removeResource(p.getSpecificResource(res.getType()));
                     this.getBagResources().addResource(res);
                 }
+                
+                p.setCompletedOrder(true, village.getId(), village.getOrder().getNbYacks());
                 getBagOrders().getOrders().add(village.getOrder());
                 village.removeOrder();
-                p.setCompletedOrder(true, village.getId());
             }
         } //Pour prendre resources du village
         else if (village.getResources().size() > 0 && village.getOrder() == null) {
@@ -215,7 +216,7 @@ public class Board {
         if (p.getPosition().getId() == p.getVillageOrderId()) {
             if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
                 p.setNbTransactionDone(p.getNbTransactionDone() + 1);
-                p.setEconomicScore(p.getEconomicScore() + p.getPosition().getOrder().getNbYacks());
+                p.setEconomicScore(p.getEconomicScore() + p.getNbYacksOrder());
             } else {
                 System.out.println("Vous devez avoir complété une commande, et moins de 2 transactions.");
             }
@@ -229,7 +230,7 @@ public class Board {
 
         // Initialisation des joueurs avant les actions
         for (Player p : players) {
-            p.setCompletedOrder(false, 0);
+            p.setCompletedOrder(false, 0, 0);
             p.setNbTransactionDone(0);
         }
 
