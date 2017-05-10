@@ -2,7 +2,6 @@ package tests;
 
 import core.Play;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,16 +27,4 @@ public class GameTest {
         assertEquals(play.getBoard().getVillageById(8), play.getBoard().getPlayers().get(2).getPosition());
         assertEquals(play.getBoard().getVillageById(19), play.getBoard().getPlayers().get(3).getPosition());
     }
-
-    @Test
-    public void runTest() {
-        play.addPlayer("rouge", 12);
-
-        play.run();
-        
-        System.out.println("Winner politique : " + play.getBoard().winnerPoliticalScore());
-        System.out.println("Winner Religion : " + play.getBoard().winnerReligiousScore());
-        System.out.println("Winner Econnomie : " + play.getBoard().winnerEconnomicScore());
-    }
-
 }
