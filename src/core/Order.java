@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Order {
 
     private ArrayList<Resource> resources;
+    private int nbYacks = 0 ;
 
     public Order() {
         //Random between 1 and 3 resources
@@ -31,10 +32,26 @@ public class Order {
                     break;
             }
             resources.add(new Resource(type));
+            
+            switch(nbResources){
+                case 1:
+                    nbYacks = (int) (Math.random() * 5 + 2);
+                    break;
+                case 2:
+                    nbYacks = (int) (Math.random() * 7 + 5);
+                    break;
+                case 3:
+                    nbYacks = (int) (Math.random() * 8 + 7);
+                    break;
+            }
         }
     }
 
     public ArrayList<Resource> getResources() {
         return resources;
     }
+    
+    public int getNbYacks() {
+        return nbYacks;
+    }    
 }
