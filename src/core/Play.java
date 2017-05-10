@@ -1,11 +1,12 @@
 package core;
 
+import ia.RandomAI;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Play {
 
-    private Board board;
+    protected Board board;
 
     public Play() {
         board = new Board();
@@ -16,51 +17,10 @@ public class Play {
     public void addPlayer(String color, int villageID) {
         board.addPlayer(new Player(color, board.getVillageById(villageID)));
     }
-
-    public void run() {
-        Scanner sc = new Scanner(System.in);
-        while (board.getNbTurn() <= 12) {
-            for (Player p : board.getPlayers()) {
-                for (int i = 0; i < 6; i++) {
-                    int choice = (int) (Math.random() * 6);
-                    System.out.println("choice = " + choice);
-                    /*System.out.println("1 : ice");
-                    System.out.println("2 : stone");
-                    System.out.println("3 : soil");
-                    System.out.println("4 : delegation");
-                    System.out.println("5 : offering");
-                    System.out.println("6 : transaction");
-                    System.out.println("0 : pause");*/
-                    Action action = null;
-                    switch (choice) {
-                        case 1:
-                            action = new Action(Action.Type.ice);
-                            break;
-                        case 2:
-                            action = new Action(Action.Type.stone);
-                            break;
-                        case 3:
-                            action = new Action(Action.Type.soil);
-                            break;
-                        case 4:
-                            action = new Action(Action.Type.delegation);
-                            break;
-                        case 5:
-                            action = new Action(Action.Type.offering);
-                            break;
-                        case 6:
-                            action = new Action(Action.Type.transaction);
-                            break;
-                        case 0:
-                            action = new Action(Action.Type.pause);
-                            break;
-                    }
-                    System.out.println(action);
-                    p.addAction(action);
-                }
-            }
-            board.executeActions();
-        }
+    
+    
+    public void addAI(String color, int villageID) {
+        board.addPlayer(new RandomAI(color, board.getVillageById(villageID)));
     }
 
     /**

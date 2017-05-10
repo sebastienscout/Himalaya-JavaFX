@@ -8,6 +8,7 @@ public class Action {
         stone,
         ice,
         transaction,
+        bartering,
         offering,
         delegation,
         pause

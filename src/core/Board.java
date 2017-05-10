@@ -129,8 +129,9 @@ public class Board {
                     p.removeResource(p.getSpecificResource(res.getType()));
                     this.getBagResources().addResource(res);
                 }
+                getBagOrders().getOrders().add(village.getOrder());
                 village.removeOrder();
-                p.setCompletedOrder(true);
+                p.setCompletedOrder(true, village.getId());
             }
         } //Pour prendre resources du village
         else if (village.getResources().size() > 0 && village.getOrder() == null) {
@@ -149,58 +150,79 @@ public class Board {
     }
 
     private void delegation(Player p, Action action) {
-        // Verification commande completée, et moins de 2 actions
-        if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
-            p.setNbTransactionDone(p.getNbTransactionDone() + 1);
+        if (p.getPosition().getId() == p.getVillageOrderId()) {
+            // Verification commande completée, et moins de 2 actions
+            if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
+                p.setNbTransactionDone(p.getNbTransactionDone() + 1);
 
-            // Id de la region contenu dans l'action delegation
-            Region choice = getRegionById(action.getId());
-            Integer nbDeleg = 0;
+                // Id de la region contenu dans l'action delegation
+                Region choice = getRegionById(action.getId());
+                Integer nbDeleg = 0;
 
-            // Type du village => nombre de delegation dispo
-            switch (p.getPosition().getType()) {
-                case house:
-                    nbDeleg = 1;
-                    break;
-                case temple:
-                    nbDeleg = 2;
-                    break;
-                case monastery:
-                    nbDeleg = 3;
-                    break;
+                // Type du village => nombre de delegation dispo
+                switch (p.getPosition().getType()) {
+                    case house:
+                        nbDeleg = 1;
+                        break;
+                    case temple:
+                        nbDeleg = 2;
+                        break;
+                    case monastery:
+                        nbDeleg = 3;
+                        break;
+                }
+
+                // Ajout des delegations
+                choice.addDelegations(p, nbDeleg);
+                p.addDelegations(choice, nbDeleg);
+
+            } else {
+                System.out.println("Vous devez avoir complété une commande, et moins de 2 transactions.");
             }
-
-            // Ajout des delegations
-            choice.addDelegations(p, nbDeleg);
-            p.addDelegations(choice, nbDeleg);
-
-        } else {
-            System.out.println("Vous devez avoir complété une commande, et moins de 2 transactions.");
         }
     }
 
     private void offering(Player p) {
-        // Verification commande completée, et moins de 2 actions
-        if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
-            p.setNbTransactionDone(p.getNbTransactionDone() + 1);
+        if (p.getPosition().getId() == p.getVillageOrderId()) {
+            // Verification commande completée, et moins de 2 actions
+            if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
+                p.setNbTransactionDone(p.getNbTransactionDone() + 1);
 
-            // Verification : pas de stupa deja placée
-            if (p.getPosition().getStupa() == null) {
-                p.putStupa();
+                // Verification : pas de stupa deja placée
+                if (p.getPosition().getStupa() == null) {
+                    p.putStupa();
+                } else {
+                    System.out.println("Il y a déjà une stupa sur ce village.");
+                }
+
             } else {
-                System.out.println("Il y a déjà une stupa sur ce village.");
+                System.out.println("Vous devez avoir complété une commande, et moins de 2 transactions.");
             }
-
-        } else {
-            System.out.println("Vous devez avoir complété une commande, et moins de 2 transactions.");
         }
+    }
+
+    /**
+     * Effectue le bartering pour récupèrer yack sur commande (point éco)
+     */
+    public void bartering(Player p) {
+        if (p.getPosition().getId() == p.getVillageOrderId()) {
+            if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
+                p.setNbTransactionDone(p.getNbTransactionDone() + 1);
+                p.setEconomicScore(p.getEconomicScore() + p.getPosition().getOrder().getNbYacks());
+            } else {
+                System.out.println("Vous devez avoir complété une commande, et moins de 2 transactions.");
+            }
+        } else {
+            System.out.println("Erreur mauvais village ! Village " + p.getVillageOrderId());
+        }
+
     }
 
     public void executeActions() {
 
         // Initialisation des joueurs avant les actions
         for (Player p : players) {
-            p.setCompletedOrder(false);
+            p.setCompletedOrder(false, 0);
             p.setNbTransactionDone(0);
         }
 
@@ -211,16 +233,22 @@ public class Board {
                     case stone:
                         if (p.getPosition().getDestVillage(Road.stone) != null) {
                             p.move(p.getPosition().getDestVillage(Road.stone));
+                        } else {
+                            System.out.println("Erreur ! Il n'a pas de routes de ce type ...");
                         }
                         break;
                     case soil:
                         if (p.getPosition().getDestVillage(Road.soil) != null) {
                             p.move(p.getPosition().getDestVillage(Road.soil));
+                        } else {
+                            System.out.println("Erreur ! Il n'a pas de routes de ce type ...");
                         }
                         break;
                     case ice:
                         if (p.getPosition().getDestVillage(Road.ice) != null) {
                             p.move(p.getPosition().getDestVillage(Road.ice));
+                        } else {
+                            System.out.println("Erreur ! Il n'a pas de routes de ce type ...");
                         }
                         break;
                     case offering:
@@ -230,6 +258,9 @@ public class Board {
                         transaction(p);
                         break;
                     case pause:
+                        break;
+                    case bartering:
+                        bartering(p);
                         break;
                     case delegation:
                         delegation(p, p.getAction(i));
@@ -252,17 +283,15 @@ public class Board {
         resourceType.add(Resource.Type.jade);
         resourceType.add(Resource.Type.or);
 
-        resourceType.stream().map((type) -> {
+        for (Resource.Type type : resourceType) {
             Player winner = players.get(0);
             for (Player p : players) {
                 if (p.getNbResources(type) > winner.getNbResources(type)) {
                     winner = p;
                 }
             }
-            return winner;
-        }).forEachOrdered((winner) -> {
             winner.setEconomicScore(winner.getEconomicScore() + 3);
-        });
+        }
     }
 
     private void calculatePoliticalScore() {

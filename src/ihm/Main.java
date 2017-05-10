@@ -1,6 +1,7 @@
 package ihm;
 
 import core.Board;
+import core.Player;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,10 +39,12 @@ public class Main extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        PlayConsole play = new PlayConsole();
+        //play.addPlayer("Rouge", 1);
+        play.addAI("Bleu", 5);
+        play.run();
         
-        Board board = new Board();
-        
-        launch(args);
+//        launch(args);
     }
 
 }
