@@ -18,19 +18,11 @@ public class Play {
     }
 
     public void run() {
-        Scanner sc = new Scanner(System.in);
         while (board.getNbTurn() <= 12) {
+            System.out.println("Nombre de tour : " + board.getNbTurn());
             for (Player p : board.getPlayers()) {
                 for (int i = 0; i < 6; i++) {
                     int choice = (int) (Math.random() * 6);
-                    System.out.println("choice = " + choice);
-                    /*System.out.println("1 : ice");
-                    System.out.println("2 : stone");
-                    System.out.println("3 : soil");
-                    System.out.println("4 : delegation");
-                    System.out.println("5 : offering");
-                    System.out.println("6 : transaction");
-                    System.out.println("0 : pause");*/
                     Action action = null;
                     switch (choice) {
                         case 1:

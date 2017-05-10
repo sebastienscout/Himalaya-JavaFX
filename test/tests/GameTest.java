@@ -34,6 +34,10 @@ public class GameTest {
         play.addPlayer("rouge", 12);
 
         play.run();
+        
+        System.out.println("Winner politique : " + play.getBoard().winnerPoliticalScore());
+        System.out.println("Winner Religion : " + play.getBoard().winnerReligiousScore());
+        System.out.println("Winner Econnomie : " + play.getBoard().winnerEconnomicScore());
     }
 
 }

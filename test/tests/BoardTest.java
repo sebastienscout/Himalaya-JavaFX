@@ -160,11 +160,11 @@ public class BoardTest {
         int nbResourcesInOrder = village.getOrder().getResources().size();
 
         //Pour ajouter resource au player pour test action
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             player1.addResource(board.getBagResources().takeRandom());
         }
-        assertEquals(10, player1.getResources().size());
-        assertEquals(25, board.getBagResources().getResources().size());
+        assertEquals(20, player1.getResources().size());
+        assertEquals(15, board.getBagResources().getResources().size());
         
         player1.addAction(new Action(Action.Type.stone));
         player1.addAction(new Action(Action.Type.ice));
@@ -174,8 +174,8 @@ public class BoardTest {
         player1.addAction(new Action(Action.Type.transaction));
         board.executeActions();
         
-        assertEquals(10-nbResourcesInOrder, player1.getResources().size());
-        assertEquals(25+nbResourcesInOrder, board.getBagResources().getResources().size());
+        assertEquals(20-nbResourcesInOrder, player1.getResources().size());
+        assertEquals(15+nbResourcesInOrder, board.getBagResources().getResources().size());
         
         assertEquals(null, village.getOrder());
     }
