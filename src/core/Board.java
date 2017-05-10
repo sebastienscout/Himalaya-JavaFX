@@ -191,6 +191,13 @@ public class Board {
                 // Verification : pas de stupa deja placée
                 if (p.getPosition().getStupa() == null) {
                     p.putStupa();
+                int nbPoints = 0;
+                switch(p.getPosition().getType()){
+                    case house: nbPoints = 1; break;
+                    case temple: nbPoints = 2; break;
+                    case monastery: nbPoints = 3; break;
+                }
+                p.setReligiousScore(p.getReligiousScore() + nbPoints);
                 } else {
                     System.out.println("Il y a déjà une stupa sur ce village.");
                 }
@@ -270,6 +277,7 @@ public class Board {
         }
 
         if (nbTurn % 4 == 0) {
+            System.out.println("Calcul de l'inventaire...");
             calculateInventory();
         }
         nbTurn++;
@@ -294,12 +302,42 @@ public class Board {
         }
     }
 
-    private void calculatePoliticalScore() {
-        // TODO
+    public Player winnerPoliticalScore() {
+        for(Region r : regions){
+            Player p = r.getMaxDelegationPlayer();
+            if(p != null){
+                p.setPoliticalScore(p.getPoliticalScore() + 1);
+    }
+        }
+        
+        Player winner = players.get(0);
+        for (Player p : players) {
+            if(winner.getPoliticalScore() < p.getPoliticalScore()){
+                winner = p;
+            }
+        }
+        
+        return winner;
     }
 
-    private void calculateReligiousScore() {
-        // TODO
+    public Player winnerReligiousScore() {
+        Player winner = players.get(0);
+        for (Player p : players) {
+            if(winner.getReligiousScore() < p.getReligiousScore()){
+                winner = p;
+    }
+        }
+        return winner;
+    }
+    
+    public Player winnerEconnomicScore() {
+        Player winner = players.get(0);
+        for (Player p : players) {
+            if(winner.getEconomicScore() < p.getEconomicScore()){
+                winner = p;
+            }
+        }
+        return winner;
     }
 
     void setPlayers(ArrayList<Player> players) {
