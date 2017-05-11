@@ -29,7 +29,10 @@ public class Main extends Application {
      */
     public static void main(String[] args) {
         PlayConsole play = new PlayConsole();
-        play.addPlayer("Rouge", 1);
+        //play.addPlayer("Rouge", 1);
+        play.addAI("Rouge", 1);
+        play.addAI("Bleu", 1);
+        play.addAI("Vert", 1);
         play.run();
         
         //launch(args);

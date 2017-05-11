@@ -116,7 +116,7 @@ public class Board {
                         resourceNew.add(res);
                         counterForPlayer++;
                         resourceGiven = true;
-                        System.out.println("nbCounter = " + counterForPlayer + "/" + nbResourcesInOrder);
+                        System.out.println("Commande <Village " + village.getId() + "> : " + counterForPlayer + "/" + nbResourcesInOrder);
                     }
                     k++;
                 }
@@ -129,7 +129,7 @@ public class Board {
                     p.removeResource(p.getSpecificResource(res.getType()));
                     this.getBagResources().addResource(res);
                 }
-                
+
                 p.setCompletedOrder(true, village.getId(), village.getOrder().getNbYacks());
                 getBagOrders().getOrders().add(village.getOrder());
                 village.removeOrder();
@@ -151,9 +151,9 @@ public class Board {
     }
 
     private void delegation(Player p, Action action) {
-        if (p.getPosition().getId() == p.getVillageOrderId()) {
-            // Verification commande completée, et moins de 2 actions
-            if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
+        // Verification commande completée, et moins de 2 actions
+        if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
+            if (p.getPosition().getId() == p.getVillageOrderId()) {
                 p.setNbTransactionDone(p.getNbTransactionDone() + 1);
 
                 // Id de la region contenu dans l'action delegation
@@ -178,15 +178,19 @@ public class Board {
                 p.addDelegations(choice, nbDeleg);
 
             } else {
-                System.out.println("Vous devez avoir complété une commande, et moins de 2 transactions.");
+                System.out.println("Troc : Vous devez être sur le village où vous avez répondu à la commande.");
             }
+        } else {
+            System.out.println("Delegation : Vous devez avoir complété une commande, et moins de 2 transactions.");
         }
+
     }
 
     private void offering(Player p) {
-        if (p.getPosition().getId() == p.getVillageOrderId()) {
-            // Verification commande completée, et moins de 2 actions
-            if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
+        // Verification commande completée, et moins de 2 actions
+        if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
+
+            if (p.getPosition().getId() == p.getVillageOrderId()) {
                 p.setNbTransactionDone(p.getNbTransactionDone() + 1);
 
                 // Verification : pas de stupa deja placée
@@ -206,12 +210,14 @@ public class Board {
                     }
                     p.setReligiousScore(p.getReligiousScore() + nbPoints);
                 } else {
-                    System.out.println("Il y a déjà une stupa sur ce village.");
+                    System.out.println("Offrande : Il y a déjà une stupa sur ce village.");
                 }
-
             } else {
-                System.out.println("Vous devez avoir complété une commande, et moins de 2 transactions.");
+                System.out.println("Troc : Vous devez être sur le village où vous avez répondu à la commande.");
             }
+
+        } else {
+            System.out.println("Offrande : Vous devez avoir complété une commande, et moins de 2 transactions.");
         }
     }
 
@@ -219,15 +225,15 @@ public class Board {
      * Effectue le bartering pour récupèrer yack sur commande (point éco)
      */
     public void bartering(Player p) {
-        if (p.getPosition().getId() == p.getVillageOrderId()) {
-            if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
+        if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
+            if (p.getPosition().getId() == p.getVillageOrderId()) {
                 p.setNbTransactionDone(p.getNbTransactionDone() + 1);
                 p.setEconomicScore(p.getEconomicScore() + p.getNbYacksOrder());
             } else {
-                System.out.println("Vous devez avoir complété une commande, et moins de 2 transactions.");
+                System.out.println("Troc : Vous devez être sur le village où vous avez répondu à la commande.");
             }
         } else {
-            System.out.println("Erreur mauvais village ! Village " + p.getVillageOrderId());
+            System.out.println("Troc : Vous devez avoir complété une commande, et moins de 2 transactions.");
         }
 
     }
@@ -240,9 +246,11 @@ public class Board {
             p.setNbTransactionDone(0);
         }
 
+        System.out.println("**** Execution des actions ****");
         // Actions
         for (int i = 0; i < 6; i++) {
             for (Player p : players) {
+                System.out.println(p.getColor() + " => " + p.getAction(i));
                 switch (p.getAction(i).getType()) {
                     case stone:
                         if (p.getPosition().getDestVillage(Road.stone) != null) {
@@ -332,16 +340,15 @@ public class Board {
             if (p.getPoliticalScore() > winner.getPoliticalScore()) {
                 winner = p;
                 equal = false;
-            }
-            else if(p.getPoliticalScore() == winner.getPoliticalScore()) {
+            } else if (p.getPoliticalScore() == winner.getPoliticalScore()) {
                 equal = true;
             }
         }
 
-        if(equal == true){
+        if (equal == true) {
             return null;
         }
-        
+
         return winner;
     }
 
@@ -352,16 +359,15 @@ public class Board {
             if (p.getReligiousScore() > winner.getReligiousScore()) {
                 winner = p;
                 equal = false;
-            }
-            else if(p.getReligiousScore() == winner.getReligiousScore()) {
+            } else if (p.getReligiousScore() == winner.getReligiousScore()) {
                 equal = true;
             }
         }
 
-        if(equal == true){
+        if (equal == true) {
             return null;
         }
-        
+
         return winner;
     }
 
@@ -372,16 +378,15 @@ public class Board {
             if (p.getEconomicScore() > winner.getEconomicScore()) {
                 winner = p;
                 equal = false;
-            }
-            else if(p.getEconomicScore() == winner.getEconomicScore()) {
+            } else if (p.getEconomicScore() == winner.getEconomicScore()) {
                 equal = true;
             }
         }
 
-        if(equal == true){
+        if (equal == true) {
             return null;
         }
-        
+
         return winner;
     }
 
