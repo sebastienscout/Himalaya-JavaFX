@@ -1,6 +1,7 @@
 package ihm;
 
 import core.Action;
+import core.Delegation;
 import core.Play;
 import core.Player;
 import core.Region;
@@ -71,8 +72,12 @@ public class PlayConsole extends Play {
                 System.out.println("score politique : " + p.getPoliticalScore());
                 System.out.println("score religieux : " + p.getReligiousScore());
                 System.out.print("Délégation[ ");
-                for (Region region : board.getRegions()) {
-                    System.out.print(region.getDelegations().get(0) + " -> Région " + region.getDelegations().get(1) + " | ");
+                for (Region region : p.getDelegations().keySet()) {
+
+                    Integer regionID = region.getId();
+                    int nbDelegation = p.getDelegations().get(region);
+                    System.out.print("Region " + regionID + " => " + nbDelegation + ", ");
+
                 }
                 System.out.println("]");
 
@@ -96,26 +101,25 @@ public class PlayConsole extends Play {
                             case 1:
                                 displayLine();
                                 action = new Action(Action.Type.ice);
-                                System.out.println("Nouvelle Position : Village "
-                                        + p.getPosition().getDestVillage(Road.ice).getId());
+                                //System.out.println("Nouvelle Position : Village " + p.getPosition().getDestVillage(Road.ice).getId());
                                 displayLine();
                                 break;
                             case 2:
                                 displayLine();
                                 action = new Action(Action.Type.stone);
-                                System.out.println("Nouvelle Position : Village "
-                                        + p.getPosition().getDestVillage(Road.stone).getId());
+                                //System.out.println("Nouvelle Position : Village " + p.getPosition().getDestVillage(Road.stone).getId());
                                 displayLine();
                                 break;
                             case 3:
                                 displayLine();
                                 action = new Action(Action.Type.soil);
-                                System.out.println("Nouvelle Position : Village "
-                                        + p.getPosition().getDestVillage(Road.soil).getId());
+                                //System.out.println("Nouvelle Position : Village " + p.getPosition().getDestVillage(Road.soil).getId());
                                 displayLine();
                                 break;
                             case 4:
-                                action = new Action(Action.Type.delegation);
+                                System.out.println("Sur quelle région voisine ? (Saisir id)");
+                                choice = sc.nextInt();
+                                action = new Action(Action.Type.delegation, choice);
                                 break;
                             case 5:
                                 action = new Action(Action.Type.offering);
@@ -126,7 +130,7 @@ public class PlayConsole extends Play {
                             case 7:
                                 action = new Action(Action.Type.transaction);
                                 break;
-                            case 0:
+                            default:
                                 action = new Action(Action.Type.pause);
                                 break;
                         }
@@ -136,30 +140,36 @@ public class PlayConsole extends Play {
                 } else {
                     for (int i = 0; i < 6; i++) {
                         Action action = ((RandomAI) p).getRandomAction();
-                        System.out.println(action);
                         p.addAction(action);
                     }
                 }
             }
             board.executeActions();
         }
+        
+        displayWinner();
 
-        if (board.winnerEconnomicScore() != null) {
-            System.out.println("Econnomie : " + board.winnerEconnomicScore().getColor());
-        }
-        else {
+    }
+
+    public void displayWinner() {
+
+        Player winnerEco = board.winnerEconnomicScore();
+        Player winnerPol = board.winnerPoliticalScore();
+        Player winnerReg = board.winnerReligiousScore();
+        
+        if (winnerEco != null) {
+            System.out.println("Econnomie : " + winnerEco.getColor() + " (" + winnerEco.getEconomicScore() + ").");
+        } else {
             System.out.println("Egalité du score Econnomie.");
         }
-        if (board.winnerPoliticalScore() != null) {
-            System.out.println("Political : " + board.winnerPoliticalScore().getColor());
-        }
-        else {
+        if (winnerPol != null) {
+            System.out.println("Political : " + winnerPol.getColor() + " (" + winnerPol.getPoliticalScore() + ").");
+        } else {
             System.out.println("Egalité du score Political.");
         }
-        if (board.winnerReligiousScore() != null) {
-            System.out.println("Regligieux : " + board.winnerReligiousScore().getColor());
-        }
-        else {
+        if (winnerReg != null) {
+            System.out.println("Political : " + winnerReg.getColor() + " (" + winnerReg.getReligiousScore() + ").");
+        } else {
             System.out.println("Egalité du score Regligieux.");
         }
     }
@@ -197,7 +207,7 @@ public class PlayConsole extends Play {
                 nbVillagesWithResources++;
             }
         }
-        
+
         ArrayList<Village> villagesToIgnore = new ArrayList<>();
         for (Village village : board.getVillages()) {
             if (!village.getResources().isEmpty() || village.getOrder() != null) {
