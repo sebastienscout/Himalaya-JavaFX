@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="ihm.MenuFXMLController">
+   <children>
+      <FlowPane alignment="CENTER" layoutY="141.0" prefHeight="250.0" prefWidth="800.0">
+         <children>
+            <FlowPane fx:id="player1" prefHeight="35.0" prefWidth="500.0">
+               <children>
+                  <Text fx:id="player1" strokeType="INSIDE" strokeWidth="0.0" text="Joueur 1" textAlignment="CENTER" wrappingWidth="191.9150390625">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <FlowPane.margin>
+                        <Insets bottom="20.0" />
+                     </FlowPane.margin>
+                  </Text>
+                  <ComboBox fx:id="playerColor1" prefWidth="150.0" promptText="Couleur">
+                     <FlowPane.margin>
+                        <Insets bottom="15.0" />
+                     </FlowPane.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="playerType1" prefWidth="150.0" promptText="Type">
+                     <FlowPane.margin>
+                        <Insets bottom="15.0" left="5.0" />
+                     </FlowPane.margin>
+                  </ComboBox>
+               </children>
+            </FlowPane>
+            <FlowPane fx:id="player2" prefHeight="35.0" prefWidth="500.0">
+               <children>
+                  <Text fx:id="player2" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 2" textAlignment="CENTER" wrappingWidth="191.9150390625">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <FlowPane.margin>
+                        <Insets bottom="20.0" />
+                     </FlowPane.margin>
+                  </Text>
+                  <ComboBox fx:id="playerColor2" prefWidth="150.0" promptText="Couleur">
+                     <FlowPane.margin>
+                        <Insets bottom="15.0" />
+                     </FlowPane.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="playerType2" prefWidth="150.0" promptText="Type">
+                     <FlowPane.margin>
+                        <Insets bottom="15.0" left="5.0" />
+                     </FlowPane.margin>
+                  </ComboBox>
+               </children>
+            </FlowPane>
+            <FlowPane fx:id="player3" prefHeight="35.0" prefWidth="500.0">
+               <children>
+                  <Text fx:id="player3" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 3" textAlignment="CENTER" wrappingWidth="191.9150390625">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <FlowPane.margin>
+                        <Insets bottom="20.0" />
+                     </FlowPane.margin>
+                  </Text>
+                  <ComboBox fx:id="playerColor3" prefWidth="150.0" promptText="Couleur">
+                     <FlowPane.margin>
+                        <Insets bottom="15.0" />
+                     </FlowPane.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="playerType3" prefWidth="150.0" promptText="Type">
+                     <FlowPane.margin>
+                        <Insets bottom="15.0" left="5.0" />
+                     </FlowPane.margin>
+                  </ComboBox>
+               </children>
+            </FlowPane>
+            <FlowPane fx:id="player4" prefHeight="35.0" prefWidth="500.0" visible="false">
+               <children>
+                  <Text fx:id="player31" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 4" textAlignment="CENTER" wrappingWidth="191.9150390625">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <FlowPane.margin>
+                        <Insets bottom="20.0" />
+                     </FlowPane.margin>
+                  </Text>
+                  <ComboBox fx:id="playerColor4" prefWidth="150.0" promptText="Couleur">
+                     <FlowPane.margin>
+                        <Insets bottom="15.0" />
+                     </FlowPane.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="playerType4" prefWidth="150.0" promptText="Type">
+                     <FlowPane.margin>
+                        <Insets bottom="15.0" left="5.0" />
+                     </FlowPane.margin>
+                  </ComboBox>
+               </children>
+            </FlowPane>
+            <FlowPane prefHeight="30.0" prefWidth="400.0">
+               <children>
+                  <Button fx:id="addPlayer" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" text="Ajouter un joueur" textAlignment="CENTER">
+                     <FlowPane.margin>
+                        <Insets />
+                     </FlowPane.margin>
+                  </Button>
+               </children>
+               <FlowPane.margin>
+                  <Insets />
+               </FlowPane.margin>
+            </FlowPane>
+         </children>
+         <padding>
+            <Insets top="100.0" />
+         </padding>
+      </FlowPane>
+      <Button disable="true" layoutX="344.0" layoutY="492.0" mnemonicParsing="false" onAction="#switchToMain" text="Jouer">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
+      <Text fill="#757373" layoutX="335.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu">
+         <font>
+            <Font name="AR CHRISTY" size="50.0" />
+         </font>
+      </Text>
+      <Text fill="#9e9c9c" layoutX="264.0" layoutY="80.0" stroke="#2f1f1f" strokeType="OUTSIDE" strokeWidth="0.0" text="Himalaya">
+         <font>
+            <Font name="AR CHRISTY" size="80.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </Text>
+   </children>
+</AnchorPane>

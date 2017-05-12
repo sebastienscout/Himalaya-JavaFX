@@ -15,7 +15,9 @@ import javafx.fxml.Initializable;
  *
  * @author sebastien
  */
-public class MainFXMLController implements Initializable {
+public class MainFXMLController implements Initializable, ControlledScreen {
+
+    ScreensController myController;
 
     /**
      * Initializes the controller class.
@@ -32,16 +34,18 @@ public class MainFXMLController implements Initializable {
 
     @FXML
     private void clickOnVillage() {
-        
-        System.out.println("Clic sur le bouton Village." );
+
+        System.out.println("Clic sur le bouton Village.");
     }
-    
+
     @FXML
     private void displayImage() {
-        
-        
+
     }
-    
-   
+
+    @Override
+    public void setScreenParent(ScreensController screenPage) {
+        myController = screenPage;
+    }
 
 }
