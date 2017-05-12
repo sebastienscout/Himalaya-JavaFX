@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.ActionsFXMLController">
+   <children>
+      <FlowPane prefHeight="400.0" prefWidth="300.0">
+         <children>
+            <Label alignment="CENTER" prefWidth="300.0" text="Choix des actions">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label text="Action 1 :">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="action1" onAction="#comboBoxValueChanged" prefWidth="300.0" promptText="Sélectionnez l'action" />
+            <ComboBox fx:id="region1" disable="true" prefHeight="25.0" prefWidth="300.0" promptText="Sélectionnez la région" />
+            <Label text="Action 2 :">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="action2" onAction="#comboBoxValueChanged" prefWidth="300.0" promptText="Sélectionnez l'action" />
+            <ComboBox fx:id="region2" disable="true" prefHeight="25.0" prefWidth="300.0" promptText="Sélectionnez la région" />
+            <Label text="Action 3 :">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="action3" onAction="#comboBoxValueChanged" prefWidth="300.0" promptText="Sélectionnez l'action" />
+            <ComboBox fx:id="region3" disable="true" prefHeight="25.0" prefWidth="300.0" promptText="Sélectionnez la région" />
+            <Label text="Action 4 :">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="action4" onAction="#comboBoxValueChanged" prefWidth="300.0" promptText="Sélectionnez l'action" />
+            <ComboBox fx:id="region4" disable="true" prefHeight="25.0" prefWidth="300.0" promptText="Sélectionnez la région" />
+            <Label text="Action 5 :">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="action5" onAction="#comboBoxValueChanged" prefWidth="300.0" promptText="Sélectionnez l'action" />
+            <ComboBox fx:id="region5" disable="true" prefHeight="25.0" prefWidth="300.0" promptText="Sélectionnez la région" />
+            <Label text="Action 6 :">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="action6" onAction="#comboBoxValueChanged" prefWidth="300.0" promptText="Sélectionnez l'action" />
+            <ComboBox fx:id="region6" disable="true" prefHeight="25.0" prefWidth="300.0" promptText="Sélectionnez la région" />
+            <Button id="validationButton" fx:id="validationButton" mnemonicParsing="false" onAction="#validationButtonClick" text="Valider les actions">
+               <FlowPane.margin>
+                  <Insets top="10.0" />
+               </FlowPane.margin>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </FlowPane>
+   </children>
+</AnchorPane>
