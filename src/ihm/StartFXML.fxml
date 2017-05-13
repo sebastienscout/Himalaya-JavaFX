@@ -11,8 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="ihm.StartFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.StartFXMLController">
    <children>
       <FlowPane layoutX="250.0" layoutY="206.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="194.0" AnchorPane.leftAnchor="250.0">
          <children>
@@ -21,7 +20,7 @@
                   <Insets bottom="20.0" />
                </FlowPane.margin>
             </Button>
-            <Button mnemonicParsing="false" prefWidth="300.0" text="Configuration">
+            <Button mnemonicParsing="false" onAction="#testActionButton" prefWidth="300.0" text="Test action">
                <FlowPane.margin>
                   <Insets bottom="20.0" />
                </FlowPane.margin>
