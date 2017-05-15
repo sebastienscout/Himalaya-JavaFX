@@ -12,7 +12,7 @@
    <children>
       <FlowPane prefHeight="400.0" prefWidth="300.0">
          <children>
-            <Label alignment="CENTER" prefWidth="300.0" text="Choix des actions">
+            <Label fx:id="playerColorLabel" alignment="CENTER" prefWidth="300.0" text="Choix des actions">
                <font>
                   <Font size="20.0" />
                </font>

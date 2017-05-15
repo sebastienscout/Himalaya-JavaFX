@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Play {
 
-    protected Board board;
+    protected static Board board;
 
     public Play() {
         board = new Board();
@@ -255,6 +255,42 @@ public class Play {
                 villagesToIgnore.add(village);
                 test = true;
             }
+        }
+    }
+    
+    //Test si il manque une commande ou moins de 5 villages avec resources
+    public void testVillages() {
+
+        int nbVillagesWithResources = 0;
+        int nbVillagesWithOrders = 0;
+        int max = 5;
+        for (Village village : board.getVillages()) {
+            if (village.getOrder() != null) {
+                nbVillagesWithOrders++;
+            }
+            if (!village.getResources().isEmpty()) {
+                nbVillagesWithResources++;
+            }
+        }
+
+        ArrayList<Village> villagesToIgnore = new ArrayList<>();
+        for (Village village : board.getVillages()) {
+            if (!village.getResources().isEmpty() || village.getOrder() != null) {
+                villagesToIgnore.add(village);
+            }
+        }
+        for (Player player : board.getPlayers()) {
+            villagesToIgnore.add(player.getPosition());
+        }
+
+        while (nbVillagesWithResources < max) {
+            System.out.println("Village a remplir  : " + (max - nbVillagesWithResources));
+            reFillVillageResource(villagesToIgnore);
+            nbVillagesWithResources++;
+        }
+        while (nbVillagesWithOrders < max) {
+            reFillVillageOrder(villagesToIgnore);
+            nbVillagesWithOrders++;
         }
     }
 

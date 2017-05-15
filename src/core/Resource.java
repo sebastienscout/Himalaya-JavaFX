@@ -21,7 +21,7 @@ public class Resource {
 
     @Override
     public String toString() {
-        return "Resource{" + "type=" + type + '}';
+        return "" + type;
     }
 
     //Valeur des resources

@@ -1,5 +1,7 @@
 package ihm;
 
+import core.Action;
+import core.Player;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,11 +10,13 @@ import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -26,8 +30,12 @@ public class ActionsFXMLController implements Initializable, ControlledScreen {
     @FXML
     private ComboBox region1, region2, region3, region4, region5, region6;
 
-    ArrayList<ComboBox> choiceBoxes = new ArrayList<>();
-    ArrayList<ComboBox> regionBoxes = new ArrayList<>();
+    @FXML
+    private Label playerColorLabel;
+
+    private ArrayList<ComboBox> choiceBoxes = new ArrayList<>();
+    private ArrayList<ComboBox> regionBoxes = new ArrayList<>();
+    private Player player;
 
     /**
      * Initializes the controller class.
@@ -66,8 +74,7 @@ public class ActionsFXMLController implements Initializable, ControlledScreen {
     }
 
     @FXML
-    public void validationButtonClick() {
-
+    public void validationButtonClick(Event evt) {
         boolean allGood = true;
         int count = 0;
         while (count < 6 && allGood == true) {
@@ -86,15 +93,7 @@ public class ActionsFXMLController implements Initializable, ControlledScreen {
         }
 
         if (allGood) {
-            for (int i = 0; i < 6; i++) {
-                ComboBox action = choiceBoxes.get(i);
-                if (action.getSelectionModel().getSelectedItem().equals("Delegation")) {
-                    ComboBox region = regionBoxes.get(i);
-                    System.out.println(action.getId() + " : Delegation => Region n°" + region.getSelectionModel().getSelectedItem());
-                } else {
-                    System.out.println(action.getId() + " : " + action.getSelectionModel().getSelectedItem());
-                }
-            }
+            validateAndClose(evt);
         } else {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Pas de précipitation !");
@@ -104,10 +103,49 @@ public class ActionsFXMLController implements Initializable, ControlledScreen {
         }
     }
 
+    private void validateAndClose(Event evt) {
+        for (int i = 0; i < 6; i++) {
+            ComboBox action = choiceBoxes.get(i);
+            if (action.getSelectionModel().getSelectedItem().equals("Delegation")) {
+                ComboBox region = regionBoxes.get(i);
+                player.addAction(new Action(Action.Type.delegation, (int) region.getSelectionModel().getSelectedItem()));
+                System.out.println(action.getId() + " : Delegation => Region n°" + region.getSelectionModel().getSelectedItem());
+            } else {
+                System.out.println(action.getId() + " : " + action.getSelectionModel().getSelectedItem());
+                switch ((String) action.getSelectionModel().getSelectedItem()) {
+                    case "Chemin de pierre":
+                        player.addAction(new Action(Action.Type.stone));
+                        break;
+                    case "Chemin de glace":
+                        player.addAction(new Action(Action.Type.ice));
+                        break;
+                    case "Chemin de terre":
+                        player.addAction(new Action(Action.Type.soil));
+                        break;
+                    case "Troc":
+                        player.addAction(new Action(Action.Type.bartering));
+                        break;
+                    case "Transaction":
+                        player.addAction(new Action(Action.Type.transaction));
+                        break;
+                    case "Offrande":
+                        player.addAction(new Action(Action.Type.offering));
+                        break;
+                    case "Pause":
+                        player.addAction(new Action(Action.Type.pause));
+                        break;
+                }
+            }
+
+        }
+
+        Stage stage = (Stage) ((Node) evt.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
     @FXML
     public void comboBoxValueChanged(Event evt) {
         ComboBox actionBox = ((ComboBox) evt.getSource());
-        System.out.println("ID ComboBox = " + actionBox.getId() + " => " + actionBox.getSelectionModel().getSelectedItem());
 
         switch (actionBox.getId()) {
             case "action1":
@@ -158,5 +196,10 @@ public class ActionsFXMLController implements Initializable, ControlledScreen {
     @Override
     public void setScreenParent(ScreensController screenPage) {
         myScreensController = screenPage;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+        playerColorLabel.setText("Joueur " + this.player.getColor());
     }
 }

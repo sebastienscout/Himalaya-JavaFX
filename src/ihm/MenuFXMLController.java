@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.FlowPane;
@@ -76,7 +77,7 @@ public class MenuFXMLController implements Initializable, ControlledScreen {
 
     @FXML
     public void switchToMain() {
-        
+
         //to do gérer les type de joueurs
         boolean testInput = true;
 
@@ -86,22 +87,29 @@ public class MenuFXMLController implements Initializable, ControlledScreen {
         }
 
         for (ComboBox input : inputs) {
-            if (input.getSelectionModel().isEmpty()) {
+            if (input.getSelectionModel().getSelectedItem() == null) {
                 testInput = false;
             }
         }
 
-        playG.addPlayer(playerColor1.getValue().toString(), 0);
-        playG.addPlayer(playerColor2.getValue().toString(), 0);
-        playG.addPlayer(playerColor3.getValue().toString(), 0);
-        
-        System.out.println("Couleur player 1 : " + playG.getBoard().getPlayers().get(0).getColor());
-        System.out.println("Couleur player 2 : " + playG.getBoard().getPlayers().get(1).getColor());
-        System.out.println("Couleur player 3 : " + playG.getBoard().getPlayers().get(2).getColor());
-        
-        //Si tous les champs sont remplis on va sur le plateau
         if (testInput) {
+            playG.addPlayer(playerColor1.getValue().toString(), 1);
+            playG.addPlayer(playerColor2.getValue().toString(), 1);
+            playG.addPlayer(playerColor3.getValue().toString(), 1);
+
+            System.out.println("Couleur player 1 : " + playG.getBoard().getPlayers().get(0).getColor());
+            System.out.println("Couleur player 2 : " + playG.getBoard().getPlayers().get(1).getColor());
+            System.out.println("Couleur player 3 : " + playG.getBoard().getPlayers().get(2).getColor());
+
+            //Si tous les champs sont remplis on va sur le plateau
             myController.setScreen(Main.screenMainID);
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Pas de précipitation !");
+            alert.setHeaderText(null);
+            alert.setContentText("Vous devez configurer les joueurs et leur type !");
+            alert.showAndWait();
         }
 
     }
@@ -124,7 +132,6 @@ public class MenuFXMLController implements Initializable, ControlledScreen {
         colorChoices.remove(event.toString());
 
 //        System.out.println("test : " + event.getSource().toString());
-
         for (ComboBox choiceColor : choiceColors) {
             if (choiceColor != event.getSource()) {
                 choiceColor.setItems(FXCollections.observableArrayList(colorChoices));
