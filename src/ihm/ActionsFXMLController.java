@@ -8,12 +8,18 @@ import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class ActionsFXMLController implements Initializable, ControlledScreen {
 
     ScreensController myScreensController;
-    
+
     @FXML
     private ComboBox action1, action2, action3, action4, action5, action6;
 
@@ -61,16 +67,40 @@ public class ActionsFXMLController implements Initializable, ControlledScreen {
 
     @FXML
     public void validationButtonClick() {
-        System.out.println("Bouton click");
-        for (int i = 0; i < 6; i++) {
-            ComboBox action = choiceBoxes.get(i);
-            if(action.getSelectionModel().getSelectedItem().equals("Delegation")){
-                ComboBox region = regionBoxes.get(i);
-                System.out.println(action.getId() + " : Delegation => Region n°" + region.getSelectionModel().getSelectedItem());
+
+        boolean allGood = true;
+        int count = 0;
+        while (count < 6 && allGood == true) {
+            ComboBox action = choiceBoxes.get(count);
+            if (action.getSelectionModel().getSelectedItem() != null) {
+                if (action.getSelectionModel().getSelectedItem().equals("Delegation")) {
+                    ComboBox region = regionBoxes.get(count);
+                    if (region.getSelectionModel().getSelectedItem() == null) {
+                        allGood = false;
+                    }
+                }
+            } else {
+                allGood = false;
             }
-            else {
-                System.out.println(action.getId() + " : " + action.getSelectionModel().getSelectedItem());
+            count++;
+        }
+
+        if (allGood) {
+            for (int i = 0; i < 6; i++) {
+                ComboBox action = choiceBoxes.get(i);
+                if (action.getSelectionModel().getSelectedItem().equals("Delegation")) {
+                    ComboBox region = regionBoxes.get(i);
+                    System.out.println(action.getId() + " : Delegation => Region n°" + region.getSelectionModel().getSelectedItem());
+                } else {
+                    System.out.println(action.getId() + " : " + action.getSelectionModel().getSelectedItem());
+                }
             }
+        } else {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Pas de précipitation !");
+            alert.setHeaderText(null);
+            alert.setContentText("Vous devez choisir 6 actions !\nNe pas oublier de choisir la région pour les délégations.");
+            alert.showAndWait();
         }
     }
 
