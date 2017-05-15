@@ -1,33 +1,26 @@
 package ihm;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 
 public class Main extends Application {
 
-    public static String screen1ID = "start";
-    public static String screen1File = "StartFXML.fxml";
-    public static String screen2ID = "menu";
-    public static String screen2File = "MenuFXML.fxml";
-    public static String screen3ID = "main";
-    public static String screen3File = "MainFXML.fxml";
+
+    public static String screenMenuID = "menu";
+    public static String screenMenuFile = "MenuFXML.fxml";
+    public static String screenMainID = "main";
+    public static String screenMainFile = "MainFXML.fxml";
 
     @Override
     public void start(Stage stage) {
         ScreensController mainContainer = new ScreensController();
-        mainContainer.loadScreen(screen1ID, screen1File);
-        mainContainer.loadScreen(screen2ID, screen2File);
-        mainContainer.loadScreen(screen3ID, screen3File);
+        mainContainer.loadScreen(screenMenuID, screenMenuFile);
+        mainContainer.loadScreen(screenMainID, screenMainFile);
 
-        mainContainer.setScreen(screen1ID);
+        mainContainer.setScreen(screenMenuID);
 
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
