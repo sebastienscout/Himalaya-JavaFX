@@ -1,15 +1,12 @@
 package ihm;
 
 import core.Action;
-import core.Delegation;
 import core.Play;
 import core.Player;
 import core.Region;
 import core.Resource;
-import core.Road;
 import core.Village;
 import ia.RandomAI;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PlayConsole extends Play {

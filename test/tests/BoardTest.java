@@ -5,7 +5,6 @@ import core.Board;
 import core.Play;
 import core.Player;
 import core.Region;
-import core.Resource;
 import core.Village;
 import java.util.ArrayList;
 import org.junit.Before;
