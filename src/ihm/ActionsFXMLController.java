@@ -11,13 +11,12 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.stage.Modality;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class ActionsFXMLController implements Initializable, ControlledScreen {
@@ -36,12 +35,19 @@ public class ActionsFXMLController implements Initializable, ControlledScreen {
     private ArrayList<ComboBox> choiceBoxes = new ArrayList<>();
     private ArrayList<ComboBox> regionBoxes = new ArrayList<>();
     private Player player;
+    private ImageView background;
+    private Image backgroundRegion;
+    private Image backgroundNoRegion;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        backgroundRegion = new Image("resources/board_regions.jpg");
+        backgroundNoRegion = new Image("resources/board.jpg");
+        
         String[] actionChoices = {
             "Chemin de terre", "Chemin de pierre",
             "Chemin de glace", "Pause",
@@ -79,10 +85,10 @@ public class ActionsFXMLController implements Initializable, ControlledScreen {
         int count = 0;
         while (count < 6 && allGood == true) {
             ComboBox action = choiceBoxes.get(count);
-            if (action.getSelectionModel().getSelectedItem() != null) {
-                if (action.getSelectionModel().getSelectedItem().equals("Delegation")) {
+            if (action.getValue() != null) {
+                if (action.getValue().equals("Delegation")) {
                     ComboBox region = regionBoxes.get(count);
-                    if (region.getSelectionModel().getSelectedItem() == null) {
+                    if (region.getValue() == null) {
                         allGood = false;
                     }
                 }
@@ -106,13 +112,13 @@ public class ActionsFXMLController implements Initializable, ControlledScreen {
     private void validateAndClose(Event evt) {
         for (int i = 0; i < 6; i++) {
             ComboBox action = choiceBoxes.get(i);
-            if (action.getSelectionModel().getSelectedItem().equals("Delegation")) {
+            if (action.getValue().equals("Delegation")) {
                 ComboBox region = regionBoxes.get(i);
-                player.addAction(new Action(Action.Type.delegation, (int) region.getSelectionModel().getSelectedItem()));
-                System.out.println(action.getId() + " : Delegation => Region n°" + region.getSelectionModel().getSelectedItem());
+                player.addAction(new Action(Action.Type.delegation, (int) region.getValue()));
+                System.out.println(action.getId() + " : Delegation => Region n°" + region.getValue());
             } else {
-                System.out.println(action.getId() + " : " + action.getSelectionModel().getSelectedItem());
-                switch ((String) action.getSelectionModel().getSelectedItem()) {
+                System.out.println(action.getId() + " : " + action.getValue());
+                switch ((String) action.getValue()) {
                     case "Chemin de pierre":
                         player.addAction(new Action(Action.Type.stone));
                         break;
@@ -149,47 +155,56 @@ public class ActionsFXMLController implements Initializable, ControlledScreen {
 
         switch (actionBox.getId()) {
             case "action1":
-                if (actionBox.getSelectionModel().getSelectedItem().equals("Delegation")) {
+                if (actionBox.getValue().equals("Delegation")) {
                     region1.setDisable(false);
                 } else {
                     region1.setDisable(true);
                 }
                 break;
             case "action2":
-                if (actionBox.getSelectionModel().getSelectedItem().equals("Delegation")) {
+                if (actionBox.getValue().equals("Delegation")) {
                     region2.setDisable(false);
                 } else {
                     region2.setDisable(true);
                 }
                 break;
             case "action3":
-                if (actionBox.getSelectionModel().getSelectedItem().equals("Delegation")) {
+                if (actionBox.getValue().equals("Delegation")) {
                     region3.setDisable(false);
                 } else {
                     region3.setDisable(true);
                 }
                 break;
             case "action4":
-                if (actionBox.getSelectionModel().getSelectedItem().equals("Delegation")) {
+                if (actionBox.getValue().equals("Delegation")) {
                     region4.setDisable(false);
                 } else {
                     region4.setDisable(true);
                 }
                 break;
             case "action5":
-                if (actionBox.getSelectionModel().getSelectedItem().equals("Delegation")) {
+                if (actionBox.getValue().equals("Delegation")) {
                     region5.setDisable(false);
                 } else {
                     region5.setDisable(true);
                 }
                 break;
             case "action6":
-                if (actionBox.getSelectionModel().getSelectedItem().equals("Delegation")) {
+                if (actionBox.getValue().equals("Delegation")) {
                     region6.setDisable(false);
                 } else {
                     region6.setDisable(true);
                 }
                 break;
+        }
+    }
+    
+    @FXML
+    private void displayRegions(){
+        if(background.getImage().equals(backgroundNoRegion)){
+            background.setImage(backgroundRegion);
+        }else {
+            background.setImage(backgroundNoRegion);
         }
     }
 
@@ -201,6 +216,11 @@ public class ActionsFXMLController implements Initializable, ControlledScreen {
     public void setPlayer(Player player) {
         this.player = player;
         playerColorLabel.setText("Joueur " + this.player.getColor());
+    }
+
+    public void setBackground(ImageView iv) {
+        background = iv;
+        background.setImage(backgroundNoRegion);
     }
 
     @Override

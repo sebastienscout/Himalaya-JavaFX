@@ -3,7 +3,6 @@ package ihm;
 import core.Action;
 import core.Play;
 import core.Player;
-import core.Resource;
 import core.Village;
 import ia.RandomAI;
 import java.io.IOException;
@@ -12,6 +11,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -21,7 +21,7 @@ public class PlayGraphic extends Play {
         super();
     }
 
-    public void run() {
+    public void run(ImageView background) {
         testVillages();
         displayInfoBoard();
         
@@ -33,9 +33,10 @@ public class PlayGraphic extends Play {
                     Parent root1 = (Parent) fxmlLoader.load();
                     ActionsFXMLController actionCtrl = fxmlLoader.getController();
                     actionCtrl.setPlayer(p);
+                    actionCtrl.setBackground(background);
                     Stage stage = new Stage();
                     stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.setTitle("Choix des actions : Joueur " + p.getColor());
+                    stage.setTitle("Choix des actions");
                     stage.setScene(new Scene(root1));
                     stage.showAndWait();
 

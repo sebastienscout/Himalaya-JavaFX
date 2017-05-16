@@ -15,7 +15,7 @@
   <children>
     <Pane layoutX="0.0" layoutY="0.0" prefHeight="600.0" prefWidth="800.0">
       <children>
-        <ImageView fitHeight="500.0" fitWidth="800.0" pickOnBounds="true" smooth="true" visible="true">
+        <ImageView fx:id="background" fitHeight="500.0" fitWidth="800.0" pickOnBounds="true" smooth="true" visible="true">
           <rotationAxis>
             <Point3D z="1.0" />
           </rotationAxis>
@@ -61,10 +61,9 @@
                         <Insets bottom="10.0" />
                      </FlowPane.margin>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#nextTurnButton" text="Tour suivant" />
+                  <Button fx:id="playTurn" mnemonicParsing="false" onAction="#nextTurnButton" text="Jouer le tour" />
                </children>
             </FlowPane>
-            <Button layoutX="229.0" layoutY="438.0" mnemonicParsing="false" onAction="#testResourcesButton" text="Test resources" />
             <FlowPane fx:id="village1" layoutX="25.0" layoutY="406.0" prefHeight="90.0" prefWidth="63.0" />
             <FlowPane fx:id="village2" layoutX="34.0" layoutY="262.0" prefHeight="90.0" prefWidth="63.0" />
             <FlowPane fx:id="village3" layoutX="3.0" layoutY="135.0" prefHeight="90.0" prefWidth="63.0" />

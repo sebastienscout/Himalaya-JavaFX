@@ -3,11 +3,6 @@ package ihm;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -34,7 +29,7 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
     private ComboBox playerType1, playerType2, playerType3, playerType4;
 
     @FXML
-    private Button addPlayer;
+    private Button addPlayer, play;
 
     @FXML
     private FlowPane player4;
@@ -92,6 +87,8 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
 
     @FXML
     public void switchToMain() {
+        
+        play.setDisable(true);
 
         //to do gérer les type de joueurs
         boolean testInput = true;
@@ -108,13 +105,29 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
         }
 
         if (testInput) {
-            playG.addPlayer(playerColor1.getValue().toString(), 1);
-//            playG.addPlayer(playerColor2.getValue().toString(), 7);
-//            playG.addPlayer(playerColor3.getValue().toString(), 18);
+            if (choiceTypes.get(0).getValue().equals("Humain")) {
+                playG.addPlayer(playerColor1.getValue().toString(), 1);
+            } else {
+                playG.addAI(playerColor1.getValue().toString(), 1);
+            }
+            if (choiceTypes.get(1).getValue().equals("Humain")) {
+                playG.addPlayer(playerColor2.getValue().toString(), 1);
+            } else {
+                playG.addAI(playerColor2.getValue().toString(), 1);
+            }
+            if (choiceTypes.get(2).getValue().equals("Humain")) {
+                playG.addPlayer(playerColor3.getValue().toString(), 1);
+            } else {
+                playG.addAI(playerColor3.getValue().toString(), 1);
+            }
 
-            System.out.println("Couleur player 1 : " + playG.getBoard().getPlayers().get(0).getColor());
-//            System.out.println("Couleur player 2 : " + playG.getBoard().getPlayers().get(1).getColor());
-//            System.out.println("Couleur player 3 : " + playG.getBoard().getPlayers().get(2).getColor());
+            if (player4.isVisible()) {
+                if (choiceTypes.get(3).getValue().equals("Humain")) {
+                    playG.addPlayer(playerColor4.getValue().toString(), 1);
+                } else {
+                    playG.addAI(playerColor4.getValue().toString(), 1);
+                }
+            }
 
             //Si tous les champs sont remplis on va sur le plateau
             myController.setScreen(Main.screenMainID);
@@ -124,6 +137,8 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
             alert.setHeaderText(null);
             alert.setContentText("Vous devez configurer les joueurs et leur type !");
             alert.showAndWait();
+            
+            play.setDisable(false);
         }
 
     }
@@ -143,7 +158,7 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
     public void removeColor(Event event) {
 
         //TODO enlever couleur des autres listes
-//        colorChoices.remove(((ComboBox)event.getSource()).getSelectionModel().getSelectedItem());
+//        colorChoices.remove(((ComboBox)event.getSource()).getValue());
 //
 ////        System.out.println("test : " + event.getSource().toString());
 //        for (ComboBox choiceColor : choiceColors) {

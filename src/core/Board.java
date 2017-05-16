@@ -245,50 +245,48 @@ public class Board {
         }
     }
 
-    public void executeAction(int i) {
-        for (Player p : players) {
-            System.out.println(p.getColor() + " => " + p.getAction(i));
-            switch (p.getAction(i).getType()) {
-                case stone:
-                    if (p.getPosition().getDestVillage(Road.stone) != null) {
-                        p.move(p.getPosition().getDestVillage(Road.stone));
-                    } else {
-                        System.out.println("Erreur ! Il n'a pas de route <stone> pour le village " + p.getPosition().getId());
-                    }
-                    break;
-                case soil:
-                    if (p.getPosition().getDestVillage(Road.soil) != null) {
-                        p.move(p.getPosition().getDestVillage(Road.soil));
-                    } else {
-                        System.out.println("Erreur ! Il n'a pas de route <soil> pour le village " + p.getPosition().getId());
-                    }
-                    break;
-                case ice:
-                    if (p.getPosition().getDestVillage(Road.ice) != null) {
-                        p.move(p.getPosition().getDestVillage(Road.ice));
-                    } else {
-                        System.out.println("Erreur ! Il n'a pas de route <ice> pour le village " + p.getPosition().getId());
-                    }
-                    break;
-                case offering:
-                    offering(p);
-                    break;
-                case transaction:
-                    transaction(p);
-                    break;
-                case pause:
-                    break;
-                case bartering:
-                    bartering(p);
-                    break;
-                case delegation:
-                    delegation(p, p.getAction(i));
-                    break;
-            }
+    public void executeAction(int i, Player p) {
+        System.out.println(p.getColor() + " => " + p.getAction(i));
+        switch (p.getAction(i).getType()) {
+            case stone:
+                if (p.getPosition().getDestVillage(Road.stone) != null) {
+                    p.move(p.getPosition().getDestVillage(Road.stone));
+                } else {
+                    System.out.println("Erreur ! Il n'a pas de route <stone> pour le village " + p.getPosition().getId());
+                }
+                break;
+            case soil:
+                if (p.getPosition().getDestVillage(Road.soil) != null) {
+                    p.move(p.getPosition().getDestVillage(Road.soil));
+                } else {
+                    System.out.println("Erreur ! Il n'a pas de route <soil> pour le village " + p.getPosition().getId());
+                }
+                break;
+            case ice:
+                if (p.getPosition().getDestVillage(Road.ice) != null) {
+                    p.move(p.getPosition().getDestVillage(Road.ice));
+                } else {
+                    System.out.println("Erreur ! Il n'a pas de route <ice> pour le village " + p.getPosition().getId());
+                }
+                break;
+            case offering:
+                offering(p);
+                break;
+            case transaction:
+                transaction(p);
+                break;
+            case pause:
+                break;
+            case bartering:
+                bartering(p);
+                break;
+            case delegation:
+                delegation(p, p.getAction(i));
+                break;
         }
     }
-    
-    public void afterActions(){
+
+    public void afterActions() {
         if (nbTurn % 4 == 0) {
             System.out.println("Calcul de l'inventaire...");
             calculateInventory();
@@ -307,7 +305,9 @@ public class Board {
         System.out.println("**** Execution des actions ****");
         // Actions
         for (int i = 0; i < 6; i++) {
-            executeAction(i);
+            for (Player p : players) {
+                executeAction(i, p);
+            }
         }
 
         afterActions();

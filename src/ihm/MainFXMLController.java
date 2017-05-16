@@ -5,12 +5,13 @@ import core.Village;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,6 +38,12 @@ public class MainFXMLController implements Initializable, ControlledScreen {
             village11, village12, village13, village14, village15,
             village16, village17, village18, village19, village20;
 
+    @FXML
+    private ImageView background;
+    
+    @FXML
+    private Button playTurn;
+
     private ArrayList<FlowPane> villagesPane;
 
     /**
@@ -44,8 +51,11 @@ public class MainFXMLController implements Initializable, ControlledScreen {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         playG = new PlayGraphic();
+
         villagesPane = new ArrayList<>();
+
         villagesPane.add(village1);
         villagesPane.add(village2);
         villagesPane.add(village3);
@@ -70,37 +80,53 @@ public class MainFXMLController implements Initializable, ControlledScreen {
 
     @FXML
     private void nextTurnButton() {
-        playG.run();
+        
+        playTurn.setDisable(true);
+
+        playG.run(background);
 
         playG.getBoard().prepareActions();
 
-        for (int i = 0; i < 6; i++) {
-            playG.getBoard().executeAction(i);
+        Task<Void> sleeper = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    for (int i = 0; i < 6; i++) {
+                        for (Player p : playG.getBoard().getPlayers()) {
+                            Thread.sleep(200);
+                            playG.getBoard().executeAction(i, p);
+                            Platform.runLater(() -> displayElementsMap());
 
-            displayElementsMap();
+                            Platform.runLater(() -> player1ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(0).getResources().toString()));
+                            Platform.runLater(() -> player2ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(1).getResources().toString()));
+                            Platform.runLater(() -> player3ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(2).getResources().toString()));
+                            if (playG.getBoard().getPlayers().size() == 4) {
+                                Platform.runLater(() -> player4ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(3).getResources().toString()));
+                            }
+                        }
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
 
-            player1ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(0).getResources().toString());
-            //player2ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(1).getResources().toString());
-            //player3ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(2).getResources().toString());
-            //player4ResLabel.setText("");
-        }
+                System.out.println("On supprime les actions");
+                playG.getBoard().afterActions();
 
-        playG.getBoard().afterActions();
+                playG.testVillages();
+                Platform.runLater(() -> displayElementsMap());
 
-        turnLabel.setText("Tour " + Integer.toString(playG.getBoard().getNbTurn()));
-    }
+                turnLabel.setText("Tour " + Integer.toString(playG.getBoard().getNbTurn()));
 
-    @FXML
-    private void testResourcesButton() {
-
-        player1Label.setText("Joueur " + playG.getBoard().getPlayers().get(0).getColor() + " > ");
-//        player2Label.setText("Joueur " + playG.getBoard().getPlayers().get(1).getColor() + " > ");
-//        player3Label.setText("Joueur " + playG.getBoard().getPlayers().get(2).getColor() + " > ");
-//        player4Label.setText("");
-
-        playG.testVillages();
-        playG.displayInfoBoard();
-        displayElementsMap();
+                playTurn.setDisable(false);
+            }
+        });
+        new Thread(sleeper).start();
     }
 
     private void displayElementsMap() {
@@ -109,11 +135,11 @@ public class MainFXMLController implements Initializable, ControlledScreen {
             Village v = playG.getBoard().getVillages().get(i);
             if (v.getResources().size() > 0) {
                 Label testVillageLabel = new Label("Ressources\n" + v.getResources().toString());
-                testVillageLabel.setStyle("-fx-background-color: white;");
+                testVillageLabel.setStyle("-fx-background-color: rgba(255,255,255,.8);");
                 villagesPane.get(i).getChildren().add(testVillageLabel);
             } else if (v.getOrder() != null) {
-                Label testVillageLabel = new Label("Commande\n" + v.getOrder().getResources().toString());
-                testVillageLabel.setStyle("-fx-background-color: white;");
+                Label testVillageLabel = new Label("Commande (" + v.getOrder().getNbYacks() + ")\n" + v.getOrder().getResources().toString());
+                testVillageLabel.setStyle("-fx-background-color: rgba(255,255,255,.8);");
                 villagesPane.get(i).getChildren().add(testVillageLabel);
             }
             for (Player player : playG.getBoard().getPlayers()) {
@@ -134,9 +160,33 @@ public class MainFXMLController implements Initializable, ControlledScreen {
         myController = screenPage;
     }
 
+    private void setPlayersInformation(Player p, Label playerLabel) {
+        Image img = new Image("resources/player/" + p.getColor() + ".png");
+        ImageView iv = new ImageView();
+        iv.setFitWidth(30.0);
+        iv.setPreserveRatio(true);
+        iv.setImage(img);
+        ((FlowPane) playerLabel.getParent()).getChildren().add(0, iv);
+        playerLabel.setText(" Joueur " + p.getColor() + " > ");
+    }
+
     //événement à l'affichage de la page
     @Override
     public void initScreen() {
-        System.out.println("Test affichage du main ...");
+
+        setPlayersInformation(playG.getBoard().getPlayers().get(0), player1Label);
+        setPlayersInformation(playG.getBoard().getPlayers().get(1), player2Label);
+        setPlayersInformation(playG.getBoard().getPlayers().get(2), player3Label);
+        if (playG.getBoard().getPlayers().size() == 4) {
+            setPlayersInformation(playG.getBoard().getPlayers().get(3), player4Label);
+        }
+        else {
+            player4Label.setVisible(false);
+            player4ResLabel.setVisible(false);
+        }
+
+        playG.testVillages();
+        playG.displayInfoBoard();
+        displayElementsMap();
     }
 }
