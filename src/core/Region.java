@@ -1,11 +1,8 @@
 package core;
 
-import static com.sun.org.apache.xalan.internal.lib.ExsltDynamic.map;
-import java.awt.RenderingHints.Key;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import static jdk.nashorn.internal.objects.NativeArray.map;
 
 public class Region {
 

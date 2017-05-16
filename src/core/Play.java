@@ -2,7 +2,6 @@ package core;
 
 import ia.RandomAI;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Play {
 

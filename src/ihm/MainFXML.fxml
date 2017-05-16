@@ -20,7 +20,7 @@
             <Point3D z="1.0" />
           </rotationAxis>
                <image>
-                  <Image url="file:/D:/Projects/Git/Himalaya-JavaFX/resources/board.jpg" />
+                  <Image url="@../resources/board.jpg" />
                </image>
         </ImageView>
             <FlowPane layoutX="5.0" layoutY="505.0" prefHeight="50.0" prefWidth="645.0">

@@ -3,21 +3,17 @@ package ihm;
 import core.Action;
 import core.Play;
 import core.Player;
-import core.Region;
 import core.Resource;
 import core.Village;
 import ia.RandomAI;
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 public class PlayGraphic extends Play {
 
