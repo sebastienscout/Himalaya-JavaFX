@@ -103,4 +103,9 @@ public class MainFXMLController implements Initializable, ControlledScreen {
         myController = screenPage;
     }
 
+    //événement à l'affichage de la page
+    @Override
+    public void initScreen() {
+        System.out.println("Test affichage du main ...");
+    }
 }
