@@ -238,59 +238,57 @@ public class Board {
 
     }
 
-    public void executeActions() {
-
-        // Initialisation des joueurs avant les actions
+    public void prepareActions() {
         for (Player p : players) {
             p.setCompletedOrder(false, 0, 0);
             p.setNbTransactionDone(0);
         }
+    }
 
-        System.out.println("**** Execution des actions ****");
-        // Actions
-        for (int i = 0; i < 6; i++) {
-            for (Player p : players) {
-                System.out.println(p.getColor() + " => " + p.getAction(i));
-                switch (p.getAction(i).getType()) {
-                    case stone:
-                        if (p.getPosition().getDestVillage(Road.stone) != null) {
-                            p.move(p.getPosition().getDestVillage(Road.stone));
-                        } else {
-                            System.out.println("Erreur ! Il n'a pas de route <stone> pour le village " + p.getPosition().getId());
-                        }
-                        break;
-                    case soil:
-                        if (p.getPosition().getDestVillage(Road.soil) != null) {
-                            p.move(p.getPosition().getDestVillage(Road.soil));
-                        } else {
-                            System.out.println("Erreur ! Il n'a pas de route <soil> pour le village " + p.getPosition().getId());
-                        }
-                        break;
-                    case ice:
-                        if (p.getPosition().getDestVillage(Road.ice) != null) {
-                            p.move(p.getPosition().getDestVillage(Road.ice));
-                        } else {
-                            System.out.println("Erreur ! Il n'a pas de route <ice> pour le village " + p.getPosition().getId());
-                        }
-                        break;
-                    case offering:
-                        offering(p);
-                        break;
-                    case transaction:
-                        transaction(p);
-                        break;
-                    case pause:
-                        break;
-                    case bartering:
-                        bartering(p);
-                        break;
-                    case delegation:
-                        delegation(p, p.getAction(i));
-                        break;
-                }
+    public void executeAction(int i) {
+        for (Player p : players) {
+            System.out.println(p.getColor() + " => " + p.getAction(i));
+            switch (p.getAction(i).getType()) {
+                case stone:
+                    if (p.getPosition().getDestVillage(Road.stone) != null) {
+                        p.move(p.getPosition().getDestVillage(Road.stone));
+                    } else {
+                        System.out.println("Erreur ! Il n'a pas de route <stone> pour le village " + p.getPosition().getId());
+                    }
+                    break;
+                case soil:
+                    if (p.getPosition().getDestVillage(Road.soil) != null) {
+                        p.move(p.getPosition().getDestVillage(Road.soil));
+                    } else {
+                        System.out.println("Erreur ! Il n'a pas de route <soil> pour le village " + p.getPosition().getId());
+                    }
+                    break;
+                case ice:
+                    if (p.getPosition().getDestVillage(Road.ice) != null) {
+                        p.move(p.getPosition().getDestVillage(Road.ice));
+                    } else {
+                        System.out.println("Erreur ! Il n'a pas de route <ice> pour le village " + p.getPosition().getId());
+                    }
+                    break;
+                case offering:
+                    offering(p);
+                    break;
+                case transaction:
+                    transaction(p);
+                    break;
+                case pause:
+                    break;
+                case bartering:
+                    bartering(p);
+                    break;
+                case delegation:
+                    delegation(p, p.getAction(i));
+                    break;
             }
         }
-
+    }
+    
+    public void afterActions(){
         if (nbTurn % 4 == 0) {
             System.out.println("Calcul de l'inventaire...");
             calculateInventory();
@@ -299,6 +297,20 @@ public class Board {
         for (Player p : players) {
             p.clearActions();
         }
+    }
+
+    public void executeActions() {
+
+        // Initialisation des joueurs avant les actions
+        prepareActions();
+
+        System.out.println("**** Execution des actions ****");
+        // Actions
+        for (int i = 0; i < 6; i++) {
+            executeAction(i);
+        }
+
+        afterActions();
     }
 
     private void calculateInventory() {

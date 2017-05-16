@@ -1,12 +1,19 @@
 package ihm;
 
+import core.Player;
 import core.Village;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 
 public class MainFXMLController implements Initializable, ControlledScreen {
@@ -65,37 +72,61 @@ public class MainFXMLController implements Initializable, ControlledScreen {
     private void nextTurnButton() {
         playG.run();
 
+        playG.getBoard().prepareActions();
+
+        for (int i = 0; i < 6; i++) {
+            playG.getBoard().executeAction(i);
+
+            displayElementsMap();
+
+            player1ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(0).getResources().toString());
+            //player2ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(1).getResources().toString());
+            //player3ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(2).getResources().toString());
+            //player4ResLabel.setText("");
+        }
+
+        playG.getBoard().afterActions();
+
         turnLabel.setText("Tour " + Integer.toString(playG.getBoard().getNbTurn()));
-
-        player1Label.setText("Joueur " + playG.getBoard().getPlayers().get(0).getColor() + " > ");
-        player2Label.setText("Joueur " + playG.getBoard().getPlayers().get(1).getColor() + " > ");
-        player3Label.setText("Joueur " + playG.getBoard().getPlayers().get(2).getColor() + " > ");
-        player4Label.setText("");
-
-        player1ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(0).getResources().toString());
-        player2ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(1).getResources().toString());
-        player3ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(2).getResources().toString());
-        player4ResLabel.setText("");
     }
 
     @FXML
     private void testResourcesButton() {
-        playG.displayInfoBoard();
 
+        player1Label.setText("Joueur " + playG.getBoard().getPlayers().get(0).getColor() + " > ");
+//        player2Label.setText("Joueur " + playG.getBoard().getPlayers().get(1).getColor() + " > ");
+//        player3Label.setText("Joueur " + playG.getBoard().getPlayers().get(2).getColor() + " > ");
+//        player4Label.setText("");
+
+        playG.testVillages();
+        playG.displayInfoBoard();
+        displayElementsMap();
+    }
+
+    private void displayElementsMap() {
         for (int i = 0; i < 20; i++) {
             villagesPane.get(i).getChildren().clear();
             Village v = playG.getBoard().getVillages().get(i);
             if (v.getResources().size() > 0) {
-                Label testVillageLabel = new Label("Ressources !\n" + v.getResources().toString());
+                Label testVillageLabel = new Label("Ressources\n" + v.getResources().toString());
                 testVillageLabel.setStyle("-fx-background-color: white;");
                 villagesPane.get(i).getChildren().add(testVillageLabel);
             } else if (v.getOrder() != null) {
-                Label testVillageLabel = new Label("Commande !\n" + v.getOrder().getResources().toString());
+                Label testVillageLabel = new Label("Commande\n" + v.getOrder().getResources().toString());
                 testVillageLabel.setStyle("-fx-background-color: white;");
                 villagesPane.get(i).getChildren().add(testVillageLabel);
             }
+            for (Player player : playG.getBoard().getPlayers()) {
+                if (player.getPosition().equals(v)) {
+                    Image img = new Image("resources/player/" + player.getColor() + ".png");
+                    ImageView iv1 = new ImageView();
+                    iv1.setFitWidth(50.0);
+                    iv1.setPreserveRatio(true);
+                    iv1.setImage(img);
+                    villagesPane.get(i).getChildren().add(iv1);
+                }
+            }
         }
-
     }
 
     @Override

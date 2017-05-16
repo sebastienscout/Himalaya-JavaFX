@@ -50,24 +50,17 @@ public class PlayGraphic extends Play {
                 }
             }
         }
-        board.executeActions();
     }
     
     public void displayInfoBoard() {
         System.out.println("******* ETAT DU PLATEAU TOUR : " + board.getNbTurn() + " *******");
         for (Village village : board.getVillages()) {
             if (!village.getResources().isEmpty()) {
-                System.out.print("Village " + village.getId() + " -> Resource[");
-                for (Resource res : village.getResources()) {
-                    System.out.print(res.getType() + ", ");
-                }
-                System.out.println(" ]");
+                System.out.println("Village " + village.getId() + 
+                        " -> Resource :" + village.getResources().toString());
             } else if (village.getOrder() != null) {
-                System.out.print("Village " + village.getId() + " -> Commande[");
-                for (Resource res : village.getOrder().getResources()) {
-                    System.out.print(res.getType() + ", ");
-                }
-                System.out.println("]");
+                System.out.println("Village " + village.getId() + 
+                        " -> Commande : " + village.getOrder().getResources().toString());
             }
         }
     }
