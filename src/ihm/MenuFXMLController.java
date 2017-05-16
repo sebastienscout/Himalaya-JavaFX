@@ -3,16 +3,27 @@ package ihm;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 
-public class MenuFXMLController implements Initializable, ControlledScreen {
+public class MenuFXMLController extends StackPane implements Initializable, ControlledScreen {
 
     public ScreensController myController = null;
 
@@ -27,6 +38,11 @@ public class MenuFXMLController implements Initializable, ControlledScreen {
 
     @FXML
     private FlowPane player4;
+
+    @FXML
+    private Text testText;
+
+    private double opacity = 1;
 
     ArrayList<ComboBox> choiceColors = new ArrayList<>();
     ArrayList<ComboBox> choiceTypes = new ArrayList<>();
@@ -103,8 +119,7 @@ public class MenuFXMLController implements Initializable, ControlledScreen {
 
             //Si tous les champs sont remplis on va sur le plateau
             myController.setScreen(Main.screenMainID);
-        }
-        else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Pas de précipitation !");
             alert.setHeaderText(null);
@@ -144,9 +159,37 @@ public class MenuFXMLController implements Initializable, ControlledScreen {
         myController = screenPage;
     }
 
+    @FXML
+    public void testText() {
+
+        Task<Void> sleeper = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    for (int i = 0; i <= 10; i++) {
+                        Thread.sleep(500);
+                        System.out.println("test " + i);
+                        testText.setText("Test " + i);
+
+                    }
+                } catch (InterruptedException e) {
+                }
+                return null;
+            }
+        };
+        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+
+            }
+        });
+        new Thread(sleeper).start();
+
+    }
+
     @Override
     public void initScreen() {
-        
+
     }
 
 }

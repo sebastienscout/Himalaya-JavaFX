@@ -17,6 +17,7 @@
                   <Font name="AR CHRISTY" size="80.0" />
                </font>
             </Text>
+            <Text fx:id="testText" onMouseClicked="#testText" strokeType="OUTSIDE" strokeWidth="0.0" text="Putain de test 1" />
             <Text fill="#757373" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu" textAlignment="CENTER" wrappingWidth="800.0">
                <font>
                   <Font name="AR CHRISTY" size="50.0" />
