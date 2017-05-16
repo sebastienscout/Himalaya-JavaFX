@@ -31,16 +31,15 @@ public class MenuFXMLController implements Initializable, ControlledScreen {
     ArrayList<ComboBox> choiceColors = new ArrayList<>();
     ArrayList<ComboBox> choiceTypes = new ArrayList<>();
     ArrayList<ComboBox> inputs = new ArrayList<>();
-    ArrayList<String> colorChoices = new ArrayList<>();
 
     PlayGraphic playG;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        colorChoices.add("Jaune");
-        colorChoices.add("Rouge");
-        colorChoices.add("Bleu");
-        colorChoices.add("Noir");
+
+        String[] colorChoices = {
+            "Blanc", "Bleu", "Orange", "Rouge", "Vert", "Violet"
+        };
 
         String[] typeChoices = {
             "Humain", "IA"
@@ -94,12 +93,12 @@ public class MenuFXMLController implements Initializable, ControlledScreen {
 
         if (testInput) {
             playG.addPlayer(playerColor1.getValue().toString(), 1);
-            playG.addPlayer(playerColor2.getValue().toString(), 1);
-            playG.addPlayer(playerColor3.getValue().toString(), 1);
+//            playG.addPlayer(playerColor2.getValue().toString(), 7);
+//            playG.addPlayer(playerColor3.getValue().toString(), 18);
 
             System.out.println("Couleur player 1 : " + playG.getBoard().getPlayers().get(0).getColor());
-            System.out.println("Couleur player 2 : " + playG.getBoard().getPlayers().get(1).getColor());
-            System.out.println("Couleur player 3 : " + playG.getBoard().getPlayers().get(2).getColor());
+//            System.out.println("Couleur player 2 : " + playG.getBoard().getPlayers().get(1).getColor());
+//            System.out.println("Couleur player 3 : " + playG.getBoard().getPlayers().get(2).getColor());
 
             //Si tous les champs sont remplis on va sur le plateau
             myController.setScreen(Main.screenMainID);
@@ -129,14 +128,14 @@ public class MenuFXMLController implements Initializable, ControlledScreen {
     public void removeColor(Event event) {
 
         //TODO enlever couleur des autres listes
-        colorChoices.remove(event.toString());
-
-//        System.out.println("test : " + event.getSource().toString());
-        for (ComboBox choiceColor : choiceColors) {
-            if (choiceColor != event.getSource()) {
-                choiceColor.setItems(FXCollections.observableArrayList(colorChoices));
-            }
-        }
+//        colorChoices.remove(((ComboBox)event.getSource()).getSelectionModel().getSelectedItem());
+//
+////        System.out.println("test : " + event.getSource().toString());
+//        for (ComboBox choiceColor : choiceColors) {
+//            if (choiceColor != event.getSource()) {
+//                choiceColor.setItems(FXCollections.observableArrayList(colorChoices));
+//            }
+//        }
     }
 
     @Override
