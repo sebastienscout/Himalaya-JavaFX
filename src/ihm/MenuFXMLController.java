@@ -143,4 +143,9 @@ public class MenuFXMLController implements Initializable, ControlledScreen {
         myController = screenPage;
     }
 
+    @Override
+    public void initScreen() {
+        
+    }
+
 }

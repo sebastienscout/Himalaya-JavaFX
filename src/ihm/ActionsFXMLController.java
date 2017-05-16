@@ -202,4 +202,9 @@ public class ActionsFXMLController implements Initializable, ControlledScreen {
         this.player = player;
         playerColorLabel.setText("Joueur " + this.player.getColor());
     }
+
+    @Override
+    public void initScreen() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
