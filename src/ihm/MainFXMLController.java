@@ -2,20 +2,28 @@ package ihm;
 
 import core.Player;
 import core.Village;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class MainFXMLController implements Initializable, ControlledScreen {
 
@@ -40,11 +48,13 @@ public class MainFXMLController implements Initializable, ControlledScreen {
 
     @FXML
     private ImageView background;
-    
+
     @FXML
     private Button playTurn;
 
     private ArrayList<FlowPane> villagesPane;
+
+    private boolean initialize;
 
     /**
      * Initializes the controller class.
@@ -53,6 +63,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
     public void initialize(URL url, ResourceBundle rb) {
 
         playG = new PlayGraphic();
+        initialize = false;
 
         villagesPane = new ArrayList<>();
 
@@ -80,8 +91,6 @@ public class MainFXMLController implements Initializable, ControlledScreen {
 
     @FXML
     private void nextTurnButton() {
-        
-        playTurn.setDisable(true);
 
         playG.run(background);
 
@@ -93,7 +102,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                 try {
                     for (int i = 0; i < 6; i++) {
                         for (Player p : playG.getBoard().getPlayers()) {
-                            Thread.sleep(200);
+                            Thread.sleep(500);
                             playG.getBoard().executeAction(i, p);
                             Platform.runLater(() -> displayElementsMap());
 
@@ -179,14 +188,31 @@ public class MainFXMLController implements Initializable, ControlledScreen {
         setPlayersInformation(playG.getBoard().getPlayers().get(2), player3Label);
         if (playG.getBoard().getPlayers().size() == 4) {
             setPlayersInformation(playG.getBoard().getPlayers().get(3), player4Label);
-        }
-        else {
+        } else {
             player4Label.setVisible(false);
             player4ResLabel.setVisible(false);
         }
 
         playG.testVillages();
         playG.displayInfoBoard();
+
         displayElementsMap();
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("InitFXML.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            InitFXMLController initCtrl = (InitFXMLController) (fxmlLoader.getController());
+            initCtrl.lauch(playG.getBoard());
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Choix du placement");
+            stage.setScene(new Scene(root1));
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(PlayGraphic.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        displayElementsMap();
+
     }
 }

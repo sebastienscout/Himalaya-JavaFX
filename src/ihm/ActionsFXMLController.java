@@ -19,7 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-public class ActionsFXMLController implements Initializable, ControlledScreen {
+public class ActionsFXMLController implements Initializable {
 
     ScreensController myScreensController;
 
@@ -208,11 +208,6 @@ public class ActionsFXMLController implements Initializable, ControlledScreen {
         }
     }
 
-    @Override
-    public void setScreenParent(ScreensController screenPage) {
-        myScreensController = screenPage;
-    }
-
     public void setPlayer(Player player) {
         this.player = player;
         playerColorLabel.setText("Joueur " + this.player.getColor());
@@ -221,10 +216,5 @@ public class ActionsFXMLController implements Initializable, ControlledScreen {
     public void setBackground(ImageView iv) {
         background = iv;
         background.setImage(backgroundNoRegion);
-    }
-
-    @Override
-    public void initScreen() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
