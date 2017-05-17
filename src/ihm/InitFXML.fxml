@@ -22,42 +22,42 @@
             </Label>
             <FlowPane alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="p1Label" text="Joueur Rouge">
+                  <Label fx:id="p1Label" alignment="CENTER" prefWidth="90.0" text="Joueur Rouge" textAlignment="CENTER">
                      <FlowPane.margin>
-                        <Insets right="15.0" />
+                        <Insets />
                      </FlowPane.margin>
                   </Label>
-                  <TextField fx:id="p1TextField" prefHeight="25.0" prefWidth="51.0" />
+                  <TextField fx:id="p1TextField" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="60.0" promptText="Numéro" />
                </children>
             </FlowPane>
             <FlowPane alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="p2Label" text="Joueur Rouge">
+                  <Label fx:id="p2Label" alignment="CENTER" prefWidth="90.0" text="Joueur Rouge" textAlignment="CENTER">
                      <FlowPane.margin>
-                        <Insets right="15.0" />
+                        <Insets />
                      </FlowPane.margin>
                   </Label>
-                  <TextField fx:id="p2TextField" prefHeight="25.0" prefWidth="51.0" />
+                  <TextField fx:id="p2TextField" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="60.0" promptText="Numéro" />
                </children>
             </FlowPane>
             <FlowPane alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="p3Label" text="Joueur Rouge">
+                  <Label fx:id="p3Label" alignment="CENTER" prefWidth="90.0" text="Joueur Rouge" textAlignment="CENTER">
                      <FlowPane.margin>
-                        <Insets right="15.0" />
+                        <Insets />
                      </FlowPane.margin>
                   </Label>
-                  <TextField fx:id="p3TextField" prefHeight="25.0" prefWidth="51.0" />
+                  <TextField fx:id="p3TextField" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="60.0" promptText="Numéro" />
                </children>
             </FlowPane>
             <FlowPane alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="p4Label" text="Joueur Rouge">
+                  <Label fx:id="p4Label" alignment="CENTER" prefWidth="90.0" text="Joueur Rouge" textAlignment="CENTER">
                      <FlowPane.margin>
-                        <Insets right="15.0" />
+                        <Insets />
                      </FlowPane.margin>
                   </Label>
-                  <TextField fx:id="p4TextField" prefHeight="25.0" prefWidth="51.0" />
+                  <TextField fx:id="p4TextField" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="60.0" promptText="Numéro" />
                </children>
             </FlowPane>
             <Button mnemonicParsing="false" onAction="#validateButton" text="Valider et commencer">

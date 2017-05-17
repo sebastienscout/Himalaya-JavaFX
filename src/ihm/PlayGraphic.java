@@ -23,7 +23,6 @@ public class PlayGraphic extends Play {
 
     public void run(ImageView background) {
         testVillages();
-        displayInfoBoard();
         
         for (Player p : board.getPlayers()) {
             if (!(p instanceof RandomAI)) {
@@ -49,19 +48,6 @@ public class PlayGraphic extends Play {
                     Action action = ((RandomAI) p).getRandomAction();
                     p.addAction(action);
                 }
-            }
-        }
-    }
-    
-    public void displayInfoBoard() {
-        System.out.println("******* ETAT DU PLATEAU TOUR : " + board.getNbTurn() + " *******");
-        for (Village village : board.getVillages()) {
-            if (!village.getResources().isEmpty()) {
-                System.out.println("Village " + village.getId() + 
-                        " -> Resource :" + village.getResources().toString());
-            } else if (village.getOrder() != null) {
-                System.out.println("Village " + village.getId() + 
-                        " -> Commande : " + village.getOrder().getResources().toString());
             }
         }
     }

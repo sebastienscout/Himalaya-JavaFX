@@ -328,11 +328,11 @@ public class Board {
                 if (p.getNbResources(type) > winner.getNbResources(type)) {
                     equal = false;
                     winner = p;
-                } else if (p.getNbResources(type) == winner.getNbResources(type)) {
+                } else if (p.getNbResources(type) == winner.getNbResources(type) && !p.equals(winner)) {
                     equal = true;
                 }
             }
-            if (equal == false) {
+            if (equal == false && winner.getNbResources(type) > 0) {
                 winner.setEconomicScore(winner.getEconomicScore() + 3);
             }
         }
@@ -352,16 +352,16 @@ public class Board {
             if (p.getPoliticalScore() > winner.getPoliticalScore()) {
                 winner = p;
                 equal = false;
-            } else if (p.getPoliticalScore() == winner.getPoliticalScore()) {
+            } else if (p.getPoliticalScore() == winner.getPoliticalScore() && !p.equals(winner)) {
                 equal = true;
             }
         }
 
-        if (equal == true) {
-            return null;
+        if (equal == false && winner.getPoliticalScore() > 0) {
+            return winner;
         }
+        return null;
 
-        return winner;
     }
 
     public Player winnerReligiousScore() {
@@ -371,16 +371,15 @@ public class Board {
             if (p.getReligiousScore() > winner.getReligiousScore()) {
                 winner = p;
                 equal = false;
-            } else if (p.getReligiousScore() == winner.getReligiousScore()) {
+            } else if (p.getReligiousScore() == winner.getReligiousScore() && !p.equals(winner)) {
                 equal = true;
             }
         }
 
-        if (equal == true) {
-            return null;
+        if (equal == false && winner.getReligiousScore()> 0) {
+            return winner;
         }
-
-        return winner;
+        return null;
     }
 
     public Player winnerEconnomicScore() {
@@ -390,16 +389,15 @@ public class Board {
             if (p.getEconomicScore() > winner.getEconomicScore()) {
                 winner = p;
                 equal = false;
-            } else if (p.getEconomicScore() == winner.getEconomicScore()) {
+            } else if (p.getEconomicScore() == winner.getEconomicScore() && !p.equals(winner)) {
                 equal = true;
             }
         }
 
-        if (equal == true) {
-            return null;
+        if (equal == false && winner.getEconomicScore()> 0) {
+            return winner;
         }
-
-        return winner;
+        return null;
     }
 
     void setPlayers(ArrayList<Player> players) {

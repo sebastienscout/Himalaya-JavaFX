@@ -54,8 +54,6 @@ public class MainFXMLController implements Initializable, ControlledScreen {
 
     private ArrayList<FlowPane> villagesPane;
 
-    private boolean initialize;
-
     /**
      * Initializes the controller class.
      */
@@ -63,7 +61,6 @@ public class MainFXMLController implements Initializable, ControlledScreen {
     public void initialize(URL url, ResourceBundle rb) {
 
         playG = new PlayGraphic();
-        initialize = false;
 
         villagesPane = new ArrayList<>();
 
@@ -92,6 +89,8 @@ public class MainFXMLController implements Initializable, ControlledScreen {
     @FXML
     private void nextTurnButton() {
 
+        playTurn.setDisable(true);
+
         playG.run(background);
 
         playG.getBoard().prepareActions();
@@ -106,36 +105,76 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                             playG.getBoard().executeAction(i, p);
                             Platform.runLater(() -> displayElementsMap());
 
-                            Platform.runLater(() -> player1ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(0).getResources().toString()));
-                            Platform.runLater(() -> player2ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(1).getResources().toString()));
-                            Platform.runLater(() -> player3ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(2).getResources().toString()));
+                            Player p1 = playG.getBoard().getPlayers().get(0);
+                            Player p2 = playG.getBoard().getPlayers().get(1);
+                            Player p3 = playG.getBoard().getPlayers().get(2);
+
+                            Platform.runLater(() -> player1ResLabel.setText("Ressources : " + p1.getResources().toString()
+                                    + " | Eco : " + p1.getEconomicScore()
+                                    + " | Rel : " + p1.getReligiousScore()
+                                    + " | Pol : " + p1.getPoliticalScore()
+                            ));
+                            Platform.runLater(() -> player2ResLabel.setText("Ressources : " + p2.getResources().toString()
+                                    + " | Eco : " + p2.getEconomicScore()
+                                    + " | Rel : " + p2.getReligiousScore()
+                                    + " | Pol : " + p2.getPoliticalScore()
+                            ));
+                            Platform.runLater(() -> player3ResLabel.setText("Ressources : " + p3.getResources().toString()
+                                    + " | Eco : " + p3.getEconomicScore()
+                                    + " | Rel : " + p3.getReligiousScore()
+                                    + " | Pol : " + p3.getPoliticalScore()
+                            ));
+
                             if (playG.getBoard().getPlayers().size() == 4) {
-                                Platform.runLater(() -> player4ResLabel.setText("Ressources : " + playG.getBoard().getPlayers().get(3).getResources().toString()));
+                                Player p4 = playG.getBoard().getPlayers().get(3);
+                                Platform.runLater(() -> player4ResLabel.setText("Ressources : " + p4.getResources().toString()
+                                        + " | Eco : " + p4.getEconomicScore()
+                                        + " | Rel : " + p4.getReligiousScore()
+                                        + " | Pol : " + p4.getPoliticalScore()
+                                ));
                             }
                         }
                     }
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
                 return null;
             }
         };
+
         sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
-
-                System.out.println("On supprime les actions");
                 playG.getBoard().afterActions();
-
-                playG.testVillages();
-                Platform.runLater(() -> displayElementsMap());
-
-                turnLabel.setText("Tour " + Integer.toString(playG.getBoard().getNbTurn()));
-
-                playTurn.setDisable(false);
+                if (playG.getBoard().getNbTurn() == 13) {
+                    turnLabel.setText("Terminé !");
+                    displayScoreScreen();
+                } else {
+                    playG.testVillages();
+                    Platform.runLater(() -> displayElementsMap());
+                    turnLabel.setText("Tour " + Integer.toString(playG.getBoard().getNbTurn()));
+                    playTurn.setDisable(false);
+                }
             }
         });
+
         new Thread(sleeper).start();
+    }
+
+    private void displayScoreScreen() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ScoreFXML.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            ScoreFXMLController scireCtrl = fxmlLoader.getController();
+            scireCtrl.setBoard(playG.getBoard());
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Résultats");
+            stage.setScene(new Scene(root1));
+            stage.showAndWait();
+
+        } catch (IOException ex) {
+            Logger.getLogger(PlayGraphic.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void displayElementsMap() {
@@ -194,7 +233,6 @@ public class MainFXMLController implements Initializable, ControlledScreen {
         }
 
         playG.testVillages();
-        playG.displayInfoBoard();
 
         displayElementsMap();
 
