@@ -49,6 +49,15 @@ public class ScreensController extends StackPane {
     public boolean setScreen(final String name) {
         ControlledScreen myScreenControler = ((ControlledScreen) myLoader.getController());
         if (screens.get(name) != null) { //Screen loaded
+
+            if (!getChildren().isEmpty()) {
+                getChildren().remove(0);
+                getChildren().add(0, screens.get(name));
+                myScreenControler.initScreen();//Event à l'affichage du screen
+            }else {
+                getChildren().add(screens.get(name));
+            }
+            /*
             final DoubleProperty opacity = opacityProperty();
 
             if (!getChildren().isEmpty()) {
@@ -77,7 +86,7 @@ public class ScreensController extends StackPane {
                         new KeyFrame(new Duration(1500), new KeyValue(opacity, 1.0))
                 );
                 fadeIn.play();
-            }
+            }*/
             return true;
         } else {
             System.out.println("Impossible de charger le screen");

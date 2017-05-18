@@ -34,9 +34,6 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
     @FXML
     private FlowPane player4;
 
-    @FXML
-    private Text testText;
-
     private double opacity = 1;
 
     ArrayList<ComboBox> choiceColors = new ArrayList<>();
@@ -156,7 +153,6 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
 
     @FXML
     public void removeColor(Event event) {
-
         //TODO enlever couleur des autres listes
 //        colorChoices.remove(((ComboBox)event.getSource()).getValue());
 //
@@ -171,34 +167,6 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
     @Override
     public void setScreenParent(ScreensController screenPage) {
         myController = screenPage;
-    }
-
-    @FXML
-    public void testText() {
-
-        Task<Void> sleeper = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    for (int i = 0; i <= 10; i++) {
-                        Thread.sleep(500);
-                        System.out.println("test " + i);
-                        testText.setText("Test " + i);
-
-                    }
-                } catch (InterruptedException e) {
-                }
-                return null;
-            }
-        };
-        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-            @Override
-            public void handle(WorkerStateEvent event) {
-
-            }
-        });
-        new Thread(sleeper).start();
-
     }
 
     @Override
