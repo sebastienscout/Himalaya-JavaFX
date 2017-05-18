@@ -84,6 +84,14 @@
             <FlowPane fx:id="village12" layoutX="512.0" layoutY="45.0" prefHeight="90.0" prefWidth="63.0" />
             <FlowPane fx:id="village11" layoutX="381.0" layoutY="29.0" prefHeight="90.0" prefWidth="63.0" />
             <FlowPane fx:id="village10" layoutX="328.0" layoutY="172.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="region2" alignment="CENTER" layoutX="62.0" layoutY="195.0" prefHeight="60.0" prefWidth="71.0" />
+            <FlowPane fx:id="region1" alignment="CENTER" layoutX="162.0" layoutY="38.0" prefHeight="60.0" prefWidth="71.0" />
+            <FlowPane fx:id="region3" alignment="CENTER" layoutX="277.0" layoutY="262.0" prefHeight="90.0" prefWidth="133.0" />
+            <FlowPane fx:id="region4" alignment="CENTER" layoutX="283.0" layoutY="101.0" prefHeight="68.0" prefWidth="90.0" />
+            <FlowPane fx:id="region5" alignment="CENTER" layoutX="428.0" layoutY="105.0" prefHeight="60.0" prefWidth="71.0" />
+            <FlowPane fx:id="region6" alignment="CENTER" layoutX="567.0" layoutY="277.0" prefHeight="60.0" prefWidth="71.0" />
+            <FlowPane fx:id="region7" alignment="CENTER" layoutX="567.0" layoutY="75.0" prefHeight="60.0" prefWidth="71.0" />
+            <FlowPane fx:id="region8" alignment="CENTER" layoutX="684.0" layoutY="315.0" prefHeight="60.0" prefWidth="71.0" />
       </children>
     </Pane>
   </children>

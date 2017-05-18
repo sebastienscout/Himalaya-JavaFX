@@ -23,11 +23,17 @@ public class Region {
     }
 
     public void addDelegations(Player r, Integer nb) {
-        delegations.put(r, nb);
+        if (delegations.get(r) == null) {
+            delegations.put(r, nb);
+        } else {
+            int nbDelegation = delegations.get(r) + nb;
+            delegations.put(r, nbDelegation);
+        }
+
     }
-    
-    public Player getMaxDelegationPlayer(){
-        if(delegations.size() > 0){
+
+    public Player getMaxDelegationPlayer() {
+        if (delegations.size() > 0) {
             return Collections.max(delegations.entrySet(), Map.Entry.comparingByValue()).getKey();
         }
         return null;

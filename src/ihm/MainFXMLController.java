@@ -1,9 +1,11 @@
 package ihm;
 
 import core.Player;
+import core.Region;
 import core.Village;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -39,12 +41,17 @@ public class MainFXMLController implements Initializable, ControlledScreen {
             village16, village17, village18, village19, village20;
 
     @FXML
+    private FlowPane region1, region2, region3, region4, region5, region6,
+            region7, region8;
+
+    @FXML
     private ImageView background;
-    
+
     @FXML
     private Button playTurn;
 
     private ArrayList<FlowPane> villagesPane;
+    private ArrayList<FlowPane> regionsPane;
 
     /**
      * Initializes the controller class.
@@ -55,6 +62,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
         playG = new PlayGraphic();
 
         villagesPane = new ArrayList<>();
+        regionsPane = new ArrayList<>();
 
         villagesPane.add(village1);
         villagesPane.add(village2);
@@ -76,11 +84,20 @@ public class MainFXMLController implements Initializable, ControlledScreen {
         villagesPane.add(village18);
         villagesPane.add(village19);
         villagesPane.add(village20);
+
+        regionsPane.add(region1);
+        regionsPane.add(region2);
+        regionsPane.add(region3);
+        regionsPane.add(region4);
+        regionsPane.add(region5);
+        regionsPane.add(region6);
+        regionsPane.add(region7);
+        regionsPane.add(region8);
     }
 
     @FXML
     private void nextTurnButton() {
-        
+
         playTurn.setDisable(true);
 
         playG.run(background);
@@ -153,6 +170,33 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                 }
             }
         }
+
+        for (int i = 0; i < 8; i++) {
+            regionsPane.get(i).getChildren().clear();
+            Region r = playG.getBoard().getRegions().get(i);
+
+            for (Map.Entry<Player, Integer> delegation : r.getDelegations().entrySet()) {
+
+                Player player = delegation.getKey();
+                Integer nbDelegation = delegation.getValue();
+                
+                System.out.println("NB DELEGATION : " + nbDelegation);
+
+                for (int j = 0; j < nbDelegation; j++) {
+                    System.out.println("couleur " + player.getColor());
+                    Image img = new Image("resources/delegation/delegation_" + player.getColor() + ".png");
+                    ImageView iv1 = new ImageView();
+                    iv1.setFitHeight(25.0);
+                    iv1.setPreserveRatio(true);
+                    iv1.setImage(img);
+
+                    regionsPane.get(i).getChildren().add(iv1);
+                }
+
+            }
+
+        }
+
     }
 
     @Override
@@ -179,8 +223,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
         setPlayersInformation(playG.getBoard().getPlayers().get(2), player3Label);
         if (playG.getBoard().getPlayers().size() == 4) {
             setPlayersInformation(playG.getBoard().getPlayers().get(3), player4Label);
-        }
-        else {
+        } else {
             player4Label.setVisible(false);
             player4ResLabel.setVisible(false);
         }
