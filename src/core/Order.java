@@ -1,11 +1,13 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Order {
+public class Order implements Cloneable {
 
     private ArrayList<Resource> resources;
-    private int nbYacks = 0 ;
+    private int nbYacks = 0;
 
     public Order() {
         //Random between 1 and 3 resources
@@ -14,7 +16,7 @@ public class Order {
         for (int i = 0; i < nbResources; i++) {
             Resource.Type type = null;
             int randType = (int) (Math.random() * 4 + 0);
-            switch(randType){
+            switch (randType) {
                 case 0:
                     type = Resource.Type.sel;
                     break;
@@ -32,8 +34,8 @@ public class Order {
                     break;
             }
             resources.add(new Resource(type));
-            
-            switch(nbResources){
+
+            switch (nbResources) {
                 case 1:
                     nbYacks = (int) (Math.random() * 5 + 2);
                     break;
@@ -50,8 +52,31 @@ public class Order {
     public ArrayList<Resource> getResources() {
         return resources;
     }
-    
+
     public int getNbYacks() {
         return nbYacks;
-    }    
+    }
+
+    public Object clone() {
+        Order o = null;
+
+        try {
+            // On récupère l'instance à renvoyer par l'appel de la 
+            // méthode super.clone()
+            o = (Order) super.clone();
+        } catch (CloneNotSupportedException ex) {
+            // Ne devrait jamais arriver car nous implémentons 
+            // l'interface Cloneable
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        o.nbYacks = nbYacks;
+        o.resources = new ArrayList<>(resources.size());
+        for (Resource resource : resources) {
+            o.resources.add((Resource) resource.clone());
+        }
+        o.resources = resources;
+
+        return o;
+    }
 }
