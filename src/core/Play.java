@@ -1,5 +1,6 @@
 package core;
 
+import ia.EvolutionaryAI;
 import ia.RandomAI;
 import java.util.ArrayList;
 
@@ -18,7 +19,7 @@ public class Play {
     }
 
     public void addAI(String color, int villageID) {
-        board.addPlayer(new RandomAI(color, board.getVillageById(villageID)));
+        board.addPlayer(new EvolutionaryAI(color, board.getVillageById(villageID)));
     }
 
     /**

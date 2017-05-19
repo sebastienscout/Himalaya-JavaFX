@@ -3,8 +3,9 @@ package ihm;
 import core.Action;
 import core.Play;
 import core.Player;
-import core.Village;
+import ia.EvolutionaryAI;
 import ia.RandomAI;
+import ia.Population;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,10 +24,36 @@ public class PlayGraphic extends Play {
 
     public void run(ImageView background) {
         testVillages();
-        
-        for (Player p : board.getPlayers()) {
-            if (!(p instanceof RandomAI)) {
 
+        for (Player p : board.getPlayers()) {
+            if(p instanceof EvolutionaryAI){
+                // population size of the parents
+                int mu = 10;
+                // population size of childrens
+                int lambda = 50;
+                // tournament size for selection
+                int tournamentSize = 2;
+                // rates of crossOver and mutation
+                double crossOverRate = 0.8;
+                // rates of mutation
+                double mutationRate = 1.0;
+                // maximum number of generation
+                int maxGeneration = 200;
+                
+                Population population = new Population();
+
+                ((EvolutionaryAI) p).run(population, mu, lambda, tournamentSize, crossOverRate, mutationRate, maxGeneration);
+
+                for (Action action : ((EvolutionaryAI) p).getActions()) {
+                    p.addAction(action);
+                }
+            } else if(p instanceof RandomAI){
+                 for (int i = 0; i < 6; i++) {
+                    Action action = ((RandomAI) p).getRandomAction();
+                    p.addAction(action);
+                }
+            }
+            else{
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ActionsFXML.fxml"));
                     Parent root1 = (Parent) fxmlLoader.load();
@@ -41,12 +68,6 @@ public class PlayGraphic extends Play {
 
                 } catch (IOException ex) {
                     Logger.getLogger(PlayGraphic.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-            } else {
-                for (int i = 0; i < 6; i++) {
-                    Action action = ((RandomAI) p).getRandomAction();
-                    p.addAction(action);
                 }
             }
         }
