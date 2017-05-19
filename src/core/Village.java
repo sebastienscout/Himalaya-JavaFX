@@ -2,8 +2,10 @@ package core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Village {
+public class Village implements Cloneable {
 
     public enum Type {
         house,
@@ -25,7 +27,7 @@ public class Village {
         roads = new HashMap<>();
         stupa = null;
         order = null;
-	regions = new ArrayList<>();
+        regions = new ArrayList<>();
     }
 
     public Type getType() {
@@ -63,7 +65,7 @@ public class Village {
     public void removeResource(Resource r) {
         resources.remove(r);
     }
-    
+
     public void removeOrder() {
         order = null;
     }
@@ -83,4 +85,36 @@ public class Village {
     public Order getOrder() {
         return order;
     }
+
+    public Object clone() {
+        Village v = null;
+        try {
+            // On récupère l'instance à renvoyer par l'appel de la 
+            // méthode super.clone()
+            v = (Village) super.clone();
+        } catch (CloneNotSupportedException ex) {
+            // Ne devrait jamais arriver car nous implémentons 
+            // l'interface Cloneable
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Clone des attributs
+        v.id = id;
+        
+        
+        if(order != null){
+            v.order = (Order) order.clone();
+        }
+        
+        v.resources = new ArrayList<>(resources.size());
+        for (Resource resource : resources) {
+             v.resources.add((Resource) resource.clone());
+        }
+        
+        v.stupa = stupa;
+        v.type = type;
+       
+        return v;
+    }
+
 }

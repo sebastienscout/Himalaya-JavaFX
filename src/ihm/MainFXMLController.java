@@ -207,6 +207,17 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                 testVillageLabel.setStyle("-fx-background-color: rgba(255,255,255,.8);");
                 villagesPane.get(i).getChildren().add(testVillageLabel);
             }
+            
+            //Gestions des stupas
+            if (v.getStupa() != null) {
+                Image img = new Image("resources/stupa/" + v.getStupa().getColor() + ".png");
+                ImageView iv1 = new ImageView();
+                iv1.setFitHeight(30.0);
+                iv1.setPreserveRatio(true);
+                iv1.setImage(img);
+                villagesPane.get(i).getChildren().add(iv1);
+            }
+            
             for (Player player : playG.getBoard().getPlayers()) {
                 if (player.getPosition().equals(v)) {
                     Image img = new Image("resources/player/" + player.getColor() + ".png");
@@ -219,6 +230,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
             }
         }
 
+        //Gestion des délégations
         for (int i = 0; i < 8; i++) {
             regionsPane.get(i).getChildren().clear();
             Region r = playG.getBoard().getRegions().get(i);
@@ -227,8 +239,6 @@ public class MainFXMLController implements Initializable, ControlledScreen {
 
                 Player player = delegation.getKey();
                 Integer nbDelegation = delegation.getValue();
-                
-                System.out.println("NB DELEGATION : " + nbDelegation);
 
                 for (int j = 0; j < nbDelegation; j++) {
                     System.out.println("couleur " + player.getColor());

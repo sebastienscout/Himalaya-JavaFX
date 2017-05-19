@@ -1,8 +1,11 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Board {
+public class Board implements Cloneable {
 
     private ArrayList<Player> players;
     private ArrayList<Village> villages;
@@ -376,7 +379,7 @@ public class Board {
             }
         }
 
-        if (equal == false && winner.getReligiousScore()> 0) {
+        if (equal == false && winner.getReligiousScore() > 0) {
             return winner;
         }
         return null;
@@ -394,7 +397,7 @@ public class Board {
             }
         }
 
-        if (equal == false && winner.getEconomicScore()> 0) {
+        if (equal == false && winner.getEconomicScore() > 0) {
             return winner;
         }
         return null;
@@ -402,5 +405,45 @@ public class Board {
 
     void setPlayers(ArrayList<Player> players) {
         this.players = players;
+    }
+
+    /**
+     * Clone du board pour IA
+     */
+    public Object clone() {
+
+        Board board = null;
+        try {
+            // On récupère l'instance à renvoyer par l'appel de la 
+            // méthode super.clone()  
+            board = (Board) super.clone();
+
+        } catch (CloneNotSupportedException ex) {
+            // Ne devrait jamais arriver car nous implémentons 
+            // l'interface Cloneable
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        board.villages = new ArrayList<>(villages.size());
+
+        // On clone les attributs
+        for (Village village : villages) {
+            board.villages.add((Village) village.clone());
+        }
+
+        board.regions = new ArrayList<>(regions.size());
+        for (Region region : regions) {
+            board.regions.add((Region) region.clone());
+        }
+        
+        board.players = new ArrayList<>(players.size());
+        for (Player player : players) {
+            board.players.add((Player) player.clone());
+        }
+        
+        board.bagOrders = (BagOrders) bagOrders.clone();
+        board.bagResources = (BagResources) bagResources.clone();
+
+        return board;
     }
 }
