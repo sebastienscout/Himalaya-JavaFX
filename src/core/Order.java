@@ -73,7 +73,7 @@ public class Order implements Cloneable {
         o.nbYacks = nbYacks;
         o.resources = new ArrayList<>(resources.size());
         for (Resource resource : resources) {
-            o.resources.add((Resource) resource.clone());
+            o.resources.add(new Resource(resource.getType()));
         }
         o.resources = resources;
 

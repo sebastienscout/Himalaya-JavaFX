@@ -18,8 +18,12 @@ public class Play {
         board.addPlayer(new Player(color, board.getVillageById(villageID)));
     }
 
-    public void addAI(String color, int villageID) {
+    public void addEvolAI(String color, int villageID) {
         board.addPlayer(new EvolutionaryAI(color, board.getVillageById(villageID)));
+    }
+
+    public void addRandomAI(String color, int villageID) {
+        board.addPlayer(new RandomAI(color, board.getVillageById(villageID)));
     }
 
     /**
@@ -50,60 +54,60 @@ public class Play {
         Village village20 = new Village(20, Village.Type.house);
 
         //Initialisation des routes
-        village1.addRoad(Road.soil, village2);
-        village1.addRoad(Road.stone, village7);
-        village1.addRoad(Road.ice, village8);
-        village2.addRoad(Road.soil, village1);
-        village2.addRoad(Road.stone, village3);
-        village3.addRoad(Road.stone, village2);
-        village3.addRoad(Road.ice, village6);
-        village3.addRoad(Road.soil, village4);
-        village4.addRoad(Road.soil, village3);
-        village4.addRoad(Road.ice, village5);
-        village5.addRoad(Road.ice, village4);
-        village5.addRoad(Road.soil, village11);
-        village5.addRoad(Road.stone, village6);
-        village6.addRoad(Road.stone, village5);
-        village6.addRoad(Road.ice, village3);
-        village6.addRoad(Road.soil, village7);
-        village7.addRoad(Road.soil, village6);
-        village7.addRoad(Road.ice, village10);
-        village7.addRoad(Road.stone, village1);
-        village8.addRoad(Road.ice, village1);
-        village8.addRoad(Road.soil, village9);
-        village9.addRoad(Road.soil, village8);
-        village9.addRoad(Road.ice, village14);
-        village9.addRoad(Road.stone, village15);
-        village10.addRoad(Road.stone, village11);
-        village10.addRoad(Road.ice, village7);
-        village10.addRoad(Road.soil, village14);
-        village11.addRoad(Road.stone, village10);
-        village11.addRoad(Road.soil, village5);
-        village11.addRoad(Road.ice, village12);
-        village12.addRoad(Road.ice, village11);
-        village12.addRoad(Road.stone, village18);
-        village12.addRoad(Road.soil, village13);
-        village13.addRoad(Road.soil, village12);
-        village13.addRoad(Road.ice, village17);
-        village13.addRoad(Road.stone, village14);
-        village14.addRoad(Road.stone, village13);
-        village14.addRoad(Road.soil, village10);
-        village14.addRoad(Road.ice, village9);
-        village15.addRoad(Road.stone, village9);
-        village15.addRoad(Road.soil, village16);
-        village16.addRoad(Road.soil, village15);
-        village16.addRoad(Road.ice, village20);
-        village16.addRoad(Road.stone, village17);
-        village17.addRoad(Road.stone, village16);
-        village17.addRoad(Road.soil, village18);
-        village17.addRoad(Road.ice, village13);
-        village18.addRoad(Road.soil, village17);
-        village18.addRoad(Road.stone, village12);
-        village18.addRoad(Road.ice, village19);
-        village19.addRoad(Road.ice, village18);
-        village19.addRoad(Road.soil, village20);
-        village20.addRoad(Road.soil, village19);
-        village20.addRoad(Road.ice, village16);
+        village1.addRoad(Road.soil, 2);
+        village1.addRoad(Road.stone, 7);
+        village1.addRoad(Road.ice, 8);
+        village2.addRoad(Road.soil, 1);
+        village2.addRoad(Road.stone, 3);
+        village3.addRoad(Road.stone, 2);
+        village3.addRoad(Road.ice, 6);
+        village3.addRoad(Road.soil, 4);
+        village4.addRoad(Road.soil, 3);
+        village4.addRoad(Road.ice, 5);
+        village5.addRoad(Road.ice, 4);
+        village5.addRoad(Road.soil, 11);
+        village5.addRoad(Road.stone, 6);
+        village6.addRoad(Road.stone, 5);
+        village6.addRoad(Road.ice, 3);
+        village6.addRoad(Road.soil, 7);
+        village7.addRoad(Road.soil, 6);
+        village7.addRoad(Road.ice, 10);
+        village7.addRoad(Road.stone, 1);
+        village8.addRoad(Road.ice, 1);
+        village8.addRoad(Road.soil, 9);
+        village9.addRoad(Road.soil, 8);
+        village9.addRoad(Road.ice, 14);
+        village9.addRoad(Road.stone, 15);
+        village10.addRoad(Road.stone, 11);
+        village10.addRoad(Road.ice, 7);
+        village10.addRoad(Road.soil, 14);
+        village11.addRoad(Road.stone, 10);
+        village11.addRoad(Road.soil, 5);
+        village11.addRoad(Road.ice, 12);
+        village12.addRoad(Road.ice, 11);
+        village12.addRoad(Road.stone, 18);
+        village12.addRoad(Road.soil, 13);
+        village13.addRoad(Road.soil, 12);
+        village13.addRoad(Road.ice, 17);
+        village13.addRoad(Road.stone, 14);
+        village14.addRoad(Road.stone, 13);
+        village14.addRoad(Road.soil, 10);
+        village14.addRoad(Road.ice, 9);
+        village15.addRoad(Road.stone, 9);
+        village15.addRoad(Road.soil, 16);
+        village16.addRoad(Road.soil, 15);
+        village16.addRoad(Road.ice, 20);
+        village16.addRoad(Road.stone, 17);
+        village17.addRoad(Road.stone, 16);
+        village17.addRoad(Road.soil, 18);
+        village17.addRoad(Road.ice, 13);
+        village18.addRoad(Road.soil, 17);
+        village18.addRoad(Road.stone, 12);
+        village18.addRoad(Road.ice, 19);
+        village19.addRoad(Road.ice, 18);
+        village19.addRoad(Road.soil, 20);
+        village20.addRoad(Road.soil, 19);
+        village20.addRoad(Road.ice, 16);
 
         //Initialisation des Régions
         Region region1 = new Region(1);
@@ -298,32 +302,32 @@ public class Play {
         return board;
     }
 
-    public void test() {
-        addPlayer("Michel", 1);
-        addPlayer("toto", 1);
-        addPlayer("TATA", 1);
-        for (int i = 0; i < 1000; i++) {
-            Board b = (Board) board.clone();
-            System.out.println("Clone #" + i + " => " + b);
-            System.out.println("    => Bag Resources " + b.getBagResources());
-            System.out.println("    => Bag Resources Detail " + b.getBagResources().getResources());
-
-            System.out.println("    => Bag Order " + b.getBagOrders());
-            System.out.println("    => Bag Order Detail " + b.getBagOrders().getOrders());
-
-            System.out.println("    => Village " + b.getVillages());
-            for (Village village : b.getVillages()) {
-                System.out.println("       => Village ID " + village.getId());
-                for (Resource resource : village.getResources()) {
-                    System.out.println("            => Village resources " + resource.hashCode());
-                }
-
-            }
-
-            for (Player player : b.getPlayers()) {
-                System.out.println("        => Player " + player.getColor());
-                System.out.println("        => Player " + player);
-            }
-        }
-    }
+//    public void test() {
+//        addPlayer("Michel", 1);
+//        addPlayer("toto", 1);
+//        addPlayer("TATA", 1);
+//        for (int i = 0; i < 1000; i++) {
+//            Board b = (Board) board.clone();
+//            System.out.println("Clone #" + i + " => " + b);
+//            System.out.println("    => Bag Resources " + b.getBagResources());
+//            System.out.println("    => Bag Resources Detail " + b.getBagResources().getResources());
+//
+//            System.out.println("    => Bag Order " + b.getBagOrders());
+//            System.out.println("    => Bag Order Detail " + b.getBagOrders().getOrders());
+//
+//            System.out.println("    => Village " + b.getVillages());
+//            for (Village village : b.getVillages()) {
+//                System.out.println("       => Village ID " + village.getId());
+//                for (Resource resource : village.getResources()) {
+//                    System.out.println("            => Village resources " + resource.hashCode());
+//                }
+//
+//            }
+//
+//            for (Player player : b.getPlayers()) {
+//                System.out.println("        => Player " + player.getColor());
+//                System.out.println("        => Player " + player);
+//            }
+//        }
+//    }
 }

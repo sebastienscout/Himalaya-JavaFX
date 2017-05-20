@@ -42,12 +42,12 @@ public class PlayGraphic extends Play {
                 // rates of mutation
                 double mutationRate = 1.0;
                 // maximum number of generation
-                int maxGeneration = 200;
+                int maxGeneration = 25;
                 
                 Population population = new Population();
 
-                ((EvolutionaryAI) p).run(population, mu, lambda, tournamentSize, crossOverRate, mutationRate, maxGeneration);
-
+                ((EvolutionaryAI) p).run(population, board, mu, lambda, tournamentSize, crossOverRate, mutationRate, maxGeneration);
+                
                 for (Action action : ((EvolutionaryAI) p).getActions()) {
                     p.addAction(action);
                 }
