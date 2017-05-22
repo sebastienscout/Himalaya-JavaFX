@@ -37,7 +37,7 @@ public class Board {
             this.villages.add(new Village(village));
         }
         for (Region region : board.regions) {
-            this.regions.add(region);
+            this.regions.add(new Region(region));
         }
         
         this.bagOrders = new BagOrders(board.bagOrders);
@@ -261,6 +261,7 @@ public class Board {
 
     /**
      * Effectue le troc pour récupèrer yack sur commande (point éco)
+     * @param p Player
      */
     public void bartering(Player p) {
         if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
@@ -401,7 +402,7 @@ public class Board {
 
     public Player winnerPoliticalScore() {
         for (Region r : regions) {
-            Player p = r.getMaxDelegationPlayer();
+            Player p = getPlayerByColor(r.getMaxDelegationPlayer());
             if (p != null) {
                 p.setPoliticalScore(p.getPoliticalScore() + 1);
             }

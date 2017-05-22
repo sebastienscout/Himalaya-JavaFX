@@ -16,7 +16,7 @@ public class Village {
     private Order order;
     private Type type;
     private Player stupa;
-    private ArrayList<Region> regions;
+    private ArrayList<Integer> regions;
 
     public Village(int id, Type type) {
         this.id = id;
@@ -49,23 +49,18 @@ public class Village {
         this.type = village.type;
         this.stupa = null;
 
-        for (Region region : village.regions) {
-            if (region != null) {
-                this.regions.add(new Region(region));
-            }
-
-        }
+        this.regions = village.regions;
     }
 
     public Type getType() {
         return type;
     }
 
-    public ArrayList<Region> getRegions() {
+    public ArrayList<Integer> getRegions() {
         return regions;
     }
-
-    public void addRegion(Region region) {
+    
+    public void addRegion(int region) {
         regions.add(region);
     }
 

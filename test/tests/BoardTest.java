@@ -72,8 +72,8 @@ public class BoardTest {
         player1.addAction(new Action(Action.Type.transaction));
         player1.addAction(new Action(Action.Type.pause));
         
-        ArrayList<Region> neighbors = player1.getPosition().getRegions();
-        int regionID = neighbors.get(0).getId();
+        ArrayList<Integer> neighbors = player1.getPosition().getRegions();
+        int regionID = neighbors.get(0);
         
         player1.addAction(new Action(Action.Type.delegation, regionID));
         

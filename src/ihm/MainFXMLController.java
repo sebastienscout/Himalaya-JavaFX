@@ -128,20 +128,19 @@ public class MainFXMLController implements Initializable, ControlledScreen {
 
                             Platform.runLater(() -> player1ResLabel.setText("Ressources : " + p1.getResources().toString()
                                     + " | Nombre de Yacks : " + p1.getEconomicScore()
-//                                    + " | Rel : " + p1.getReligiousScore()
-//                                    + " | Pol : " + p1.getPoliticalScore()
+                            //                                    + " | Rel : " + p1.getReligiousScore()
+                            //                                    + " | Pol : " + p1.getPoliticalScore()
                             ));
                             Platform.runLater(() -> player2ResLabel.setText("Ressources : " + p2.getResources().toString()
                                     + " | Nombre de Yacks : " + p2.getEconomicScore()
-//                                    + " | Rel : " + p1.getReligiousScore()
-//                                    + " | Pol : " + p1.getPoliticalScore()
+                            //                                    + " | Rel : " + p1.getReligiousScore()
+                            //                                    + " | Pol : " + p1.getPoliticalScore()
                             ));
                             Platform.runLater(() -> player3ResLabel.setText("Ressources : " + p3.getResources().toString()
                                     + " | Nombre de Yacks : " + p3.getEconomicScore()
-//                                    + " | Rel : " + p1.getReligiousScore()
-//                                    + " | Pol : " + p1.getPoliticalScore()
+                            //                                    + " | Rel : " + p1.getReligiousScore()
+                            //                                    + " | Pol : " + p1.getPoliticalScore()
                             ));
-                           
 
                             if (playG.getBoard().getPlayers().size() == 4) {
                                 Player p4 = playG.getBoard().getPlayers().get(3);
@@ -208,7 +207,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                 testVillageLabel.setStyle("-fx-background-color: rgba(255,255,255,.8);");
                 villagesPane.get(i).getChildren().add(testVillageLabel);
             }
-            
+
             //Gestions des stupas
             if (v.getStupa() != null) {
                 Image img = new Image("resources/stupa/" + v.getStupa().getColor() + ".png");
@@ -218,7 +217,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                 iv1.setImage(img);
                 villagesPane.get(i).getChildren().add(iv1);
             }
-            
+
             for (Player player : playG.getBoard().getPlayers()) {
                 if (player.getPosition().equals(v)) {
                     Image img = new Image("resources/player/" + player.getColor() + ".png");
@@ -236,9 +235,9 @@ public class MainFXMLController implements Initializable, ControlledScreen {
             regionsPane.get(i).getChildren().clear();
             Region r = playG.getBoard().getRegions().get(i);
 
-            for (Map.Entry<Player, Integer> delegation : r.getDelegations().entrySet()) {
+            for (Map.Entry<String, Integer> delegation : r.getDelegations().entrySet()) {
 
-                Player player = delegation.getKey();
+                Player player = playG.getBoard().getPlayerByColor(delegation.getKey());
                 Integer nbDelegation = delegation.getValue();
 
                 for (int j = 0; j < nbDelegation; j++) {

@@ -7,7 +7,7 @@ import java.util.Map;
 public class Region {
 
     private int id;
-    private HashMap<Player, Integer> delegations;
+    private HashMap<String, Integer> delegations;
 
     public Region(int id) {
         this.id = id;
@@ -20,30 +20,35 @@ public class Region {
      * @param r
      */
     public Region(Region r) {
-        this.id = id;
-        //TODO remplacer Player par string color dans Hash MAP
-        this.delegations = null;
+        this.id = r.id;
+        delegations = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : r.delegations.entrySet()) {
+            String color = entry.getKey();
+            Integer nbDelegations = entry.getValue();
+            this.delegations.put(color, new Integer(nbDelegations));
+        }
+
     }
 
     public int getId() {
         return id;
     }
-
-    public HashMap<Player, Integer> getDelegations() {
+    
+    public HashMap<String, Integer> getDelegations() {
         return delegations;
     }
 
     public void addDelegations(Player r, Integer nb) {
-        if (delegations.get(r) == null) {
-            delegations.put(r, nb);
+        if (delegations.get(r.getColor()) == null) {
+            delegations.put(r.getColor(), nb);
         } else {
-            int nbDelegation = delegations.get(r) + nb;
-            delegations.put(r, nbDelegation);
+            int nbDelegation = delegations.get(r.getColor()) + nb;
+            delegations.put(r.getColor(), nbDelegation);
         }
 
     }
 
-    public Player getMaxDelegationPlayer() {
+    public String getMaxDelegationPlayer() {
         if (delegations.size() > 0) {
             return Collections.max(delegations.entrySet(), Map.Entry.comparingByValue()).getKey();
         }

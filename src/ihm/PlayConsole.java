@@ -69,9 +69,9 @@ public class PlayConsole extends Play {
                 System.out.println("score politique : " + p.getPoliticalScore());
                 System.out.println("score religieux : " + p.getReligiousScore());
                 System.out.print("Délégation[ ");
-                for (Region region : p.getDelegations().keySet()) {
+                for (Integer region : p.getDelegations().keySet()) {
 
-                    Integer regionID = region.getId();
+                    Integer regionID = region;
                     int nbDelegation = p.getDelegations().get(region);
                     System.out.print("Region " + regionID + " => " + nbDelegation + ", ");
 
