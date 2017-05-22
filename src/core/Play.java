@@ -120,46 +120,46 @@ public class Play {
         Region region8 = new Region(8);
 
         // Add regions to villages
-        village1.addRegion(region2);
-        village1.addRegion(region3);
-        village2.addRegion(region2);
-        village3.addRegion(region2);
-        village3.addRegion(region1);
-        village4.addRegion(region1);
-        village5.addRegion(region1);
-        village5.addRegion(region4);
-        village6.addRegion(region1);
-        village6.addRegion(region2);
-        village6.addRegion(region4);
-        village7.addRegion(region2);
-        village7.addRegion(region3);
-        village7.addRegion(region4);
-        village8.addRegion(region3);
-        village9.addRegion(region3);
-        village9.addRegion(region6);
-        village10.addRegion(region4);
-        village10.addRegion(region5);
-        village10.addRegion(region3);
-        village11.addRegion(region4);
-        village11.addRegion(region5);
-        village12.addRegion(region5);
-        village12.addRegion(region7);
-        village13.addRegion(region5);
-        village13.addRegion(region6);
-        village13.addRegion(region7);
-        village14.addRegion(region3);
-        village14.addRegion(region5);
-        village14.addRegion(region6);
-        village15.addRegion(region6);
-        village16.addRegion(region6);
-        village16.addRegion(region8);
-        village17.addRegion(region6);
-        village17.addRegion(region7);
-        village17.addRegion(region8);
-        village18.addRegion(region7);
-        village18.addRegion(region8);
-        village19.addRegion(region8);
-        village20.addRegion(region8);
+        village1.addRegion(2);
+        village1.addRegion(3);
+        village2.addRegion(2);
+        village3.addRegion(2);
+        village3.addRegion(1);
+        village4.addRegion(1);
+        village5.addRegion(1);
+        village5.addRegion(4);
+        village6.addRegion(1);
+        village6.addRegion(2);
+        village6.addRegion(4);
+        village7.addRegion(2);
+        village7.addRegion(3);
+        village7.addRegion(4);
+        village8.addRegion(3);
+        village9.addRegion(3);
+        village9.addRegion(6);
+        village10.addRegion(4);
+        village10.addRegion(5);
+        village10.addRegion(3);
+        village11.addRegion(4);
+        village11.addRegion(5);
+        village12.addRegion(5);
+        village12.addRegion(7);
+        village13.addRegion(5);
+        village13.addRegion(6);
+        village13.addRegion(7);
+        village14.addRegion(3);
+        village14.addRegion(5);
+        village14.addRegion(6);
+        village15.addRegion(6);
+        village16.addRegion(6);
+        village16.addRegion(8);
+        village17.addRegion(6);
+        village17.addRegion(7);
+        village17.addRegion(8);
+        village18.addRegion(7);
+        village18.addRegion(8);
+        village19.addRegion(8);
+        village20.addRegion(8);
 
         //Affection villages
         board.addVillage(village1);
@@ -300,50 +300,6 @@ public class Play {
 
     public Board getBoard() {
         return board;
-    }
-
-    public void test() {
-
-//        Board b = (Board) board.clone();
-//        System.out.println("Clone  => " + b);
-//        System.out.println("    => Bag Resources " + b.getBagResources());
-//        System.out.println("    => Bag Resources Detail " + b.getBagResources().getResources());
-//
-//        System.out.println("    => Bag Order " + b.getBagOrders());
-//        System.out.println("    => Bag Order Detail " + b.getBagOrders().getOrders());
-//
-//        System.out.println("    => Village " + b.getVillages());
-//        for (Village village : b.getVillages()) {
-//            System.out.println("       => Village ID " + village.getId());
-//            for (Resource resource : village.getResources()) {
-//                System.out.println("            => Village resources " + resource.hashCode());
-//            }
-//
-//        }
-
-//        for (Player player : b.getPlayers()) {
-////            System.out.println("        => Player " + player.getColor());
-////            System.out.println("        => Player Position" + player.getPosition());
-////            System.out.println("        => Player " + player);
-//
-//        }
-//
-//        Player p1 = b.getPlayers().get(0);
-//
-//        System.out.println("Position Clone Avant " + p1.getPosition().getId());
-//        p1.move(b.getVillageById(2));
-//        System.out.println("Position Clone Après " + p1.getPosition().getId());
-//        System.out.println("Position Reel " + this.board.getPlayers().get(0).getPosition().getId());
-//
-//        p1.addResource(b.getBagResources().takeRandom());
-//        p1.addResource(b.getBagResources().takeRandom());
-//        p1.addResource(b.getBagResources().takeRandom());
-//
-//        System.out.println("Resource Clone : " + p1.getResources());
-//        System.out.println("Resource Reel : " + board.getPlayers().get(0).getResources());
-        
-        
-
     }
 
 }

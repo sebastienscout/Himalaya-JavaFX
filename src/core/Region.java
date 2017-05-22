@@ -1,71 +1,58 @@
 package core;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class Region implements Cloneable {
+public class Region {
 
     private int id;
-    private HashMap<Player, Integer> delegations;
+    private HashMap<String, Integer> delegations;
 
     public Region(int id) {
         this.id = id;
         delegations = new HashMap<>();
     }
 
+    /**
+     * Constructeur par copie
+     *
+     * @param r
+     */
+    public Region(Region r) {
+        this.id = r.id;
+        delegations = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : r.delegations.entrySet()) {
+            String color = entry.getKey();
+            Integer nbDelegations = entry.getValue();
+            this.delegations.put(color, new Integer(nbDelegations));
+        }
+
+    }
+
     public int getId() {
         return id;
     }
-
-    public HashMap<Player, Integer> getDelegations() {
+    
+    public HashMap<String, Integer> getDelegations() {
         return delegations;
     }
 
     public void addDelegations(Player r, Integer nb) {
-        if (delegations.get(r) == null) {
-            delegations.put(r, nb);
+        if (delegations.get(r.getColor()) == null) {
+            delegations.put(r.getColor(), nb);
         } else {
-            int nbDelegation = delegations.get(r) + nb;
-            delegations.put(r, nbDelegation);
+            int nbDelegation = delegations.get(r.getColor()) + nb;
+            delegations.put(r.getColor(), nbDelegation);
         }
 
     }
 
-    public Player getMaxDelegationPlayer() {
+    public String getMaxDelegationPlayer() {
         if (delegations.size() > 0) {
             return Collections.max(delegations.entrySet(), Map.Entry.comparingByValue()).getKey();
         }
         return null;
-    }
-
-    public Object clone() {
-        Region r = null;
-
-        try {
-            // On récupère l'instance à renvoyer par l'appel de la 
-            // méthode super.clone()
-            r = (Region) super.clone();
-        } catch (CloneNotSupportedException ex) {
-            // Ne devrait jamais arriver car nous implémentons 
-            // l'interface Cloneable
-            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        r.id = id;
-        
-        r.delegations = new HashMap<>(delegations.size());
-        for (Map.Entry<Player, Integer> entry : delegations.entrySet()) {
-            Player player = entry.getKey();
-            Integer nbDelegations = entry.getValue();
-           
-            r.delegations.put(player, nbDelegations);
-        }
-
-        return r;
     }
 
 }

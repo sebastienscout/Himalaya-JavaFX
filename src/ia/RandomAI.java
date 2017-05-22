@@ -39,7 +39,7 @@ public class RandomAI extends Player {
                 action = new Action(Action.Type.pause);
                 break;
             case 0:
-                action = new Action(Action.Type.delegation, getPosition().getRegions().get(0).getId());
+                action = new Action(Action.Type.delegation, getPosition().getRegions().get(0));
                 break;
         }
 

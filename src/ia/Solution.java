@@ -4,7 +4,6 @@ import core.Action;
 import core.Board;
 import core.Player;
 import core.Resource;
-import core.Village;
 import java.util.ArrayList;
 
 public class Solution {
@@ -101,7 +100,7 @@ public class Solution {
                     action = new Action(Action.Type.pause);
                     break;
                 case 0:
-                    action = new Action(Action.Type.delegation, p.getPosition().getRegions().get(0).getId());
+                    action = new Action(Action.Type.delegation, p.getPosition().getRegions().get(0));
                     break;
             }
             actions.add(action);

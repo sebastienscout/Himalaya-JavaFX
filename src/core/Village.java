@@ -2,7 +2,6 @@ package core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Village {
 
@@ -17,7 +16,7 @@ public class Village {
     private Order order;
     private Type type;
     private Player stupa;
-    private ArrayList<Region> regions;
+    private ArrayList<Integer> regions;
 
     public Village(int id, Type type) {
         this.id = id;
@@ -29,28 +28,39 @@ public class Village {
         regions = new ArrayList<>();
     }
 
+    /**
+     * Constucteur par copie
+     *
+     * @param village
+     */
     public Village(Village village) {
         this.id = village.id;
         this.resources = new ArrayList<>();
+        this.regions = new ArrayList<>();
         for (Resource resource : village.resources) {
             this.resources.add(new Resource(resource.getType()));
         }
-        this.roads = village.roads;        
-        this.order = null;
+        this.roads = village.roads;
+
+        if (village.order != null) {
+            this.order = new Order(village.order);
+        }
+
         this.type = village.type;
         this.stupa = null;
-        this.regions = null;
+
+        this.regions = village.regions;
     }
 
     public Type getType() {
         return type;
     }
 
-    public ArrayList<Region> getRegions() {
+    public ArrayList<Integer> getRegions() {
         return regions;
     }
-
-    public void addRegion(Region region) {
+    
+    public void addRegion(int region) {
         regions.add(region);
     }
 
@@ -97,36 +107,5 @@ public class Village {
     public Order getOrder() {
         return order;
     }
-
-//    @Override
-//    public Object clone() {
-//        Village v = null;
-//        try {
-//            // On récupère l'instance à renvoyer par l'appel de la 
-//            // méthode super.clone()
-//            v = (Village) super.clone();
-//        } catch (CloneNotSupportedException ex) {
-//            // Ne devrait jamais arriver car nous implémentons 
-//            // l'interface Cloneable
-//            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        //Clone des attributs
-//        v.id = id;
-//
-//        if (order != null) {
-//            v.order = (Order) order.clone();
-//        }
-//
-//        v.resources = new ArrayList<>();
-//        for (Resource resource : resources) {
-//            v.resources.add((Resource) resource.clone());
-//        }
-//
-//        v.stupa = stupa;
-//        v.type = type;
-//
-//        return v;
-//    }
 
 }
