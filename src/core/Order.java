@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Order {
 
     private ArrayList<Resource> resources;
-    private int nbYacks = 0;
+    private int value = 0;
 
     public Order() {
         //Random between 1 and 3 resources
@@ -32,18 +32,10 @@ public class Order {
                     break;
             }
             resources.add(new Resource(type));
+        }
 
-            switch (nbResources) {
-                case 1:
-                    nbYacks = (int) (Math.random() * 5 + 2);
-                    break;
-                case 2:
-                    nbYacks = (int) (Math.random() * 7 + 5);
-                    break;
-                case 3:
-                    nbYacks = (int) (Math.random() * 8 + 7);
-                    break;
-            }
+        for (Resource r : resources) {
+            value += r.getValue();
         }
     }
 
@@ -53,7 +45,7 @@ public class Order {
      * @param o
      */
     public Order(Order o) {
-        this.nbYacks = nbYacks;
+        this.value = o.value;
         this.resources = new ArrayList<>();
         o.resources.forEach((resource) -> {
             this.resources.add(new Resource(resource.getType()));
@@ -64,7 +56,7 @@ public class Order {
         return resources;
     }
 
-    public int getNbYacks() {
-        return nbYacks;
+    public int getValue() {
+        return value;
     }
 }

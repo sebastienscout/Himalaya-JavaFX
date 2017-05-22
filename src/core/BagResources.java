@@ -8,12 +8,20 @@ public class BagResources {
 
     public BagResources() {
         resources = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 18; i++) {
             resources.add(new Resource(Resource.Type.sel));
+        }
+        for (int i = 0; i < 15; i++) {
             resources.add(new Resource(Resource.Type.orge));
+        }
+        for (int i = 0; i < 12; i++) {
             resources.add(new Resource(Resource.Type.the));
-            resources.add(new Resource(Resource.Type.or));
+        }
+        for (int i = 0; i < 9; i++) {
             resources.add(new Resource(Resource.Type.jade));
+        }
+        for (int i = 0; i < 6; i++) {
+            resources.add(new Resource(Resource.Type.or));
         }
     }
     
@@ -29,10 +37,15 @@ public class BagResources {
     }
 
     public Resource takeRandom() {
-        int rand = (int) (Math.random() * resources.size());
-        Resource result = resources.get(rand);
-        resources.remove(result);
-        return result;
+        if (resources.size() > 0) {
+            int rand = (int) (Math.random() * resources.size());
+            Resource result = resources.get(rand);
+            resources.remove(result);
+            return result;
+        }
+
+        System.out.println("Plus de resources disponible !");
+        return null;
     }
 
     public ArrayList<Resource> getResources() {

@@ -19,7 +19,7 @@ public class Board {
         villages = new ArrayList<>();
         regions = new ArrayList<>();
         bagResources = new BagResources();
-        bagOrders = new BagOrders();
+        bagOrders = new BagOrders(40);
     }
     
     /**
@@ -120,8 +120,6 @@ public class Board {
      */
     private void transaction(Player p) {
         Village village = p.getPosition();
-        int value = 0;
-        Resource resSelected = null;
 
         //Pour faire une Commande
         if (village.getResources().isEmpty() && village.getOrder() != null) {
@@ -159,13 +157,14 @@ public class Board {
                     this.getBagResources().addResource(res);
                 }
 
-                p.setCompletedOrder(true, village.getId(), village.getOrder().getNbYacks());
+                p.setCompletedOrder(true, village.getId(), village.getOrder().getValue());
                 getBagOrders().getOrders().add(village.getOrder());
                 village.removeOrder();
             }
         } //Pour prendre resources du village
-        else if (village.getResources().size() > 0 && village.getOrder() == null) {
-            value = village.getResources().get(0).getValue();
+        else if (village.getResources().size() > 0 && village.getOrder() == null && p.canTakeResource()) {
+            Resource resSelected = null;
+            int value = village.getResources().get(0).getValue();
             for (Resource villResource : village.getResources()) {
                 if (villResource.getValue() <= value) {
                     value = villResource.getValue();
@@ -174,6 +173,7 @@ public class Board {
             }
             if (resSelected != null) {
                 p.addResource(resSelected);
+                p.addResourceTaken(village);
                 village.removeResource(resSelected);
             }
         }
@@ -333,14 +333,26 @@ public class Board {
      * au premier
      */
     public void afterActions() {
+        
+        // Calcul de l'inventaire aux tours 4, 8 et 12
         if (nbTurn % 4 == 0) {
             System.out.println("Calcul de l'inventaire...");
             calculateInventory();
         }
+        
+        // Avance du compteur de tour
         nbTurn++;
-        for (Player p : players) {
+        
+        // On réinitialise les actions et les villages des ressources
+        players.forEach((p) -> {
             p.clearActions();
-        }
+            p.clearResTakenVillage();
+        });
+        
+        // On switch le premier joueur, il devient dernier à jouer
+        Player p = players.get(0);
+        players.remove(0);
+        players.add(p);
     }
 
     /**
@@ -455,7 +467,7 @@ public class Board {
 
     public Player getPlayerByColor(String color) {
         Player p = null;
-        
+
         for (Player player : players) {
             if (player.getColor().equals(color)) {
                 p = player;

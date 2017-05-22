@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
@@ -10,14 +13,22 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.MenuFXMLController">
    <children>
+      <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true">
+         <image>
+            <Image url="@../resources/menu.jpg" />
+         </image>
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+      </ImageView>
       <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Text fill="#9e9c9c" stroke="#2f1f1f" strokeType="OUTSIDE" strokeWidth="0.0" text="Himalaya" textAlignment="CENTER" wrappingWidth="800.0">
+            <Text fill="#d38585" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="2.0" text="Himalaya" textAlignment="CENTER" wrappingWidth="800.0">
                <font>
                   <Font name="AR CHRISTY" size="80.0" />
                </font>
             </Text>
-            <Text fill="#757373" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu" textAlignment="CENTER" wrappingWidth="800.0">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu" textAlignment="CENTER" wrappingWidth="800.0">
                <font>
                   <Font name="AR CHRISTY" size="50.0" />
                </font>
@@ -26,7 +37,7 @@
                <children>
                   <FlowPane fx:id="player1" alignment="CENTER" prefHeight="35.0" prefWidth="800.0">
                      <children>
-                        <Text strokeType="INSIDE" strokeWidth="0.0" text="Joueur 1" textAlignment="CENTER" wrappingWidth="100.0">
+                        <Text fill="WHITE" strokeType="INSIDE" strokeWidth="0.0" text="Joueur 1" textAlignment="CENTER" wrappingWidth="100.0">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -48,7 +59,7 @@
                   </FlowPane>
                   <FlowPane fx:id="player2" alignment="CENTER" prefHeight="35.0" prefWidth="800.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 2" textAlignment="CENTER" wrappingWidth="100.0">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 2" textAlignment="CENTER" wrappingWidth="100.0">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -70,7 +81,7 @@
                   </FlowPane>
                   <FlowPane fx:id="player3" alignment="CENTER" prefHeight="35.0" prefWidth="800.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 3" textAlignment="CENTER" wrappingWidth="100.0">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 3" textAlignment="CENTER" wrappingWidth="100.0">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -92,7 +103,7 @@
                   </FlowPane>
                   <FlowPane fx:id="player4" alignment="CENTER" prefHeight="35.0" prefWidth="800.0" visible="false">
                      <children>
-                        <Text fx:id="player31" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 4" textAlignment="CENTER" wrappingWidth="100.0">
+                        <Text fx:id="player31" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 4" textAlignment="CENTER" wrappingWidth="100.0">
                            <font>
                               <Font size="20.0" />
                            </font>

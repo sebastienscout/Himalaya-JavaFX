@@ -204,7 +204,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                 testVillageLabel.setStyle("-fx-background-color: rgba(255,255,255,.8);");
                 villagesPane.get(i).getChildren().add(testVillageLabel);
             } else if (v.getOrder() != null) {
-                Label testVillageLabel = new Label("Commande (" + v.getOrder().getNbYacks() + ")\n" + v.getOrder().getResources().toString());
+                Label testVillageLabel = new Label("Commande (" + v.getOrder().getValue() + ")\n" + v.getOrder().getResources().toString());
                 testVillageLabel.setStyle("-fx-background-color: rgba(255,255,255,.8);");
                 villagesPane.get(i).getChildren().add(testVillageLabel);
             }
@@ -242,7 +242,6 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                 Integer nbDelegation = delegation.getValue();
 
                 for (int j = 0; j < nbDelegation; j++) {
-                    System.out.println("couleur " + player.getColor());
                     Image img = new Image("resources/delegation/delegation_" + player.getColor() + ".png");
                     ImageView iv1 = new ImageView();
                     iv1.setFitHeight(25.0);

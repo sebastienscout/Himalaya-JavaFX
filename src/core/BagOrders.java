@@ -6,9 +6,9 @@ public class BagOrders {
 
     private ArrayList<Order> orders;
 
-    public BagOrders() {
+    public BagOrders(int nb) {
         orders = new ArrayList<>();
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < nb; i++) {
             orders.add(new Order());
         }
     }
