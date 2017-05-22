@@ -1,11 +1,8 @@
 package core;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class Board implements Cloneable {
+public class Board {
 
     private ArrayList<Player> players;
     private ArrayList<Village> villages;
@@ -23,6 +20,22 @@ public class Board implements Cloneable {
         regions = new ArrayList<>();
         bagResources = new BagResources();
         bagOrders = new BagOrders();
+    }
+    
+    public Board(Board board){
+        this.currentPlayer = board.currentPlayer;
+        this.nbTurn = board.nbTurn;
+        this.players = new ArrayList<>();
+        this.villages = new ArrayList<>();
+        this.regions = new ArrayList<>();
+        for (Village village : board.villages) {
+            this.villages.add(new Village(village));
+        }
+        for (Region region : board.regions) {
+            this.regions.add(region);
+        }
+        this.bagOrders = (BagOrders) board.bagOrders.clone();
+        this.bagResources = (BagResources) board.bagResources.clone();
     }
 
     public ArrayList<Player> getPlayers() {
@@ -119,7 +132,7 @@ public class Board implements Cloneable {
                         resourceNew.add(res);
                         counterForPlayer++;
                         resourceGiven = true;
-                        System.out.println("Commande <Village " + village.getId() + "> : " + counterForPlayer + "/" + nbResourcesInOrder);
+//                        System.out.println("Commande <Village " + village.getId() + "> : " + counterForPlayer + "/" + nbResourcesInOrder);
                     }
                     k++;
                 }
@@ -181,10 +194,10 @@ public class Board implements Cloneable {
                 p.addDelegations(choice, nbDeleg);
 
             } else {
-                System.out.println("Troc : Vous devez être sur le village où vous avez répondu à la commande.");
+//                System.out.println("Troc : Vous devez être sur le village où vous avez répondu à la commande.");
             }
         } else {
-            System.out.println("Delegation : Vous devez avoir complété une commande, et moins de 2 transactions.");
+//            System.out.println("Delegation : Vous devez avoir complété une commande, et moins de 2 transactions.");
         }
 
     }
@@ -213,14 +226,14 @@ public class Board implements Cloneable {
                     }
                     p.setReligiousScore(p.getReligiousScore() + nbPoints);
                 } else {
-                    System.out.println("Offrande : Il y a déjà une stupa sur ce village.");
+//                    System.out.println("Offrande : Il y a déjà une stupa sur ce village.");
                 }
             } else {
-                System.out.println("Troc : Vous devez être sur le village où vous avez répondu à la commande.");
+//                System.out.println("Troc : Vous devez être sur le village où vous avez répondu à la commande.");
             }
 
         } else {
-            System.out.println("Offrande : Vous devez avoir complété une commande, et moins de 2 transactions.");
+//            System.out.println("Offrande : Vous devez avoir complété une commande, et moins de 2 transactions.");
         }
     }
 
@@ -233,10 +246,10 @@ public class Board implements Cloneable {
                 p.setNbTransactionDone(p.getNbTransactionDone() + 1);
                 p.setEconomicScore(p.getEconomicScore() + p.getNbYacksOrder());
             } else {
-                System.out.println("Troc : Vous devez être sur le village où vous avez répondu à la commande.");
+//                System.out.println("Troc : Vous devez être sur le village où vous avez répondu à la commande.");
             }
         } else {
-            System.out.println("Troc : Vous devez avoir complété une commande, et moins de 2 transactions.");
+//            System.out.println("Troc : Vous devez avoir complété une commande, et moins de 2 transactions.");
         }
 
     }
@@ -249,27 +262,26 @@ public class Board implements Cloneable {
     }
 
     public void executeAction(int i, Player p) {
-        System.out.println(p.getColor() + " => " + p.getAction(i));
         switch (p.getAction(i).getType()) {
             case stone:
                 if (p.getPosition().getDestVillage(Road.stone) != null) {
-                    p.move(p.getPosition().getDestVillage(Road.stone));
+                    p.move(getVillageById(p.getPosition().getDestVillage(Road.stone)));
                 } else {
-                    System.out.println("Erreur ! Il n'a pas de route <stone> pour le village " + p.getPosition().getId());
+//                    System.out.println("Erreur ! Il n'a pas de route <stone> pour le village " + p.getPosition().getId());
                 }
                 break;
             case soil:
                 if (p.getPosition().getDestVillage(Road.soil) != null) {
-                    p.move(p.getPosition().getDestVillage(Road.soil));
+                    p.move(getVillageById(p.getPosition().getDestVillage(Road.soil)));
                 } else {
-                    System.out.println("Erreur ! Il n'a pas de route <soil> pour le village " + p.getPosition().getId());
+//                    System.out.println("Erreur ! Il n'a pas de route <soil> pour le village " + p.getPosition().getId());
                 }
                 break;
             case ice:
                 if (p.getPosition().getDestVillage(Road.ice) != null) {
-                    p.move(p.getPosition().getDestVillage(Road.ice));
+                    p.move(getVillageById(p.getPosition().getDestVillage(Road.ice)));
                 } else {
-                    System.out.println("Erreur ! Il n'a pas de route <ice> pour le village " + p.getPosition().getId());
+//                    System.out.println("Erreur ! Il n'a pas de route <ice> pour le village " + p.getPosition().getId());
                 }
                 break;
             case offering:
@@ -410,40 +422,52 @@ public class Board implements Cloneable {
     /**
      * Clone du board pour IA
      */
-    public Object clone() {
+//    public Object clone() {
+//
+//        Board board = null;
+//        try {
+//            // On récupère l'instance à renvoyer par l'appel de la 
+//            // méthode super.clone()  
+//            board = (Board) super.clone();
+//
+//        } catch (CloneNotSupportedException ex) {
+//            // Ne devrait jamais arriver car nous implémentons 
+//            // l'interface Cloneable
+//            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        board.villages = new ArrayList<>();
+//
+//        // On clone les attributs
+//        for (Village village : villages) {
+//            board.villages.add(new Village(village));
+//        }
+//
+//        board.regions = new ArrayList<>(regions.size());
+//        for (Region region : regions) {
+//            board.regions.add((Region) region.clone());
+//        }
+//
+//        board.players = new ArrayList<>();
+////        board.players = new ArrayList<>(players.size());
+////        for (Player player : players) {
+////            board.players.add((Player) player.clone());
+////        }
+//
+//        board.bagOrders = (BagOrders) bagOrders.clone();
+//        board.bagResources = (BagResources) bagResources.clone();
+//
+//        return board;
+//    }
 
-        Board board = null;
-        try {
-            // On récupère l'instance à renvoyer par l'appel de la 
-            // méthode super.clone()  
-            board = (Board) super.clone();
-
-        } catch (CloneNotSupportedException ex) {
-            // Ne devrait jamais arriver car nous implémentons 
-            // l'interface Cloneable
-            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        board.villages = new ArrayList<>(villages.size());
-
-        // On clone les attributs
-        for (Village village : villages) {
-            board.villages.add((Village) village.clone());
-        }
-
-        board.regions = new ArrayList<>(regions.size());
-        for (Region region : regions) {
-            board.regions.add((Region) region.clone());
-        }
+    public Player getPlayerByColor(String color) {
+        Player p = null;
         
-        board.players = new ArrayList<>(players.size());
         for (Player player : players) {
-            board.players.add((Player) player.clone());
+            if (player.getColor().equals(color)) {
+                p = player;
+            }
         }
-        
-        board.bagOrders = (BagOrders) bagOrders.clone();
-        board.bagResources = (BagResources) bagResources.clone();
-
-        return board;
+        return p;
     }
 }

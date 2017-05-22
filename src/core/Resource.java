@@ -1,11 +1,8 @@
 package core;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+public class Resource {
 
-public class Resource implements Cloneable {
-
-    public enum Type implements Cloneable{
+    public enum Type {
         sel,
         orge,
         the,
@@ -48,22 +45,5 @@ public class Resource implements Cloneable {
                 break;
         }
         return valeur;
-    }
-
-    public Object clone() {
-        Resource r = null;
-        try {
-            // On récupère l'instance à renvoyer par l'appel de la 
-            // méthode super.clone()
-            r = (Resource) super.clone();
-        } catch (CloneNotSupportedException ex) {
-            // Ne devrait jamais arriver car nous implémentons 
-            // l'interface Cloneable
-            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        // On clone les attributs
-         r.type = type;
-        return r;
     }
 }

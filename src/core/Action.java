@@ -50,7 +50,6 @@ public class Action {
 
     @Override
     public String toString() {
-        return "Action{" + "type=" + type + ", id=" + id + '}';
+        return "" + type;
     }
-
 }

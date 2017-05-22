@@ -49,7 +49,7 @@ public class BagResources implements Cloneable {
         // On clone les attributs
         br.resources = new ArrayList<>(resources.size());
         for (Resource resource : resources) {
-            br.resources.add((Resource) resource.clone());
+            br.resources.add(new Resource(resource.getType()));
         }
 
         return br;

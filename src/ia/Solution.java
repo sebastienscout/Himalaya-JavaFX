@@ -1,7 +1,10 @@
 package ia;
 
 import core.Action;
+import core.Board;
 import core.Player;
+import core.Resource;
+import core.Village;
 import java.util.ArrayList;
 
 public class Solution {
@@ -16,14 +19,53 @@ public class Solution {
         this.fitness = 0;
         actions = new ArrayList<>(size);
     }
-
-    @Override
-    public String toString() {
-        return "Solution{" + "fitness=" + fitness + ", actions=" + actions + '}';
+    
+    public Solution(Solution solution){
+        this.fitness = solution.fitness;
+        this.size = solution.size;
+        this.p = solution.p;
+        this.actions = new ArrayList<>();
+        for (Action action : solution.actions) {
+            this.actions.add(new Action(action.getType(), action.getId()));
+        }
     }
 
-    public void calculateFitness() {
-        // TODO
+    public void calculateFitness(Board b) {
+        
+        Board cloneBoard = new Board(b);
+
+        Player clonePlayer = new Player(p);
+        clonePlayer.move(cloneBoard.getVillageById(p.getPosition().getId()));
+        cloneBoard.addPlayer(clonePlayer);
+
+        for (Action action : actions) {
+            clonePlayer.addAction(action);
+        }
+
+        clonePlayer.setCompletedOrder(false, 0, 0);
+        clonePlayer.setNbTransactionDone(0);
+
+        // Actions
+        for (int i = 0; i < 6; i++) {
+            cloneBoard.executeAction(i, clonePlayer);
+            //System.out.println("Position : " + clonePlayer.getPosition().getId() + " (" + clonePlayer.getPosition() + ") > Resources : " + clonePlayer.getPosition().getResources());
+        }
+
+        clonePlayer.clearActions();
+
+        int totalValueResourcesClone = 0;
+        int totalValueResourcesAI = 0;
+
+        for (Resource resource : clonePlayer.getResources()) {
+            totalValueResourcesClone += resource.getValue();
+        }
+
+        for (Resource resource : p.getResources()) {
+            totalValueResourcesAI += resource.getValue();
+        }
+
+        fitness = totalValueResourcesClone - totalValueResourcesAI;
+        //System.out.println("Fitness : " + fitness + ", actions = " + actions + ", resources = " + clonePlayer.getResources());
     }
 
     public double getFitness() {
@@ -85,7 +127,7 @@ public class Solution {
     public void mutate(int i) {
         Action tmp = actions.get(i);
         Action newAction = tmp;
-        while(newAction.getType().equals(tmp.getType())){
+        while (newAction.getType().equals(tmp.getType())) {
             int randAction = (int) (Math.random() * 7);
             Action action = null;
             switch (randAction) {
@@ -117,5 +159,10 @@ public class Solution {
             newAction = action;
         }
         actions.set(i, newAction);
+    }
+    
+    @Override
+    public String toString() {
+        return "Solution{" + "fitness=" + fitness + ", actions=" + actions + '}';
     }
 }

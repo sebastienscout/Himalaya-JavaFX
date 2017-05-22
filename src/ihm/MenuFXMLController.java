@@ -84,7 +84,7 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
 
     @FXML
     public void switchToMain() {
-        
+
         play.setDisable(true);
 
         //to do gérer les type de joueurs
@@ -101,7 +101,15 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
             }
         }
 
+        playG.addEvolAI("Rouge", 1);
+        playG.addRandomAI("Bleu", 5);
+        playG.addRandomAI("Vert", 10);
+        
+        myController.setScreen(Main.screenMainID);
+        
+        /*
         if (testInput) {
+            
             if (choiceTypes.get(0).getValue().equals("Humain")) {
                 playG.addPlayer(playerColor1.getValue().toString(), 1);
             } else {
@@ -137,7 +145,7 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
             
             play.setDisable(false);
         }
-
+         */
     }
 
     @FXML
