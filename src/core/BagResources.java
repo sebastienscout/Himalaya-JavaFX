@@ -1,10 +1,8 @@
 package core;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class BagResources implements Cloneable {
+public class BagResources {
 
     private ArrayList<Resource> resources;
 
@@ -16,6 +14,17 @@ public class BagResources implements Cloneable {
             resources.add(new Resource(Resource.Type.the));
             resources.add(new Resource(Resource.Type.or));
             resources.add(new Resource(Resource.Type.jade));
+        }
+    }
+    
+    /**
+     * Constructeur par copie
+     * @param br 
+     */
+    public BagResources(BagResources br){
+        this.resources = new ArrayList<>();
+        for (Resource resource : br.resources) {
+            this.resources.add(new Resource(resource.getType()));
         }
     }
 
@@ -33,26 +42,4 @@ public class BagResources implements Cloneable {
     public void addResource(Resource r) {
         resources.add(r);
     }
-
-    public Object clone() {
-        BagResources br = null;
-        try {
-            // On récupère l'instance à renvoyer par l'appel de la 
-            // méthode super.clone()
-            br = (BagResources) super.clone();
-        } catch (CloneNotSupportedException ex) {
-            // Ne devrait jamais arriver car nous implémentons 
-            // l'interface Cloneable
-            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        // On clone les attributs
-        br.resources = new ArrayList<>(resources.size());
-        for (Resource resource : resources) {
-            br.resources.add(new Resource(resource.getType()));
-        }
-
-        return br;
-    }
-
 }

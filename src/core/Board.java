@@ -22,20 +22,26 @@ public class Board {
         bagOrders = new BagOrders();
     }
     
+    /**
+     * Constructeur par copie
+     * @param board 
+     */
     public Board(Board board){
         this.currentPlayer = board.currentPlayer;
         this.nbTurn = board.nbTurn;
         this.players = new ArrayList<>();
         this.villages = new ArrayList<>();
         this.regions = new ArrayList<>();
+        
         for (Village village : board.villages) {
             this.villages.add(new Village(village));
         }
         for (Region region : board.regions) {
             this.regions.add(region);
         }
-        this.bagOrders = (BagOrders) board.bagOrders.clone();
-        this.bagResources = (BagResources) board.bagResources.clone();
+        
+        this.bagOrders = new BagOrders(board.bagOrders);
+        this.bagResources = new BagResources(board.bagResources);
     }
 
     public ArrayList<Player> getPlayers() {
@@ -104,6 +110,14 @@ public class Board {
         regions.add(r);
     }
 
+    /**
+     * Effectue une transaction => 
+     *  - Si il y a des ressources sur le village on récupère la ressource la 
+     * + faible 
+     *  - Si il y a une commande on donne nos ressources pour honorer la 
+     * commande
+     * @param p Joueur
+     */
     private void transaction(Player p) {
         Village village = p.getPosition();
         int value = 0;
@@ -132,7 +146,6 @@ public class Board {
                         resourceNew.add(res);
                         counterForPlayer++;
                         resourceGiven = true;
-//                        System.out.println("Commande <Village " + village.getId() + "> : " + counterForPlayer + "/" + nbResourcesInOrder);
                     }
                     k++;
                 }
@@ -166,6 +179,11 @@ public class Board {
         }
     }
 
+    /**
+     * Ajoute une ou plusieurs délégations sur une région voisine du village
+     * @param p
+     * @param action 
+     */
     private void delegation(Player p, Action action) {
         // Verification commande completée, et moins de 2 actions
         if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
@@ -202,6 +220,10 @@ public class Board {
 
     }
 
+    /**
+     * Effectue une offrande sur le village
+     * @param p 
+     */
     private void offering(Player p) {
         // Verification commande completée, et moins de 2 actions
         if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
@@ -238,7 +260,7 @@ public class Board {
     }
 
     /**
-     * Effectue le bartering pour récupèrer yack sur commande (point éco)
+     * Effectue le troc pour récupèrer yack sur commande (point éco)
      */
     public void bartering(Player p) {
         if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
@@ -261,6 +283,11 @@ public class Board {
         }
     }
 
+    /**
+     * Exécution des actions après plannification d'un joueur en particulier
+     * @param i numéro de l'action dans l'ordre de la plannification
+     * @param p Player
+     */
     public void executeAction(int i, Player p) {
         switch (p.getAction(i).getType()) {
             case stone:
@@ -301,6 +328,10 @@ public class Board {
         }
     }
 
+    /**
+     * Pour les tours 4 et 8 on calcul l'inventaire pour affecter récompense
+     * au premier
+     */
     public void afterActions() {
         if (nbTurn % 4 == 0) {
             System.out.println("Calcul de l'inventaire...");
@@ -312,6 +343,9 @@ public class Board {
         }
     }
 
+    /**
+     * Exécute toutes les actions de tous les joueurs
+     */
     public void executeActions() {
 
         // Initialisation des joueurs avant les actions
@@ -418,47 +452,6 @@ public class Board {
     void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
-
-    /**
-     * Clone du board pour IA
-     */
-//    public Object clone() {
-//
-//        Board board = null;
-//        try {
-//            // On récupère l'instance à renvoyer par l'appel de la 
-//            // méthode super.clone()  
-//            board = (Board) super.clone();
-//
-//        } catch (CloneNotSupportedException ex) {
-//            // Ne devrait jamais arriver car nous implémentons 
-//            // l'interface Cloneable
-//            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        board.villages = new ArrayList<>();
-//
-//        // On clone les attributs
-//        for (Village village : villages) {
-//            board.villages.add(new Village(village));
-//        }
-//
-//        board.regions = new ArrayList<>(regions.size());
-//        for (Region region : regions) {
-//            board.regions.add((Region) region.clone());
-//        }
-//
-//        board.players = new ArrayList<>();
-////        board.players = new ArrayList<>(players.size());
-////        for (Player player : players) {
-////            board.players.add((Player) player.clone());
-////        }
-//
-//        board.bagOrders = (BagOrders) bagOrders.clone();
-//        board.bagResources = (BagResources) bagResources.clone();
-//
-//        return board;
-//    }
 
     public Player getPlayerByColor(String color) {
         Player p = null;

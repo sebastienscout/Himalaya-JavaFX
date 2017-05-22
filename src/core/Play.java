@@ -302,48 +302,4 @@ public class Play {
         return board;
     }
 
-    public void test() {
-
-//        Board b = (Board) board.clone();
-//        System.out.println("Clone  => " + b);
-//        System.out.println("    => Bag Resources " + b.getBagResources());
-//        System.out.println("    => Bag Resources Detail " + b.getBagResources().getResources());
-//
-//        System.out.println("    => Bag Order " + b.getBagOrders());
-//        System.out.println("    => Bag Order Detail " + b.getBagOrders().getOrders());
-//
-//        System.out.println("    => Village " + b.getVillages());
-//        for (Village village : b.getVillages()) {
-//            System.out.println("       => Village ID " + village.getId());
-//            for (Resource resource : village.getResources()) {
-//                System.out.println("            => Village resources " + resource.hashCode());
-//            }
-//
-//        }
-
-//        for (Player player : b.getPlayers()) {
-////            System.out.println("        => Player " + player.getColor());
-////            System.out.println("        => Player Position" + player.getPosition());
-////            System.out.println("        => Player " + player);
-//
-//        }
-//
-//        Player p1 = b.getPlayers().get(0);
-//
-//        System.out.println("Position Clone Avant " + p1.getPosition().getId());
-//        p1.move(b.getVillageById(2));
-//        System.out.println("Position Clone Après " + p1.getPosition().getId());
-//        System.out.println("Position Reel " + this.board.getPlayers().get(0).getPosition().getId());
-//
-//        p1.addResource(b.getBagResources().takeRandom());
-//        p1.addResource(b.getBagResources().takeRandom());
-//        p1.addResource(b.getBagResources().takeRandom());
-//
-//        System.out.println("Resource Clone : " + p1.getResources());
-//        System.out.println("Resource Reel : " + board.getPlayers().get(0).getResources());
-        
-        
-
-    }
-
 }

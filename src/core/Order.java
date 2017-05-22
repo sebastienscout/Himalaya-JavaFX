@@ -1,10 +1,8 @@
 package core;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class Order implements Cloneable {
+public class Order {
 
     private ArrayList<Resource> resources;
     private int nbYacks = 0;
@@ -49,34 +47,24 @@ public class Order implements Cloneable {
         }
     }
 
+    /**
+     * Constructeur par copie
+     *
+     * @param o
+     */
+    public Order(Order o) {
+        this.nbYacks = nbYacks;
+        this.resources = new ArrayList<>();
+        o.resources.forEach((resource) -> {
+            this.resources.add(new Resource(resource.getType()));
+        });
+    }
+
     public ArrayList<Resource> getResources() {
         return resources;
     }
 
     public int getNbYacks() {
         return nbYacks;
-    }
-
-    public Object clone() {
-        Order o = null;
-
-        try {
-            // On récupère l'instance à renvoyer par l'appel de la 
-            // méthode super.clone()
-            o = (Order) super.clone();
-        } catch (CloneNotSupportedException ex) {
-            // Ne devrait jamais arriver car nous implémentons 
-            // l'interface Cloneable
-            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        o.nbYacks = nbYacks;
-        o.resources = new ArrayList<>(resources.size());
-        for (Resource resource : resources) {
-            o.resources.add(new Resource(resource.getType()));
-        }
-        o.resources = resources;
-
-        return o;
     }
 }
