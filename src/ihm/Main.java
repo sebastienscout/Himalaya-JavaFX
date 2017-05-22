@@ -26,6 +26,7 @@ public class Main extends Application {
         root.getChildren().addAll(mainContainer);
         Scene scene = new Scene(root, Color.TRANSPARENT);
         stage.setScene(scene);
+        stage.setTitle("Himalaya - Le jeu");
         stage.show();
     }
 

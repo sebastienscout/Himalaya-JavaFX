@@ -115,7 +115,6 @@ public class ActionsFXMLController implements Initializable {
             if (action.getValue().equals("Delegation")) {
                 ComboBox region = regionBoxes.get(i);
                 player.addAction(new Action(Action.Type.delegation, (int) region.getValue()));
-                System.out.println(action.getId() + " : Delegation => Region n°" + region.getValue());
             } else {
                 System.out.println(action.getId() + " : " + action.getValue());
                 switch ((String) action.getValue()) {
@@ -210,7 +209,6 @@ public class ActionsFXMLController implements Initializable {
 
     public void setPlayer(Player player) {
         this.player = player;
-        playerColorLabel.setText("Joueur " + this.player.getColor());
     }
 
     public void setBackground(ImageView iv) {

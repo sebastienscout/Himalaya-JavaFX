@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 public class Order implements Cloneable {
 
     private ArrayList<Resource> resources;
-    private int nbYacks = 0;
+    private int value = 0;
 
     public Order() {
         //Random between 1 and 3 resources
@@ -34,18 +34,10 @@ public class Order implements Cloneable {
                     break;
             }
             resources.add(new Resource(type));
+        }
 
-            switch (nbResources) {
-                case 1:
-                    nbYacks = (int) (Math.random() * 5 + 2);
-                    break;
-                case 2:
-                    nbYacks = (int) (Math.random() * 7 + 5);
-                    break;
-                case 3:
-                    nbYacks = (int) (Math.random() * 8 + 7);
-                    break;
-            }
+        for (Resource r : resources) {
+            value += r.getValue();
         }
     }
 
@@ -53,8 +45,8 @@ public class Order implements Cloneable {
         return resources;
     }
 
-    public int getNbYacks() {
-        return nbYacks;
+    public int getValue() {
+        return value;
     }
 
     public Object clone() {
@@ -70,7 +62,7 @@ public class Order implements Cloneable {
             Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        o.nbYacks = nbYacks;
+        o.value = value;
         o.resources = new ArrayList<>(resources.size());
         for (Resource resource : resources) {
             o.resources.add(new Resource(resource.getType()));

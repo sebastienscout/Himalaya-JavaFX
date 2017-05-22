@@ -8,8 +8,8 @@ public class BagOrders implements Cloneable {
 
     private ArrayList<Order> orders = new ArrayList<>();
 
-    public BagOrders() {
-        for (int i = 0; i < 40; i++) {
+    public BagOrders(int nb) {
+        for (int i = 0; i < nb; i++) {
             orders.add(new Order());
         }
     }
