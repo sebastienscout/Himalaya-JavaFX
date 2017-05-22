@@ -304,7 +304,7 @@ public class Play {
 
     public void test() {
 
-        Board b = (Board) board.clone();
+//        Board b = (Board) board.clone();
 //        System.out.println("Clone  => " + b);
 //        System.out.println("    => Bag Resources " + b.getBagResources());
 //        System.out.println("    => Bag Resources Detail " + b.getBagResources().getResources());
