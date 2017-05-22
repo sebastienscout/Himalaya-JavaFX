@@ -1,6 +1,9 @@
 package ihm;
 
 import core.Board;
+import core.Player;
+import ia.EvolutionaryAI;
+import ia.RandomAI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -47,6 +50,12 @@ public class InitFXMLController implements Initializable {
         }
 
         if (test) {
+            for (Player player : board.getPlayers()) {
+                player.setBoard(board);
+                int villageChoice = player.getBeginingVillage();
+                board.addChoiceVillage(villageChoice);
+                System.out.println(player.getColor() + " > Village depart : " + villageChoice);
+            }
             board.getPlayers().get(0).move(board.getVillageById(Integer.parseInt(p1TextField.getText())));
             board.getPlayers().get(1).move(board.getVillageById(Integer.parseInt(p2TextField.getText())));
             board.getPlayers().get(2).move(board.getVillageById(Integer.parseInt(p3TextField.getText())));

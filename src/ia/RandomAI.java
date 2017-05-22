@@ -1,19 +1,22 @@
 package ia;
 
 import core.Action;
+import core.Board;
 import core.Player;
 import core.Village;
 
 public class RandomAI extends Player {
-    
-    public RandomAI(String color, Village village){
+
+    private Board board;
+
+    public RandomAI(String color, Village village) {
         super(color, village);
     }
-    
-    public Action getRandomAction(){
-        int randAction = (int)(Math.random()* 7 );
+
+    public Action getRandomAction() {
+        int randAction = (int) (Math.random() * 7);
         Action action = null;
-        switch(randAction){
+        switch (randAction) {
             case 1:
                 action = new Action(Action.Type.stone);
                 break;
@@ -39,7 +42,27 @@ public class RandomAI extends Player {
                 action = new Action(Action.Type.delegation, getPosition().getRegions().get(0).getId());
                 break;
         }
-        
+
         return action;
     }
+
+    @Override
+    public int getBeginingVillage() {
+        Village village = board.getVillageById((int) (Math.random() * 20) + 1);
+        boolean found = false;
+        while (found = false) {
+            if(village.getResources().size() > 0 && !(board.getChoiceBegining().contains(village.getId()))){
+                village = board.getVillageById((int) (Math.random() * 20 + 1));
+            }
+            else {
+                found = true;
+            }
+        }
+        return village.getId();
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
 }

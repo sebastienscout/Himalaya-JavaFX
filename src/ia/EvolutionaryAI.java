@@ -3,8 +3,12 @@ package ia;
 import core.Action;
 import core.Board;
 import core.Player;
+import core.Resource;
 import core.Village;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class EvolutionaryAI extends Player {
@@ -114,7 +118,7 @@ public class EvolutionaryAI extends Player {
         parents.setIndividuals(newIndiv);
     }
 
-    public void run(Population parents, Board board, int mu, int lambda, int tournamentSize, double crossOverRate, double mutationRate, int maxGeneration) {
+    public void run(Population parents, int mu, int lambda, int tournamentSize, double crossOverRate, double mutationRate, int maxGeneration) {
         
         this.mu = mu;
         this.tournamentSize = tournamentSize;
@@ -142,6 +146,26 @@ public class EvolutionaryAI extends Player {
         }
         
         bestSolActions = parents.bestSolution();
+    }
+    
+    @Override
+    public int getBeginingVillage(){
+        HashMap<Integer, Integer> values = new HashMap<>();
+        for (Village village : board.getVillages()) {
+            if(village.getResources().size() > 0 && !(board.getChoiceBegining().contains(village.getId()))){
+                int value = 0;
+                for (Resource resource : village.getResources()) {
+                    value += resource.getValue();
+                }
+                values.put(village.getId(), value);
+            }
+        }
+        
+        return Collections.max(values.entrySet(), Map.Entry.comparingByValue()).getKey();
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     public ArrayList<Action> getActions() {

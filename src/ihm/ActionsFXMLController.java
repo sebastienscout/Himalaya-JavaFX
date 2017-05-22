@@ -209,6 +209,7 @@ public class ActionsFXMLController implements Initializable {
 
     public void setPlayer(Player player) {
         this.player = player;
+        playerColorLabel.setText("Joueur " + this.player.getColor());
     }
 
     public void setBackground(ImageView iv) {

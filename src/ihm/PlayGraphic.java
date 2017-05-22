@@ -46,7 +46,7 @@ public class PlayGraphic extends Play {
                 
                 Population population = new Population();
 
-                ((EvolutionaryAI) p).run(population, board, mu, lambda, tournamentSize, crossOverRate, mutationRate, maxGeneration);
+                ((EvolutionaryAI) p).run(population, mu, lambda, tournamentSize, crossOverRate, mutationRate, maxGeneration);
                 
                 for (Action action : ((EvolutionaryAI) p).getActions()) {
                     p.addAction(action);

@@ -9,6 +9,7 @@ public class Board {
     private ArrayList<Region> regions;
     private BagResources bagResources;
     private BagOrders bagOrders;
+    private ArrayList<Integer> choiceBegining;
     private int nbTurn;
     private int currentPlayer;
 
@@ -16,6 +17,7 @@ public class Board {
         nbTurn = 1;
         currentPlayer = 0;
         players = new ArrayList<>();
+        choiceBegining = new ArrayList<>();
         villages = new ArrayList<>();
         regions = new ArrayList<>();
         bagResources = new BagResources();
@@ -28,6 +30,7 @@ public class Board {
         this.players = new ArrayList<>();
         this.villages = new ArrayList<>();
         this.regions = new ArrayList<>();
+        this.choiceBegining = new ArrayList<>();
         for (Village village : board.villages) {
             this.villages.add(new Village(village));
         }
@@ -48,6 +51,14 @@ public class Board {
 
     public ArrayList<Region> getRegions() {
         return regions;
+    }
+
+    public ArrayList<Integer> getChoiceBegining() {
+        return choiceBegining;
+    }
+    
+    public void addChoiceVillage(int i){
+        choiceBegining.add(i);
     }
 
     public Village getVillageById(int id) {
