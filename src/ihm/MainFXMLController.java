@@ -127,20 +127,21 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                             Player p3 = playG.getBoard().getPlayers().get(2);
 
                             Platform.runLater(() -> player1ResLabel.setText("Ressources : " + p1.getResources().toString()
-                                    + " | Eco : " + p1.getEconomicScore()
-                                    + " | Rel : " + p1.getReligiousScore()
-                                    + " | Pol : " + p1.getPoliticalScore()
+                                    + " | Nombre de Yacks : " + p1.getEconomicScore()
+//                                    + " | Rel : " + p1.getReligiousScore()
+//                                    + " | Pol : " + p1.getPoliticalScore()
                             ));
                             Platform.runLater(() -> player2ResLabel.setText("Ressources : " + p2.getResources().toString()
-                                    + " | Eco : " + p2.getEconomicScore()
-                                    + " | Rel : " + p2.getReligiousScore()
-                                    + " | Pol : " + p2.getPoliticalScore()
+                                    + " | Nombre de Yacks : " + p2.getEconomicScore()
+//                                    + " | Rel : " + p1.getReligiousScore()
+//                                    + " | Pol : " + p1.getPoliticalScore()
                             ));
                             Platform.runLater(() -> player3ResLabel.setText("Ressources : " + p3.getResources().toString()
-                                    + " | Eco : " + p3.getEconomicScore()
-                                    + " | Rel : " + p3.getReligiousScore()
-                                    + " | Pol : " + p3.getPoliticalScore()
+                                    + " | Nombre de Yacks : " + p3.getEconomicScore()
+//                                    + " | Rel : " + p1.getReligiousScore()
+//                                    + " | Pol : " + p1.getPoliticalScore()
                             ));
+                           
 
                             if (playG.getBoard().getPlayers().size() == 4) {
                                 Player p4 = playG.getBoard().getPlayers().get(3);
