@@ -197,7 +197,7 @@ public class Board {
     private void delegation(Player p, Action action) {
         // Verification commande completée, et moins de 2 actions
         if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
-            if (p.getPosition().getId() == p.getVillageOrderId()) {
+            if (p.getPosition().getId() == p.getVillageOrderId() && p.canPutDelegation()) {
                 p.setNbTransactionDone(p.getNbTransactionDone() + 1);
 
                 // Id de la region contenu dans l'action delegation
@@ -220,6 +220,7 @@ public class Board {
                 // Ajout des delegations
                 choice.addDelegations(p, nbDeleg);
                 p.addDelegations(choice, nbDeleg);
+                p.addDelegationPut(p.getPosition());
 
             } else {
 //                System.out.println("Troc : Vous devez être sur le village où vous avez répondu à la commande.");
@@ -358,6 +359,7 @@ public class Board {
         players.forEach((p) -> {
             p.clearActions();
             p.clearResTakenVillage();
+            p.clearDelegationPut();
         });
         
         // On switch le premier joueur, il devient dernier à jouer
