@@ -37,9 +37,6 @@ public class MainFXMLController implements Initializable, ControlledScreen {
     private Label turnLabel;
 
     @FXML
-    private Label player1Label, player2Label, player3Label, player4Label;
-
-    @FXML
     private Label player1ResLabel, player2ResLabel, player3ResLabel, player4ResLabel;
 
     @FXML
@@ -60,6 +57,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
 
     private ArrayList<FlowPane> villagesPane;
     private ArrayList<FlowPane> regionsPane;
+    private ArrayList<Label> playerLabels;
 
     /**
      * Initializes the controller class.
@@ -71,6 +69,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
 
         villagesPane = new ArrayList<>();
         regionsPane = new ArrayList<>();
+        playerLabels = new ArrayList<>();
 
         villagesPane.add(village1);
         villagesPane.add(village2);
@@ -101,6 +100,11 @@ public class MainFXMLController implements Initializable, ControlledScreen {
         regionsPane.add(region6);
         regionsPane.add(region7);
         regionsPane.add(region8);
+        
+        playerLabels.add(player1ResLabel);
+        playerLabels.add(player2ResLabel);
+        playerLabels.add(player3ResLabel);
+        playerLabels.add(player4ResLabel);
     }
 
     @FXML
@@ -121,35 +125,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                             Thread.sleep(500);
                             playG.getBoard().executeAction(i, p);
                             Platform.runLater(() -> displayElementsMap());
-
-                            Player p1 = playG.getBoard().getPlayers().get(0);
-                            Player p2 = playG.getBoard().getPlayers().get(1);
-                            Player p3 = playG.getBoard().getPlayers().get(2);
-
-                            Platform.runLater(() -> player1ResLabel.setText("Ressources : " + p1.getResources().toString()
-                                    + " | Nombre de Yacks : " + p1.getEconomicScore()
-                            //                                    + " | Rel : " + p1.getReligiousScore()
-                            //                                    + " | Pol : " + p1.getPoliticalScore()
-                            ));
-                            Platform.runLater(() -> player2ResLabel.setText("Ressources : " + p2.getResources().toString()
-                                    + " | Nombre de Yacks : " + p2.getEconomicScore()
-                            //                                    + " | Rel : " + p1.getReligiousScore()
-                            //                                    + " | Pol : " + p1.getPoliticalScore()
-                            ));
-                            Platform.runLater(() -> player3ResLabel.setText("Ressources : " + p3.getResources().toString()
-                                    + " | Nombre de Yacks : " + p3.getEconomicScore()
-                            //                                    + " | Rel : " + p1.getReligiousScore()
-                            //                                    + " | Pol : " + p1.getPoliticalScore()
-                            ));
-
-                            if (playG.getBoard().getPlayers().size() == 4) {
-                                Player p4 = playG.getBoard().getPlayers().get(3);
-                                Platform.runLater(() -> player4ResLabel.setText("Ressources : " + p4.getResources().toString()
-                                        + " | Eco : " + p4.getEconomicScore()
-                                        + " | Rel : " + p4.getReligiousScore()
-                                        + " | Pol : " + p4.getPoliticalScore()
-                                ));
-                            }
+                            Platform.runLater(() -> displayPlayersInformations());
                         }
                     }
                 } catch (InterruptedException e) {
@@ -249,11 +225,19 @@ public class MainFXMLController implements Initializable, ControlledScreen {
 
                     regionsPane.get(i).getChildren().add(iv1);
                 }
-
             }
-
         }
-
+    }
+    
+    public void displayPlayersInformations(){
+        setPlayersInformation(playG.getBoard().getPlayers().get(0), player1ResLabel);
+        setPlayersInformation(playG.getBoard().getPlayers().get(1), player2ResLabel);
+        setPlayersInformation(playG.getBoard().getPlayers().get(2), player3ResLabel);
+        if (playG.getBoard().getPlayers().size() == 4) {
+            setPlayersInformation(playG.getBoard().getPlayers().get(3), player4ResLabel);
+        } else {
+            player4ResLabel.setVisible(false);
+        }
     }
 
     @Override
@@ -262,32 +246,28 @@ public class MainFXMLController implements Initializable, ControlledScreen {
     }
 
     private void setPlayersInformation(Player p, Label playerLabel) {
+        FlowPane playerPane = (FlowPane) playerLabel.getParent();
+        if (playerPane.getChildren().size() == 2) {
+            playerPane.getChildren().remove(0);
+        }
         Image img = new Image("resources/player/" + p.getColor() + ".png");
         ImageView iv = new ImageView();
         iv.setFitWidth(30.0);
         iv.setPreserveRatio(true);
         iv.setImage(img);
-        ((FlowPane) playerLabel.getParent()).getChildren().add(0, iv);
-        playerLabel.setText(" Joueur " + p.getColor() + " > ");
+        playerLabel.setText("Joueur " + p.getColor() + " > Ressources : " + p.getResources() 
+                + " | Nombre de Yacks : " + p.getEconomicScore());
+        playerPane.getChildren().add(0, iv);
     }
 
     //événement à l'affichage de la page
     @Override
     public void initScreen() {
 
-        setPlayersInformation(playG.getBoard().getPlayers().get(0), player1Label);
-        setPlayersInformation(playG.getBoard().getPlayers().get(1), player2Label);
-        setPlayersInformation(playG.getBoard().getPlayers().get(2), player3Label);
-        if (playG.getBoard().getPlayers().size() == 4) {
-            setPlayersInformation(playG.getBoard().getPlayers().get(3), player4Label);
-        } else {
-            player4Label.setVisible(false);
-            player4ResLabel.setVisible(false);
-        }
-
         playG.testVillages();
 
         displayElementsMap();
+        displayPlayersInformations();
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("InitFXML.fxml"));

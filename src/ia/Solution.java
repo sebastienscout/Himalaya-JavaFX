@@ -64,6 +64,8 @@ public class Solution {
         }
 
         fitness = totalValueResourcesClone - totalValueResourcesAI;
+        fitness += (p.getNbStupa() - clonePlayer.getNbStupa()) * 100;
+        fitness += (p.getNbDelegation() - clonePlayer.getNbDelegation()) * 50;
         //System.out.println("Fitness : " + fitness + ", actions = " + actions + ", resources = " + clonePlayer.getResources());
     }
 

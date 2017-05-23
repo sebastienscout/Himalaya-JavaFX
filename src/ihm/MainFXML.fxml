@@ -27,26 +27,34 @@
                <children>
                   <FlowPane prefHeight="20.0" prefWidth="645.0">
                      <children>
-                        <Label fx:id="player1Label" text="Joueur 1 (Rouge) &gt;" />
-                        <Label fx:id="player1ResLabel" text="Resources" />
+                        <Label fx:id="player1ResLabel">
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
+                           </FlowPane.margin></Label>
                      </children>
                   </FlowPane>
                   <FlowPane prefHeight="20.0" prefWidth="645.0">
                      <children>
-                        <Label fx:id="player2Label" text="Joueur 2 (Bleu) &gt;" />
-                        <Label fx:id="player2ResLabel" text="Resources" />
+                        <Label fx:id="player2ResLabel">
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
+                           </FlowPane.margin></Label>
                      </children>
                   </FlowPane>
                   <FlowPane prefHeight="20.0" prefWidth="645.0">
                      <children>
-                        <Label fx:id="player3Label" text="Joueur 3 (Jaune) &gt;" />
-                        <Label fx:id="player3ResLabel" text="Resources" />
+                        <Label fx:id="player3ResLabel">
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
+                           </FlowPane.margin></Label>
                      </children>
                   </FlowPane>
                   <FlowPane prefHeight="20.0" prefWidth="645.0">
                      <children>
-                        <Label fx:id="player4Label" text="Joueur 4 (Vert) &gt;" />
-                        <Label fx:id="player4ResLabel" text="Resources" />
+                        <Label fx:id="player4ResLabel">
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
+                           </FlowPane.margin></Label>
                      </children>
                   </FlowPane>
                </children>
