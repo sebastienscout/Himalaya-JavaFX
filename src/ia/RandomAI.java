@@ -47,7 +47,7 @@ public class RandomAI extends Player {
     }
 
     @Override
-    public int getBeginingVillage() {
+    public int calculateInitPosition() {
         Village village = board.getVillageById((int) (Math.random() * 20) + 1);
         boolean found = false;
         while (found = false) {

@@ -3,6 +3,7 @@ package ihm;
 import core.Player;
 import core.Region;
 import core.Village;
+import ia.EvolutionaryAI;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -141,6 +142,11 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                 if (playG.getBoard().getNbTurn() == 13) {
                     turnLabel.setText("Terminé !");
                     displayScoreScreen();
+                    for (Player p : playG.getBoard().getPlayers()) {
+                        if(p instanceof EvolutionaryAI){
+                            ((EvolutionaryAI) p).closeFile();
+                        }
+                    }
                 } else {
                     playG.testVillages();
                     Platform.runLater(() -> displayElementsMap());
