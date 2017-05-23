@@ -5,6 +5,7 @@ import core.Board;
 import core.Player;
 import core.Resource;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Solution {
 
@@ -12,14 +13,20 @@ public class Solution {
     private ArrayList<Action> actions;
     private int size = 6;
     private Player p;
+    private Player strongest;
+    private Player weakest;
+    private int coeffStupa = 10;
+    private int coeffDelegation = 5;
+    private Board cloneBoard;
+    private Player clonePlayer;
 
     public Solution() {
         this.actions = null;
         this.fitness = 0;
         actions = new ArrayList<>(size);
     }
-    
-    public Solution(Solution solution){
+
+    public Solution(Solution solution) {
         this.fitness = solution.fitness;
         this.size = solution.size;
         this.p = solution.p;
@@ -30,10 +37,9 @@ public class Solution {
     }
 
     public void calculateFitness(Board b) {
-        
-        Board cloneBoard = new Board(b);
 
-        Player clonePlayer = new Player(p);
+        cloneBoard = new Board(b);
+        clonePlayer = new Player(p);
         clonePlayer.move(cloneBoard.getVillageById(p.getPosition().getId()));
         cloneBoard.addPlayer(clonePlayer);
 
@@ -63,9 +69,11 @@ public class Solution {
             totalValueResourcesAI += resource.getValue();
         }
 
+        calculStupas(b);
+
         fitness = totalValueResourcesClone - totalValueResourcesAI;
-        fitness += (p.getNbStupa() - clonePlayer.getNbStupa()) * 100;
-        fitness += (p.getNbDelegation() - clonePlayer.getNbDelegation()) * 50;
+        fitness += (p.getNbStupa() - clonePlayer.getNbStupa()) * coeffStupa;
+        fitness += (p.getNbDelegation() - clonePlayer.getNbDelegation()) * coeffDelegation;
         //System.out.println("Fitness : " + fitness + ", actions = " + actions + ", resources = " + clonePlayer.getResources());
     }
 
@@ -161,7 +169,46 @@ public class Solution {
         }
         actions.set(i, newAction);
     }
-    
+
+    public void calculStupas(Board b) {
+
+        if (b.winnerReligiousScore() != null) {
+            System.out.println(" Point du + fort en stupa " + b.winnerReligiousScore().getReligiousScore());
+            if (p.equals(b.winnerReligiousScore())) {
+                coeffStupa = coeffStupa - (b.winnerReligiousScore().getReligiousScore() - p.getReligiousScore());
+            }
+        }
+
+       // System.out.println("Coeff stupa " + p.getColor() + " = " + coeffStupa);
+    }
+
+    /**
+     * Calcul la fitness pour les délégations, par rapport aux régions où le
+     * joueur dommine ...
+     *
+     * @param clonePlayer Player cloné
+     */
+    public void calculFitnessDelegation(Player clonePlayer) {
+        int totalNbDelegationAi = 0;
+        int totalNbDelegationClone = 0;
+        //Ajout prise en compte de la prise de commande
+        for (Map.Entry<Integer, Integer> en : p.getDelegations().entrySet()) {
+            Integer region = en.getKey();
+            Integer nbDelegation = en.getValue();
+            totalNbDelegationAi += nbDelegation;
+        }
+        for (Map.Entry<Integer, Integer> en : clonePlayer.getDelegations().entrySet()) {
+            Integer region = en.getKey();
+            Integer nbDelegation = en.getValue();
+            totalNbDelegationClone += nbDelegation;
+        }
+        int scoreDelegation = 0;
+        scoreDelegation = totalNbDelegationClone - totalNbDelegationAi;
+        fitness += scoreDelegation;
+        System.out.println("Delegation ia = " + totalNbDelegationAi + " Fitness new " + fitness);
+
+    }
+
     @Override
     public String toString() {
         return "Solution{" + "fitness=" + fitness + ", actions=" + actions + '}';
