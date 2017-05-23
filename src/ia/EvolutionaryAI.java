@@ -5,11 +5,18 @@ import core.Board;
 import core.Player;
 import core.Resource;
 import core.Village;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EvolutionaryAI extends Player {
 
@@ -23,9 +30,19 @@ public class EvolutionaryAI extends Player {
     private Solution bestSolActions = null;
     private Board board;
 
+    private FileOutputStream fos;
+    private Writer writer;
+
     public EvolutionaryAI(String color, Village v) {
         super(color, v);
         random = new Random();
+        try {
+            fos = new FileOutputStream("fitness_" + getColor() + ".txt");
+            writer = new BufferedWriter(new OutputStreamWriter(fos, "utf-8"));
+            writer.write("turn,generation,fitness\n");
+        } catch (IOException ex) {
+            Logger.getLogger(EvolutionaryAI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void evalPop(Population population) {
@@ -119,40 +136,58 @@ public class EvolutionaryAI extends Player {
     }
 
     public void run(Population parents, int mu, int lambda, int tournamentSize, double crossOverRate, double mutationRate, int maxGeneration) {
-        
-        this.mu = mu;
-        this.tournamentSize = tournamentSize;
-        this.crossOverRate = crossOverRate;
-        this.mutationRate = mutationRate;
-        this.maxGeneration = maxGeneration;
-        this.board = board;
 
-        Population children = new Population(lambda);
+        try {
 
-        initialization(parents);
-        evalPop(parents);
+            this.mu = mu;
+            this.tournamentSize = tournamentSize;
+            this.crossOverRate = crossOverRate;
+            this.mutationRate = mutationRate;
+            this.maxGeneration = maxGeneration;
+            this.board = board;
 
-        int nbGeneration = 0;
-        
-        System.out.println(getColor() + " Generation n°" + nbGeneration + " -> BestSolution = " + parents.bestSolution());
+            Population children = new Population(lambda);
 
-        while (nbGeneration < this.maxGeneration) {
-            selection(parents, children);
-            randomVariation(children);
-            evalPop(children);
-            replacement(parents, children);
-            nbGeneration++;
+            initialization(parents);
+            evalPop(parents);
+
+            int nbGeneration = 0;
+
             System.out.println(getColor() + " Generation n°" + nbGeneration + " -> BestSolution = " + parents.bestSolution());
+
+            writer.write(board.getNbTurn() + "," + nbGeneration + "," + parents.bestSolution().getFitness() + '\n');
+            while (nbGeneration < this.maxGeneration) {
+                selection(parents, children);
+                randomVariation(children);
+                evalPop(children);
+                replacement(parents, children);
+                nbGeneration++;
+                System.out.println(getColor() + " Generation n°" + nbGeneration + " -> BestSolution = " + parents.bestSolution());
+                writer.write(board.getNbTurn() + "," + nbGeneration + "," + parents.bestSolution().getFitness() + '\n');
+            }
+
+            bestSolActions = parents.bestSolution();
+            writer.flush();
+
+        } catch (Exception ex) {
+            Logger.getLogger(EvolutionaryAI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        bestSolActions = parents.bestSolution();
     }
-    
+
+    public void closeFile() {
+        try {
+            writer.close();
+            fos.close();
+        } catch (IOException ex) {
+            Logger.getLogger(EvolutionaryAI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @Override
-    public int getBeginingVillage(){
+    public int calculateInitPosition() {
         HashMap<Integer, Integer> values = new HashMap<>();
         for (Village village : board.getVillages()) {
-            if(village.getResources().size() > 0 && !(board.getChoiceBegining().contains(village.getId()))){
+            if (village.getResources().size() > 0 && !(board.getChoiceBegining().contains(village.getId()))) {
                 int value = 0;
                 for (Resource resource : village.getResources()) {
                     value += resource.getValue();
@@ -160,10 +195,11 @@ public class EvolutionaryAI extends Player {
                 values.put(village.getId(), value);
             }
         }
-        
+
         return Collections.max(values.entrySet(), Map.Entry.comparingByValue()).getKey();
     }
 
+    @Override
     public void setBoard(Board board) {
         this.board = board;
     }

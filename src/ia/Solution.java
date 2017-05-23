@@ -52,6 +52,10 @@ public class Solution {
 
         // Actions
         for (int i = 0; i < 6; i++) {
+            Action action = clonePlayer.getAction(i);
+            if(action.getType() == Action.Type.delegation){
+                action.setId(clonePlayer.getPosition().getRegions().get(0));
+            }
             cloneBoard.executeAction(i, clonePlayer);
             //System.out.println("Position : " + clonePlayer.getPosition().getId() + " (" + clonePlayer.getPosition() + ") > Resources : " + clonePlayer.getPosition().getResources());
         }
