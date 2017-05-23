@@ -4,10 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
-import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -15,8 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
-import javafx.util.Duration;
 
 public class MenuFXMLController extends StackPane implements Initializable, ControlledScreen {
 
@@ -50,7 +45,7 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
         };
 
         String[] typeChoices = {
-            "Humain", "IA"
+            "Humain", "IA Aléatoire", "IA Evolutionnaire"
         };
 
         choiceColors.add(playerColor1);
@@ -101,36 +96,43 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
             }
         }
 
-        playG.addEvolAI("Rouge", 1);
-        playG.addRandomAI("Bleu", 5);
-        playG.addEvolAI("Vert", 10);
-        
-        myController.setScreen(Main.screenMainID);
-        
-        /*
+//        playG.addEvolAI("Rouge", 1);
+//        playG.addRandomAI("Bleu", 5);
+//        playG.addEvolAI("Vert", 10);
+//
+//        myController.setScreen(Main.screenMainID);
+
         if (testInput) {
-            
+
             if (choiceTypes.get(0).getValue().equals("Humain")) {
                 playG.addPlayer(playerColor1.getValue().toString(), 1);
-            } else {
-                playG.addAI(playerColor1.getValue().toString(), 1);
+            } else if (choiceTypes.get(0).getValue().equals("IA Aléatoire")) {
+                playG.addRandomAI(playerColor1.getValue().toString(), 1);
+            } else if (choiceTypes.get(0).getValue().equals("IA Evolutionnaire")) {
+                playG.addEvolAI(playerColor1.getValue().toString(), 1);
             }
             if (choiceTypes.get(1).getValue().equals("Humain")) {
                 playG.addPlayer(playerColor2.getValue().toString(), 1);
-            } else {
-                playG.addAI(playerColor2.getValue().toString(), 1);
+            } else if (choiceTypes.get(1).getValue().equals("IA Aléatoire")) {
+                playG.addRandomAI(playerColor2.getValue().toString(), 1);
+            } else if (choiceTypes.get(1).getValue().equals("IA Evolutionnaire")) {
+                playG.addEvolAI(playerColor2.getValue().toString(), 1);
             }
             if (choiceTypes.get(2).getValue().equals("Humain")) {
                 playG.addPlayer(playerColor3.getValue().toString(), 1);
-            } else {
-                playG.addAI(playerColor3.getValue().toString(), 1);
+            } else if (choiceTypes.get(2).getValue().equals("IA Aléatoire")) {
+                playG.addRandomAI(playerColor3.getValue().toString(), 1);
+            } else if (choiceTypes.get(2).getValue().equals("IA Evolutionnaire")) {
+                playG.addEvolAI(playerColor3.getValue().toString(), 1);
             }
 
             if (player4.isVisible()) {
                 if (choiceTypes.get(3).getValue().equals("Humain")) {
                     playG.addPlayer(playerColor4.getValue().toString(), 1);
-                } else {
-                    playG.addAI(playerColor4.getValue().toString(), 1);
+                } else if (choiceTypes.get(3).getValue().equals("IA Aléatoire")) {
+                    playG.addRandomAI(playerColor4.getValue().toString(), 1);
+                } else if (choiceTypes.get(3).getValue().equals("IA Evolutionnaire")) {
+                    playG.addEvolAI(playerColor4.getValue().toString(), 1);
                 }
             }
 
@@ -142,10 +144,10 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
             alert.setHeaderText(null);
             alert.setContentText("Vous devez configurer les joueurs et leur type !");
             alert.showAndWait();
-            
+
             play.setDisable(false);
         }
-         */
+
     }
 
     @FXML
