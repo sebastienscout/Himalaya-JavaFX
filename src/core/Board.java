@@ -1,6 +1,9 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Board {
 
@@ -413,6 +416,11 @@ public class Board {
     }
 
     public Player winnerPoliticalScore() {
+        
+        for (Player p : players) {
+            p.setPoliticalScore(0);
+        }
+        
         for (Region r : regions) {
             Player p = getPlayerByColor(r.getMaxDelegationPlayer());
             if (p != null) {
@@ -472,6 +480,42 @@ public class Board {
             return winner;
         }
         return null;
+    }
+    
+    public Player winner(){
+        Player winner = null;
+        Player playerECO = winnerEconnomicScore();
+        Player playerREL = winnerReligiousScore();
+        Player playerPOL = winnerPoliticalScore();
+        
+        HashMap<Player, Integer> nbVictory = new HashMap<>();
+        players.forEach((p) -> {
+            nbVictory.put(p, 0);
+        });
+        
+        if (playerECO != null) {
+            nbVictory.replace(playerECO, nbVictory.get(playerECO) + 1);
+        }
+        if (playerPOL != null) {
+            nbVictory.replace(playerPOL, nbVictory.get(playerPOL) + 1);
+        }
+        if (playerREL != null) {
+            nbVictory.replace(playerREL, nbVictory.get(playerREL) + 1);
+        }
+
+        Map.Entry<Player, Integer> maxVictoryPlayer = Collections.max(nbVictory.entrySet(), Map.Entry.comparingByValue());
+        if (maxVictoryPlayer.getValue() >= 2) {
+            winner = maxVictoryPlayer.getKey();
+        } else if (playerECO != null) {
+            winner = playerECO;
+        } else if (playerPOL != null) {
+            winner = playerPOL;
+        } else if (playerREL != null) {
+            winner = playerREL;
+        }
+        
+        return winner;
+
     }
 
     void setPlayers(ArrayList<Player> players) {

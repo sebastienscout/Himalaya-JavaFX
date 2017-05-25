@@ -15,7 +15,7 @@ public class Solution {
     private Player p;
     private Player strongest;
     private Player weakest;
-    private final int weightStupa = 100;
+    private final int weightStupa = 20;
     private int coeffDelegation = 10;
     private Board cloneBoard;
     private Player clonePlayer;
@@ -74,16 +74,10 @@ public class Solution {
         }
 
         fitness = totalValueResourcesClone - totalValueResourcesAI;
-
         //Calcul Fitness Stupa
-        if ((p.getNbStupa() - clonePlayer.getNbStupa()) > 0) {
-            fitness += calculStupas(b) * weightStupa * (p.getNbStupa() - clonePlayer.getNbStupa());
-            //System.out.println("calcul " + p.getColor() + " stupa " + calculStupas(b) * weightStupa * (p.getNbStupa() - clonePlayer.getNbStupa()));
-        } else {
-            fitness += (p.getNbStupa() - clonePlayer.getNbStupa()) * weightStupa;
-            //System.out.println("calcul " + p.getColor() + "stupa aucun stupa " + (p.getNbStupa() - clonePlayer.getNbStupa()) * weightStupa);
-        }
-
+        fitness += calculStupas(b) * weightStupa * (p.getNbStupa() - clonePlayer.getNbStupa());
+        System.out.println(p.getColor() + " score : " + p.getReligiousScore() + " => poids religieux = " + calculStupas(b) * weightStupa);
+        
         fitness += (p.getNbDelegation() - clonePlayer.getNbDelegation()) * coeffDelegation;
         //System.out.println("Fitness : " + fitness + ", actions = " + actions + ", resources = " + clonePlayer.getResources() + "COEFF : " + weightStupa);
     }
@@ -183,18 +177,17 @@ public class Solution {
 
     public double calculStupas(Board b) {
 
-        double coeff = 0.0;
+        double coeff = 1.0;
 
         if (b.winnerReligiousScore() != null) {
             if (p.equals(b.winnerReligiousScore())) {
-                coeff = 0.1;
+                coeff = 0.5;
             } else {
-                coeff = (p.getNbStupa() / b.winnerReligiousScore().getNbStupa());
+                coeff = b.winnerReligiousScore().getReligiousScore() - p.getReligiousScore();
             }
-            return coeff;
         }
 
-        return 1.0;
+        return coeff;
     }
 
     /**

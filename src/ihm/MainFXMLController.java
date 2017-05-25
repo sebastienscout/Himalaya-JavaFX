@@ -123,7 +123,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                 try {
                     for (int i = 0; i < 6; i++) {
                         for (Player p : playG.getBoard().getPlayers()) {
-                            Thread.sleep(500);
+                            Thread.sleep(100);
                             playG.getBoard().executeAction(i, p);
                             Platform.runLater(() -> displayElementsMap());
                             Platform.runLater(() -> displayPlayersInformations());

@@ -3,6 +3,7 @@ package core;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Region {
 
@@ -33,7 +34,7 @@ public class Region {
     public int getId() {
         return id;
     }
-    
+
     public HashMap<String, Integer> getDelegations() {
         return delegations;
     }
@@ -49,8 +50,22 @@ public class Region {
     }
 
     public String getMaxDelegationPlayer() {
+
         if (delegations.size() > 0) {
-            return Collections.max(delegations.entrySet(), Map.Entry.comparingByValue()).getKey();
+            int nbMaxValue = 0;
+            String maxValue = null;
+
+            int maxValueInMap = (Collections.max(delegations.values()));
+            for (Entry<String, Integer> entry : delegations.entrySet()) {
+                if (entry.getValue() == maxValueInMap) {
+                    nbMaxValue++;
+                    maxValue = entry.getKey();
+                }
+            }
+
+            if (nbMaxValue == 1) {
+                return maxValue;
+            }
         }
         return null;
     }
