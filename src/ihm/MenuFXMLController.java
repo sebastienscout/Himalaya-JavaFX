@@ -96,57 +96,57 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
             }
         }
 
-//        playG.addEvolAI("Rouge", 1);
-//        playG.addRandomAI("Bleu", 5);
-//        playG.addEvolAI("Vert", 10);
+        playG.addEvolAI("Rouge", 1);
+        playG.addRandomAI("Bleu", 5);
+        playG.addEvolAI("Vert", 10);
+
+        myController.setScreen(Main.screenMainID);
+
+//        if (testInput) {
 //
-//        myController.setScreen(Main.screenMainID);
-
-        if (testInput) {
-
-            if (choiceTypes.get(0).getValue().equals("Humain")) {
-                playG.addPlayer(playerColor1.getValue().toString(), 1);
-            } else if (choiceTypes.get(0).getValue().equals("IA Aléatoire")) {
-                playG.addRandomAI(playerColor1.getValue().toString(), 1);
-            } else if (choiceTypes.get(0).getValue().equals("IA Evolutionnaire")) {
-                playG.addEvolAI(playerColor1.getValue().toString(), 1);
-            }
-            if (choiceTypes.get(1).getValue().equals("Humain")) {
-                playG.addPlayer(playerColor2.getValue().toString(), 1);
-            } else if (choiceTypes.get(1).getValue().equals("IA Aléatoire")) {
-                playG.addRandomAI(playerColor2.getValue().toString(), 1);
-            } else if (choiceTypes.get(1).getValue().equals("IA Evolutionnaire")) {
-                playG.addEvolAI(playerColor2.getValue().toString(), 1);
-            }
-            if (choiceTypes.get(2).getValue().equals("Humain")) {
-                playG.addPlayer(playerColor3.getValue().toString(), 1);
-            } else if (choiceTypes.get(2).getValue().equals("IA Aléatoire")) {
-                playG.addRandomAI(playerColor3.getValue().toString(), 1);
-            } else if (choiceTypes.get(2).getValue().equals("IA Evolutionnaire")) {
-                playG.addEvolAI(playerColor3.getValue().toString(), 1);
-            }
-
-            if (player4.isVisible()) {
-                if (choiceTypes.get(3).getValue().equals("Humain")) {
-                    playG.addPlayer(playerColor4.getValue().toString(), 1);
-                } else if (choiceTypes.get(3).getValue().equals("IA Aléatoire")) {
-                    playG.addRandomAI(playerColor4.getValue().toString(), 1);
-                } else if (choiceTypes.get(3).getValue().equals("IA Evolutionnaire")) {
-                    playG.addEvolAI(playerColor4.getValue().toString(), 1);
-                }
-            }
-
-            //Si tous les champs sont remplis on va sur le plateau
-            myController.setScreen(Main.screenMainID);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Pas de précipitation !");
-            alert.setHeaderText(null);
-            alert.setContentText("Vous devez configurer les joueurs et leur type !");
-            alert.showAndWait();
-
-            play.setDisable(false);
-        }
+//            if (choiceTypes.get(0).getValue().equals("Humain")) {
+//                playG.addPlayer(playerColor1.getValue().toString(), 1);
+//            } else if (choiceTypes.get(0).getValue().equals("IA Aléatoire")) {
+//                playG.addRandomAI(playerColor1.getValue().toString(), 1);
+//            } else if (choiceTypes.get(0).getValue().equals("IA Evolutionnaire")) {
+//                playG.addEvolAI(playerColor1.getValue().toString(), 1);
+//            }
+//            if (choiceTypes.get(1).getValue().equals("Humain")) {
+//                playG.addPlayer(playerColor2.getValue().toString(), 1);
+//            } else if (choiceTypes.get(1).getValue().equals("IA Aléatoire")) {
+//                playG.addRandomAI(playerColor2.getValue().toString(), 1);
+//            } else if (choiceTypes.get(1).getValue().equals("IA Evolutionnaire")) {
+//                playG.addEvolAI(playerColor2.getValue().toString(), 1);
+//            }
+//            if (choiceTypes.get(2).getValue().equals("Humain")) {
+//                playG.addPlayer(playerColor3.getValue().toString(), 1);
+//            } else if (choiceTypes.get(2).getValue().equals("IA Aléatoire")) {
+//                playG.addRandomAI(playerColor3.getValue().toString(), 1);
+//            } else if (choiceTypes.get(2).getValue().equals("IA Evolutionnaire")) {
+//                playG.addEvolAI(playerColor3.getValue().toString(), 1);
+//            }
+//
+//            if (player4.isVisible()) {
+//                if (choiceTypes.get(3).getValue().equals("Humain")) {
+//                    playG.addPlayer(playerColor4.getValue().toString(), 1);
+//                } else if (choiceTypes.get(3).getValue().equals("IA Aléatoire")) {
+//                    playG.addRandomAI(playerColor4.getValue().toString(), 1);
+//                } else if (choiceTypes.get(3).getValue().equals("IA Evolutionnaire")) {
+//                    playG.addEvolAI(playerColor4.getValue().toString(), 1);
+//                }
+//            }
+//
+//            //Si tous les champs sont remplis on va sur le plateau
+//            myController.setScreen(Main.screenMainID);
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Pas de précipitation !");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Vous devez configurer les joueurs et leur type !");
+//            alert.showAndWait();
+//
+//            play.setDisable(false);
+//        }
 
     }
 

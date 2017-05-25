@@ -15,8 +15,8 @@ public class Solution {
     private Player p;
     private Player strongest;
     private Player weakest;
-    private int coeffStupa = 10;
-    private int coeffDelegation = 5;
+    private final int weightStupa = 100;
+    private int coeffDelegation = 10;
     private Board cloneBoard;
     private Player clonePlayer;
 
@@ -53,7 +53,7 @@ public class Solution {
         // Actions
         for (int i = 0; i < 6; i++) {
             Action action = clonePlayer.getAction(i);
-            if(action.getType() == Action.Type.delegation){
+            if (action.getType() == Action.Type.delegation) {
                 action.setId(clonePlayer.getPosition().getRegions().get(0));
             }
             cloneBoard.executeAction(i, clonePlayer);
@@ -73,12 +73,19 @@ public class Solution {
             totalValueResourcesAI += resource.getValue();
         }
 
-        calculStupas(b);
-
         fitness = totalValueResourcesClone - totalValueResourcesAI;
-        fitness += (p.getNbStupa() - clonePlayer.getNbStupa()) * coeffStupa;
+
+        //Calcul Fitness Stupa
+        if ((p.getNbStupa() - clonePlayer.getNbStupa()) > 0) {
+            fitness += calculStupas(b) * weightStupa * (p.getNbStupa() - clonePlayer.getNbStupa());
+            //System.out.println("calcul " + p.getColor() + " stupa " + calculStupas(b) * weightStupa * (p.getNbStupa() - clonePlayer.getNbStupa()));
+        } else {
+            fitness += (p.getNbStupa() - clonePlayer.getNbStupa()) * weightStupa;
+            //System.out.println("calcul " + p.getColor() + "stupa aucun stupa " + (p.getNbStupa() - clonePlayer.getNbStupa()) * weightStupa);
+        }
+
         fitness += (p.getNbDelegation() - clonePlayer.getNbDelegation()) * coeffDelegation;
-        //System.out.println("Fitness : " + fitness + ", actions = " + actions + ", resources = " + clonePlayer.getResources());
+        //System.out.println("Fitness : " + fitness + ", actions = " + actions + ", resources = " + clonePlayer.getResources() + "COEFF : " + weightStupa);
     }
 
     public double getFitness() {
@@ -174,16 +181,20 @@ public class Solution {
         actions.set(i, newAction);
     }
 
-    public void calculStupas(Board b) {
+    public double calculStupas(Board b) {
+
+        double coeff = 0.0;
 
         if (b.winnerReligiousScore() != null) {
-            System.out.println(" Point du + fort en stupa " + b.winnerReligiousScore().getReligiousScore());
             if (p.equals(b.winnerReligiousScore())) {
-                coeffStupa = coeffStupa - (b.winnerReligiousScore().getReligiousScore() - p.getReligiousScore());
+                coeff = 0.1;
+            } else {
+                coeff = (p.getNbStupa() / b.winnerReligiousScore().getNbStupa());
             }
+            return coeff;
         }
 
-       // System.out.println("Coeff stupa " + p.getColor() + " = " + coeffStupa);
+        return 1.0;
     }
 
     /**
