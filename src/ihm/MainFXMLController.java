@@ -203,7 +203,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
             }
 
             for (Player player : playG.getBoard().getPlayers()) {
-                if (player.getPosition().equals(v)) {
+                if (player.getPosition() != null && player.getPosition().equals(v)) {
                     Image img = new Image("resources/player/" + player.getColor() + ".png");
                     ImageView iv1 = new ImageView();
                     iv1.setFitWidth(50.0);

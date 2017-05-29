@@ -1,10 +1,11 @@
 package core;
 
 import ia.EvolutionaryAI;
+import ia.Population;
 import ia.RandomAI;
 import java.util.ArrayList;
 
-public class Play {
+public abstract class Play {
 
     protected static Board board;
 
@@ -14,16 +15,54 @@ public class Play {
         initFirstTurn();
     }
 
-    public void addPlayer(String color, int villageID) {
-        board.addPlayer(new Player(color, board.getVillageById(villageID)));
+    public void addPlayer(String color) {
+        Player player = new Player(color);
+        player.setBoard(board);
+        board.addPlayer(player);       
     }
 
-    public void addEvolAI(String color, int villageID) {
-        board.addPlayer(new EvolutionaryAI(color, board.getVillageById(villageID)));
+    public void addEvolAI(String color) {
+        EvolutionaryAI ai = new EvolutionaryAI(color);
+        ai.setBoard(board);
+        board.addPlayer(ai);
     }
 
-    public void addRandomAI(String color, int villageID) {
-        board.addPlayer(new RandomAI(color, board.getVillageById(villageID)));
+    public void addRandomAI(String color) {
+        RandomAI ai = new RandomAI(color);
+        ai.setBoard(board);
+        board.addPlayer(ai);
+    }
+    
+    protected void evolActions(EvolutionaryAI p) {
+        // population size of the parents
+        int mu = 10;
+        // population size of childrens
+        int lambda = 50;
+        // tournament size for selection
+        int tournamentSize = 2;
+        // rates of crossOver and mutation
+        double crossOverRate = 0.8;
+        // rates of mutation
+        double mutationRate = 1.0;
+        // maximum number of generation
+        int maxGeneration = 1000;
+
+        Population population = new Population();
+
+        p.run(population, mu, lambda, tournamentSize, crossOverRate, mutationRate, maxGeneration);
+        
+        for (Action action : p.getActions()) {
+            p.addAction(action);
+        }
+    }
+    
+    protected abstract void humanActions(Player p);
+
+    protected void randomActions(RandomAI p) {
+        for (int i = 0; i < 6; i++) {
+            Action action = ((RandomAI) p).getRandomAction();
+            p.addAction(action);
+        }
     }
 
     /**

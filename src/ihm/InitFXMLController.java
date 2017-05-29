@@ -38,25 +38,25 @@ public class InitFXMLController implements Initializable {
     @FXML
     private void validateButton(Event evt) {
 
-        boolean test = true;
+        boolean allFieldsOK = true;
 
         if (p1TextField.getText().isEmpty() || p2TextField.getText().isEmpty() || p3TextField.getText().isEmpty()) {
-            test = false;
+            allFieldsOK = false;
         }
         if (board.getPlayers().size() == 4 && p1TextField.getText().isEmpty()) {
-            test = false;
+            allFieldsOK = false;
         }
 
         // Vérification villages différents
         for (TextField textField : tf) {
             for (TextField textField1 : tf) {
                 if(!textField.equals(textField1) && textField.getText().equals(textField1.getText())){
-                    test = false;
+                    allFieldsOK = false;
                 }
             }
         }
 
-        if (test) {
+        if (allFieldsOK) {
 
             board.getPlayers().get(0).move(board.getVillageById(Integer.parseInt(p1TextField.getText())));
             board.getPlayers().get(1).move(board.getVillageById(Integer.parseInt(p2TextField.getText())));
@@ -78,7 +78,6 @@ public class InitFXMLController implements Initializable {
     }
 
     public void setPlayerInitialPosition(Player player, TextField tf) {
-        player.setBoard(board);
         int villageChoice = player.calculateInitPosition();
         if (villageChoice > 0 && villageChoice <= 20) {
             board.addChoiceVillage(villageChoice);

@@ -3,189 +3,175 @@ package ihm;
 import core.Action;
 import core.Play;
 import core.Player;
-import core.Region;
-import core.Resource;
 import core.Village;
+import ia.EvolutionaryAI;
 import ia.RandomAI;
 import java.util.Scanner;
 
 public class PlayConsole extends Play {
 
-    private static int nbTurnMax = 12;
+    private final int nbTurnMax = 12;
+    private final Scanner sc;
 
     public PlayConsole() {
         super();
+        sc = new Scanner(System.in);
     }
 
     public void run() {
-        int choice;
-        int choiceVillage;
-        Village v;
-        Scanner sc = new Scanner(System.in);
-        System.out.println("**** HIMALAYA ****");
-        displayLine();
+
         //Initialisation
         System.out.println("Initialisation en cours ...");
         displayInfoBoard();
-
-        //Pour premier tour
-        for (Player p : board.getPlayers()) {
-
-            //Choisir position de départ
-            System.out.println("Joueur " + p.getColor()
-                    + " Choisir le village de départ (il ne doit pas y"
-                    + " avoir de ressources ou de commande) ");
-            choiceVillage = sc.nextInt();
-            while (!board.getVillageById(choiceVillage).getResources().isEmpty()
-                    || board.getVillageById(choiceVillage).getOrder() != null) {
-                System.out.println("Erreur il y a une commande ou des ressources"
-                        + " sur ce village.");
-                System.out.println("Choisir le village de départ (il ne doit pas y"
-                        + " avoir de ressources ou de commande) ");
-                choiceVillage = sc.nextInt();
-            }
-            p.setPosition(board.getVillageById(choiceVillage));
-        }
+        initialPositionPlayers();
 
         //Les 12 tours
         while (board.getNbTurn() <= nbTurnMax) {
             testVillages();
-            displayInfoBoard();
-            //Pour tous les joueurs
-            for (Player p : board.getPlayers()) {
+            //displayInfoBoard();
+
+            board.getPlayers().forEach((p) -> {
+
                 displayLine();
-                /**
-                 * INFOS DU JOUEURS *
-                 */
-                System.out.println("**** Joueur " + p.getColor() + " ****");
-                System.out.println("Votre position : Village " + p.getPosition().getId());
-                System.out.print("Vos Resources [ ");
-                for (Resource res : p.getResources()) {
-                    System.out.print(res.getType() + " ");
-                }
-                System.out.print("]");
-                System.out.println("");
-                System.out.println("score éco : " + p.getEconomicScore());
-                System.out.println("score politique : " + p.getPoliticalScore());
-                System.out.println("score religieux : " + p.getReligiousScore());
-                System.out.print("Délégation[ ");
-                for (Integer region : p.getDelegations().keySet()) {
+                displayPlayerInfos(p);
 
-                    Integer regionID = region;
-                    int nbDelegation = p.getDelegations().get(region);
-                    System.out.print("Region " + regionID + " => " + nbDelegation + ", ");
-
-                }
-                System.out.println("]");
-
-                /**
-                 * ACTIONS *
-                 */
-                if (!(p instanceof RandomAI)) {
-                    System.out.println("Choisir parmis ces 6 actions :");
-                    for (int i = 0; i < 6; i++) {
-                        System.out.println("1 : ice");
-                        System.out.println("2 : stone");
-                        System.out.println("3 : soil");
-                        System.out.println("4 : delegation -> Récompense");
-                        System.out.println("5 : offering -> Récompense");
-                        System.out.println("6 : troc -> Récompense");
-                        System.out.println("7 : transaction");
-                        System.out.println("0 : pause");
-                        Action action = null;
-                        choice = sc.nextInt();
-                        switch (choice) {
-                            case 1:
-                                displayLine();
-                                action = new Action(Action.Type.ice);
-                                //System.out.println("Nouvelle Position : Village " + p.getPosition().getDestVillage(Road.ice).getId());
-                                displayLine();
-                                break;
-                            case 2:
-                                displayLine();
-                                action = new Action(Action.Type.stone);
-                                //System.out.println("Nouvelle Position : Village " + p.getPosition().getDestVillage(Road.stone).getId());
-                                displayLine();
-                                break;
-                            case 3:
-                                displayLine();
-                                action = new Action(Action.Type.soil);
-                                //System.out.println("Nouvelle Position : Village " + p.getPosition().getDestVillage(Road.soil).getId());
-                                displayLine();
-                                break;
-                            case 4:
-                                System.out.println("Sur quelle région voisine ? (Saisir id)");
-                                choice = sc.nextInt();
-                                action = new Action(Action.Type.delegation, choice);
-                                break;
-                            case 5:
-                                action = new Action(Action.Type.offering);
-                                break;
-                            case 6:
-                                action = new Action(Action.Type.bartering);
-                                break;
-                            case 7:
-                                action = new Action(Action.Type.transaction);
-                                break;
-                            default:
-                                action = new Action(Action.Type.pause);
-                                break;
-                        }
-                        System.out.println(action);
-                        p.addAction(action);
-                    }
+                if (p instanceof EvolutionaryAI) {
+                    //Actions pour l'IA evolutionnaire
+                    evolActions((EvolutionaryAI) p);
+                } else if (p instanceof RandomAI) {
+                    //Actions pour l'IA random
+                    randomActions((RandomAI) p);
                 } else {
-                    for (int i = 0; i < 6; i++) {
-                        Action action = ((RandomAI) p).getRandomAction();
-                        p.addAction(action);
-                    }
+                    //Actions pour le joueur humain
+                    humanActions(p);
                 }
-            }
+            });
+
             board.executeActions();
         }
-        
-        displayWinner();
 
+        displayWinner();
+    }
+
+    private void displayPlayerInfos(Player p) {
+        /**
+         * INFOS DU JOUEUR
+         */
+        System.out.println("**** Joueur " + p.getColor() + " ****");
+        System.out.println("Position : Village " + p.getPosition().getId());
+        System.out.println("Ressources : " + p.getResources());
+        System.out.println("Nombre de yacks : " + p.getEconomicScore());
+        System.out.print("Délégation [");
+        p.getDelegations().keySet().forEach((region) -> {
+            Integer regionID = region;
+            int nbDelegation = p.getDelegations().get(region);
+            System.out.print("Region " + regionID + " => " + nbDelegation + ", ");
+        });
+        System.out.println("]");
+    }
+
+    private void initialPositionPlayers() {
+        int choiceVillage;
+        //Pour premier tour
+        for (Player p : board.getPlayers()) {
+
+            if (p instanceof EvolutionaryAI || p instanceof RandomAI) {
+                choiceVillage = p.calculateInitPosition();
+            } else {
+                System.out.println("Joueur " + p.getColor() + " Choisir le village de départ");
+                choiceVillage = sc.nextInt();
+                while (!board.getVillageById(choiceVillage).getResources().isEmpty()
+                        || board.getVillageById(choiceVillage).getOrder() != null) {
+                    System.out.println("Erreur il y a une commande ou des ressources sur ce village.");
+                    System.out.println("Joueur " + p.getColor() + " Choisir le village de départ");
+                    choiceVillage = sc.nextInt();
+                }
+            }
+
+            System.out.println("Joueur " + p.getColor() + " se positionne en " + choiceVillage);
+            p.setPosition(board.getVillageById(choiceVillage));
+            board.addChoiceVillage(choiceVillage);
+        }
+    }
+
+    @Override
+    protected void humanActions(Player p) {
+        int choice;
+
+        System.out.println("Choisir parmis ces 6 actions :");
+        for (int i = 0; i < 6; i++) {
+            System.out.println("1 : ice");
+            System.out.println("2 : stone");
+            System.out.println("3 : soil");
+            System.out.println("4 : delegation -> Récompense");
+            System.out.println("5 : offering -> Récompense");
+            System.out.println("6 : troc -> Récompense");
+            System.out.println("7 : transaction");
+            System.out.println("0 : pause");
+            Action action = null;
+            choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    displayLine();
+                    action = new Action(Action.Type.ice);
+                    displayLine();
+                    break;
+                case 2:
+                    displayLine();
+                    action = new Action(Action.Type.stone);
+                    displayLine();
+                    break;
+                case 3:
+                    displayLine();
+                    action = new Action(Action.Type.soil);
+                    displayLine();
+                    break;
+                case 4:
+                    System.out.println("Sur quelle région voisine ? (Saisir id)");
+                    choice = sc.nextInt();
+                    action = new Action(Action.Type.delegation, choice);
+                    break;
+                case 5:
+                    action = new Action(Action.Type.offering);
+                    break;
+                case 6:
+                    action = new Action(Action.Type.bartering);
+                    break;
+                case 7:
+                    action = new Action(Action.Type.transaction);
+                    break;
+                default:
+                    action = new Action(Action.Type.pause);
+                    break;
+            }
+            System.out.println(action);
+            p.addAction(action);
+        }
     }
 
     public void displayWinner() {
 
-        Player winnerEco = board.winnerEconnomicScore();
-        Player winnerPol = board.winnerPoliticalScore();
-        Player winnerReg = board.winnerReligiousScore();
+        System.out.println("**** Calcul de fin de partie ****");
+
+        Player winner = board.winner();
         
-        if (winnerEco != null) {
-            System.out.println("Econnomie : " + winnerEco.getColor() + " (" + winnerEco.getEconomicScore() + ").");
-        } else {
-            System.out.println("Egalité du score Econnomie.");
+        for (Player p : board.getPlayers()) {
+            System.out.println("Joueur " + p.getColor() + " Economie : " + p.getEconomicScore());
+            System.out.println("Joueur " + p.getColor() + " Religieux : " + p.getReligiousScore());
+            System.out.println("Joueur " + p.getColor() + " Politique : " + p.getPoliticalScore());
+            System.out.println("---");
         }
-        if (winnerPol != null) {
-            System.out.println("Political : " + winnerPol.getColor() + " (" + winnerPol.getPoliticalScore() + ").");
-        } else {
-            System.out.println("Egalité du score Political.");
-        }
-        if (winnerReg != null) {
-            System.out.println("Political : " + winnerReg.getColor() + " (" + winnerReg.getReligiousScore() + ").");
-        } else {
-            System.out.println("Egalité du score Regligieux.");
-        }
+
+        System.out.println("Vainqueur : " + winner.getColor());
     }
 
     public void displayInfoBoard() {
         System.out.println("******* ETAT DU PLATEAU TOUR : " + board.getNbTurn() + " *******");
         for (Village village : board.getVillages()) {
             if (!village.getResources().isEmpty()) {
-                System.out.print("Village " + village.getId() + " -> Resource[");
-                for (Resource res : village.getResources()) {
-                    System.out.print(res.getType() + ", ");
-                }
-                System.out.println(" ]");
+                System.out.println("Village " + village.getId() + " -> Ressources: " + village.getResources());
             } else if (village.getOrder() != null) {
-                System.out.print("Village " + village.getId() + " -> Commande[");
-                for (Resource res : village.getOrder().getResources()) {
-                    System.out.print(res.getType() + ", ");
-                }
-                System.out.println("]");
+                System.out.println("Village " + village.getId() + " -> Commande: " + village.getOrder().getResources());
             }
         }
     }

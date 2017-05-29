@@ -1,11 +1,9 @@
 package ihm;
 
-import core.Action;
 import core.Play;
 import core.Player;
 import ia.EvolutionaryAI;
 import ia.RandomAI;
-import ia.Population;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +24,7 @@ public class PlayGraphic extends Play {
     public PlayGraphic() {
         super();
     }
-
+    
     public void run(ImageView background) {
         
         this.background = background;
@@ -47,37 +45,8 @@ public class PlayGraphic extends Play {
         });
     }
 
-    private void evolActions(EvolutionaryAI p) {
-        // population size of the parents
-        int mu = 10;
-        // population size of childrens
-        int lambda = 50;
-        // tournament size for selection
-        int tournamentSize = 2;
-        // rates of crossOver and mutation
-        double crossOverRate = 0.8;
-        // rates of mutation
-        double mutationRate = 1.0;
-        // maximum number of generation
-        int maxGeneration = 1000;
-
-        Population population = new Population();
-
-        p.run(population, mu, lambda, tournamentSize, crossOverRate, mutationRate, maxGeneration);
-        
-        for (Action action : p.getActions()) {
-            p.addAction(action);
-        }
-    }
-
-    private void randomActions(RandomAI p) {
-        for (int i = 0; i < 6; i++) {
-            Action action = ((RandomAI) p).getRandomAction();
-            p.addAction(action);
-        }
-    }
-
-    private void humanActions(Player p) {
+    @Override
+    protected void humanActions(Player p) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ActionsFXML.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();

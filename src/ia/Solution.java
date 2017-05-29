@@ -75,7 +75,7 @@ public class Solution {
 
         //Malus
         int nbTrans = clonePlayer.getNbTransactionDone();
-        if (clonePlayer.asCompletedOrder()) {
+        if (clonePlayer.hasCompletedOrder()) {
             fitness -= (2 - nbTrans) * malus;
         }
     }

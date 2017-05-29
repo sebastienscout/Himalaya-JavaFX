@@ -2,12 +2,12 @@ package ihm;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.FlowPane;
@@ -47,23 +47,11 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
         String[] typeChoices = {
             "Humain", "IA Aléatoire", "IA Evolutionnaire"
         };
-
-        choiceColors.add(playerColor1);
-        choiceColors.add(playerColor2);
-        choiceColors.add(playerColor3);
-        choiceColors.add(playerColor4);
-        choiceTypes.add(playerType1);
-        choiceTypes.add(playerType2);
-        choiceTypes.add(playerType3);
-        choiceTypes.add(playerType4);
-        inputs.add(playerColor1);
-        inputs.add(playerColor2);
-        inputs.add(playerColor3);
-        inputs.add(playerColor4);
-        inputs.add(playerType1);
-        inputs.add(playerType2);
-        inputs.add(playerType3);
-        inputs.add(playerType4);
+        
+        choiceColors.addAll(Arrays.asList(playerColor1, playerColor2, playerColor3, playerColor4));
+        choiceTypes.addAll(Arrays.asList(playerType1, playerType2, playerType3, playerType4));
+        inputs.addAll(choiceColors);
+        inputs.addAll(choiceTypes);
 
         for (ComboBox box : choiceColors) {
             box.setItems(FXCollections.observableArrayList(colorChoices));
@@ -96,9 +84,9 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
             }
         }
 
-        playG.addEvolAI("Rouge", 1);
-        playG.addEvolAI("Bleu", 5);
-        playG.addEvolAI("Vert", 10);
+        playG.addEvolAI("Rouge");
+        playG.addEvolAI("Bleu");
+        playG.addEvolAI("Vert");
 
         myController.setScreen(Main.screenMainID);
 
