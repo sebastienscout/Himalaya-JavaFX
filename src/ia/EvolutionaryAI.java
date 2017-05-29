@@ -153,8 +153,7 @@ public class EvolutionaryAI extends Player {
 
             int nbGeneration = 0;
 
-            System.out.println(getColor() + " Generation n°" + nbGeneration + " -> BestSolution = " + parents.bestSolution());
-
+//            System.out.println(getColor() + " Generation n°" + nbGeneration + " -> BestSolution = " + parents.bestSolution());
             writer.write(board.getNbTurn() + "," + nbGeneration + "," + parents.bestSolution().getFitness() + '\n');
             while (nbGeneration < this.maxGeneration) {
                 selection(parents, children);
@@ -162,9 +161,10 @@ public class EvolutionaryAI extends Player {
                 evalPop(children);
                 replacement(parents, children);
                 nbGeneration++;
-                System.out.println(getColor() + " Generation n°" + nbGeneration + " -> BestSolution = " + parents.bestSolution());
                 writer.write(board.getNbTurn() + "," + nbGeneration + "," + parents.bestSolution().getFitness() + '\n');
             }
+
+            System.out.println(getColor() + " -> " + parents.bestSolution());
 
             bestSolActions = parents.bestSolution();
             writer.flush();

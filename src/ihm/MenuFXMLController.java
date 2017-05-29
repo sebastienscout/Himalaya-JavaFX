@@ -97,7 +97,7 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
         }
 
         playG.addEvolAI("Rouge", 1);
-        playG.addRandomAI("Bleu", 5);
+        playG.addEvolAI("Bleu", 5);
         playG.addEvolAI("Vert", 10);
 
         myController.setScreen(Main.screenMainID);

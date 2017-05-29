@@ -3,8 +3,12 @@ package ia;
 import core.Action;
 import core.Board;
 import core.Player;
+import core.Region;
 import core.Resource;
+import core.Village;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Solution {
@@ -13,12 +17,13 @@ public class Solution {
     private ArrayList<Action> actions;
     private int size = 6;
     private Player p;
-    private Player strongest;
-    private Player weakest;
-    private final int weightStupa = 20;
-    private int coeffDelegation = 10;
     private Board cloneBoard;
     private Player clonePlayer;
+
+    private final int malus = 100;
+    private final int weightStupa = 20;
+    private final int weightDelegation = 10;
+    private final int weightBartering = 5;
 
     public Solution() {
         this.actions = null;
@@ -53,33 +58,54 @@ public class Solution {
         // Actions
         for (int i = 0; i < 6; i++) {
             Action action = clonePlayer.getAction(i);
+            testAction(action);
             if (action.getType() == Action.Type.delegation) {
-                action.setId(clonePlayer.getPosition().getRegions().get(0));
+                action.setId(computeOptimalRegion(b));
             }
             cloneBoard.executeAction(i, clonePlayer);
-            //System.out.println("Position : " + clonePlayer.getPosition().getId() + " (" + clonePlayer.getPosition() + ") > Resources : " + clonePlayer.getPosition().getResources());
         }
 
         clonePlayer.clearActions();
 
-        int totalValueResourcesClone = 0;
-        int totalValueResourcesAI = 0;
+        // Compute fitness
+        fitness = computeResourcesFitness();
+        fitness += calculWeightStupas(b) * weightStupa * (p.getNbStupa() - clonePlayer.getNbStupa());
+        fitness += (p.getNbDelegation() - clonePlayer.getNbDelegation()) * weightDelegation;
+        fitness += (clonePlayer.getEconomicScore() - p.getEconomicScore()) * weightBartering;
 
-        for (Resource resource : clonePlayer.getResources()) {
-            totalValueResourcesClone += resource.getValue();
+        //Malus
+        int nbTrans = clonePlayer.getNbTransactionDone();
+        if (clonePlayer.asCompletedOrder()) {
+            fitness -= (2 - nbTrans) * malus;
         }
+    }
 
-        for (Resource resource : p.getResources()) {
-            totalValueResourcesAI += resource.getValue();
+    public void testAction(Action action) {
+
+        switch (action.getType()) {
+            case transaction:
+                if (clonePlayer.getPosition().getResources().isEmpty() && clonePlayer.getPosition().getOrder() == null) {
+                    action.setType(Action.Type.pause);
+                }
+                break;
+            case bartering:
+                if (!clonePlayer.canBartering()) {
+                    action.setType(Action.Type.pause);
+                }
+
+                break;
+            case offering:
+                if (!clonePlayer.canPutStupa()) {
+                    action.setType(Action.Type.pause);
+                }
+                break;
+
+            case delegation:
+                if (!clonePlayer.canPutDelegation()) {
+                    action.setType(Action.Type.pause);
+                }
+                break;
         }
-
-        fitness = totalValueResourcesClone - totalValueResourcesAI;
-        //Calcul Fitness Stupa
-        fitness += calculStupas(b) * weightStupa * (p.getNbStupa() - clonePlayer.getNbStupa());
-        System.out.println(p.getColor() + " score : " + p.getReligiousScore() + " => poids religieux = " + calculStupas(b) * weightStupa);
-        
-        fitness += (p.getNbDelegation() - clonePlayer.getNbDelegation()) * coeffDelegation;
-        //System.out.println("Fitness : " + fitness + ", actions = " + actions + ", resources = " + clonePlayer.getResources() + "COEFF : " + weightStupa);
     }
 
     public double getFitness() {
@@ -167,7 +193,7 @@ public class Solution {
                     action = new Action(Action.Type.pause);
                     break;
                 case 0:
-                    action = new Action(Action.Type.delegation, 5);
+                    action = new Action(Action.Type.delegation, 1);
                     break;
             }
             newAction = action;
@@ -175,7 +201,7 @@ public class Solution {
         actions.set(i, newAction);
     }
 
-    public double calculStupas(Board b) {
+    public double calculWeightStupas(Board b) {
 
         double coeff = 1.0;
 
@@ -190,31 +216,68 @@ public class Solution {
         return coeff;
     }
 
+    public int computeWeightBartering(Board b) {
+        return 0;
+    }
+
     /**
-     * Calcul la fitness pour les délégations, par rapport aux régions où le
-     * joueur dommine ...
+     * Permet de déterminer où le joueur va placer les délégations
      *
      * @param clonePlayer Player cloné
      */
-    public void calculFitnessDelegation(Player clonePlayer) {
-        int totalNbDelegationAi = 0;
-        int totalNbDelegationClone = 0;
-        //Ajout prise en compte de la prise de commande
-        for (Map.Entry<Integer, Integer> en : p.getDelegations().entrySet()) {
-            Integer region = en.getKey();
-            Integer nbDelegation = en.getValue();
-            totalNbDelegationAi += nbDelegation;
-        }
-        for (Map.Entry<Integer, Integer> en : clonePlayer.getDelegations().entrySet()) {
-            Integer region = en.getKey();
-            Integer nbDelegation = en.getValue();
-            totalNbDelegationClone += nbDelegation;
-        }
-        int scoreDelegation = 0;
-        scoreDelegation = totalNbDelegationClone - totalNbDelegationAi;
-        fitness += scoreDelegation;
-        System.out.println("Delegation ia = " + totalNbDelegationAi + " Fitness new " + fitness);
+    public int computeOptimalRegion(Board b) {
+        HashMap<Integer, Integer> score = new HashMap<>();
 
+        for (Integer idRegion : clonePlayer.getPosition().getRegions()) {
+
+            Region region = cloneBoard.getRegionById(idRegion);
+            String playerMax = region.getMaxDelegationPlayer();
+
+            if (!clonePlayer.getColor().equals(playerMax)) {
+                int nbDelegationsPlayerMax = 0;
+                int nbDelegations = 0;
+                int nbDelegationsAvailable = 1;
+
+                Village.Type type = clonePlayer.getPosition().getType();
+                if (type.equals(Village.Type.temple)) {
+                    nbDelegationsAvailable = 2;
+                } else if (type.equals(Village.Type.monastery)) {
+                    nbDelegationsAvailable = 3;
+                }
+
+                if (playerMax != null) {
+                    nbDelegationsPlayerMax = b.getPlayerByColor(playerMax).getDelegations().get(idRegion);
+                }
+                if (clonePlayer.getDelegations().size() > 0 && clonePlayer.getDelegations().get(idRegion) != null) {
+                    nbDelegations = clonePlayer.getDelegations().get(idRegion);
+                }
+
+                score.put(idRegion, nbDelegationsAvailable + nbDelegations - nbDelegationsPlayerMax);
+
+            }
+        }
+
+        if (score.size() > 0) {
+            return Collections.max(score.entrySet(), Map.Entry.comparingByValue()).getKey();
+        }
+
+        return clonePlayer.getPosition().getRegions().get(0);
+
+    }
+
+    public int computeResourcesFitness() {
+        int totalValueResourcesClone = 0;
+        int totalValueResourcesAI = 0;
+
+        for (Resource resource : clonePlayer.getResources()) {
+            totalValueResourcesClone += resource.getValue();
+        }
+
+        for (Resource resource : p.getResources()) {
+            totalValueResourcesAI += resource.getValue();
+        }
+
+        return totalValueResourcesClone - totalValueResourcesAI;
     }
 
     @Override

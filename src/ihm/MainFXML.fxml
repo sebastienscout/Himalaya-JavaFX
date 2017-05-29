@@ -30,7 +30,8 @@
                         <Label fx:id="player1ResLabel">
                            <FlowPane.margin>
                               <Insets left="10.0" />
-                           </FlowPane.margin></Label>
+                           </FlowPane.margin>
+                        </Label>
                      </children>
                   </FlowPane>
                   <FlowPane prefHeight="20.0" prefWidth="645.0">

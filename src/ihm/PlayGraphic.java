@@ -9,7 +9,6 @@ import ia.Population;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -60,7 +59,7 @@ public class PlayGraphic extends Play {
         // rates of mutation
         double mutationRate = 1.0;
         // maximum number of generation
-        int maxGeneration = 25;
+        int maxGeneration = 1000;
 
         Population population = new Population();
 

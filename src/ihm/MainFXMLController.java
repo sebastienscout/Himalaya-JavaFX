@@ -59,6 +59,8 @@ public class MainFXMLController implements Initializable, ControlledScreen {
     private ArrayList<FlowPane> villagesPane;
     private ArrayList<FlowPane> regionsPane;
     private ArrayList<Label> playerLabels;
+    
+    private final long timeAnimation = 500;
 
     /**
      * Initializes the controller class.
@@ -123,7 +125,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                 try {
                     for (int i = 0; i < 6; i++) {
                         for (Player p : playG.getBoard().getPlayers()) {
-                            Thread.sleep(100);
+                            Thread.sleep(timeAnimation);
                             playG.getBoard().executeAction(i, p);
                             Platform.runLater(() -> displayElementsMap());
                             Platform.runLater(() -> displayPlayersInformations());

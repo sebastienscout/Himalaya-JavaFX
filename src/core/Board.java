@@ -26,12 +26,13 @@ public class Board {
         bagResources = new BagResources();
         bagOrders = new BagOrders(40);
     }
-    
+
     /**
      * Constructeur par copie
-     * @param board 
+     *
+     * @param board
      */
-    public Board(Board board){
+    public Board(Board board) {
         this.currentPlayer = board.currentPlayer;
         this.nbTurn = board.nbTurn;
         this.players = new ArrayList<>();
@@ -44,7 +45,7 @@ public class Board {
         for (Region region : board.regions) {
             this.regions.add(new Region(region));
         }
-        
+
         this.bagOrders = new BagOrders(board.bagOrders);
         this.bagResources = new BagResources(board.bagResources);
     }
@@ -64,8 +65,8 @@ public class Board {
     public ArrayList<Integer> getChoiceBegining() {
         return choiceBegining;
     }
-    
-    public void addChoiceVillage(int i){
+
+    public void addChoiceVillage(int i) {
         choiceBegining.add(i);
     }
 
@@ -124,11 +125,10 @@ public class Board {
     }
 
     /**
-     * Effectue une transaction => 
-     *  - Si il y a des ressources sur le village on récupère la ressource la 
-     * + faible 
-     *  - Si il y a une commande on donne nos ressources pour honorer la 
-     * commande
+     * Effectue une transaction => - Si il y a des ressources sur le village on
+     * récupère la ressource la + faible - Si il y a une commande on donne nos
+     * ressources pour honorer la commande
+     *
      * @param p Joueur
      */
     private void transaction(Player p) {
@@ -194,99 +194,79 @@ public class Board {
 
     /**
      * Ajoute une ou plusieurs délégations sur une région voisine du village
+     *
      * @param p
-     * @param action 
+     * @param action
      */
     private void delegation(Player p, Action action) {
         // Verification commande completée, et moins de 2 actions
-        if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
-            if (p.getPosition().getId() == p.getVillageOrderId() && p.canPutDelegation()) {
-                p.setNbTransactionDone(p.getNbTransactionDone() + 1);
+        if (p.canPutDelegation()) {
+            p.setNbTransactionDone(p.getNbTransactionDone() + 1);
 
-                // Id de la region contenu dans l'action delegation
-                Region choice = getRegionById(action.getId());
-                Integer nbDeleg = 0;
+            // Id de la region contenu dans l'action delegation
+            Region choice = getRegionById(action.getId());
+            Integer nbDeleg = 0;
 
-                // Type du village => nombre de delegation dispo
-                switch (p.getPosition().getType()) {
-                    case house:
-                        nbDeleg = 1;
-                        break;
-                    case temple:
-                        nbDeleg = 2;
-                        break;
-                    case monastery:
-                        nbDeleg = 3;
-                        break;
-                }
-
-                // Ajout des delegations
-                choice.addDelegations(p, nbDeleg);
-                p.addDelegations(choice, nbDeleg);
-                p.addDelegationPut(p.getPosition());
-
-            } else {
-//                System.out.println("Troc : Vous devez être sur le village où vous avez répondu à la commande.");
+            // Type du village => nombre de delegation dispo
+            switch (p.getPosition().getType()) {
+                case house:
+                    nbDeleg = 1;
+                    break;
+                case temple:
+                    nbDeleg = 2;
+                    break;
+                case monastery:
+                    nbDeleg = 3;
+                    break;
             }
-        } else {
-//            System.out.println("Delegation : Vous devez avoir complété une commande, et moins de 2 transactions.");
-        }
 
+            // Ajout des delegations
+            choice.addDelegations(p, nbDeleg);
+            p.addDelegations(choice, nbDeleg);
+            p.addDelegationPut(p.getPosition());
+        }
     }
 
     /**
      * Effectue une offrande sur le village
-     * @param p 
+     *
+     * @param p
      */
     private void offering(Player p) {
         // Verification commande completée, et moins de 2 actions
-        if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
+        if (p.canPutStupa()) {
+            p.setNbTransactionDone(p.getNbTransactionDone() + 1);
 
-            if (p.getPosition().getId() == p.getVillageOrderId()) {
-                p.setNbTransactionDone(p.getNbTransactionDone() + 1);
-
-                // Verification : pas de stupa deja placée
-                if (p.getPosition().getStupa() == null) {
-                    p.putStupa();
-                    int nbPoints = 0;
-                    switch (p.getPosition().getType()) {
-                        case house:
-                            nbPoints = 1;
-                            break;
-                        case temple:
-                            nbPoints = 2;
-                            break;
-                        case monastery:
-                            nbPoints = 3;
-                            break;
-                    }
-                    p.setReligiousScore(p.getReligiousScore() + nbPoints);
-                } else {
-//                    System.out.println("Offrande : Il y a déjà une stupa sur ce village.");
+            // Verification : pas de stupa deja placée
+            if (p.getPosition().getStupa() == null) {
+                p.putStupa();
+                int nbPoints = 0;
+                switch (p.getPosition().getType()) {
+                    case house:
+                        nbPoints = 1;
+                        break;
+                    case temple:
+                        nbPoints = 2;
+                        break;
+                    case monastery:
+                        nbPoints = 3;
+                        break;
                 }
-            } else {
-//                System.out.println("Troc : Vous devez être sur le village où vous avez répondu à la commande.");
+                p.setReligiousScore(p.getReligiousScore() + nbPoints);
             }
-
-        } else {
-//            System.out.println("Offrande : Vous devez avoir complété une commande, et moins de 2 transactions.");
         }
     }
 
     /**
      * Effectue le troc pour récupèrer yack sur commande (point éco)
+     *
      * @param p Player
      */
     public void bartering(Player p) {
-        if (p.asCompletedOrder() && p.getNbTransactionDone() < 2) {
-            if (p.getPosition().getId() == p.getVillageOrderId()) {
-                p.setNbTransactionDone(p.getNbTransactionDone() + 1);
-                p.setEconomicScore(p.getEconomicScore() + p.getNbYacksOrder());
-            } else {
-//                System.out.println("Troc : Vous devez être sur le village où vous avez répondu à la commande.");
-            }
-        } else {
-//            System.out.println("Troc : Vous devez avoir complété une commande, et moins de 2 transactions.");
+        if (p.canBartering()) {
+            p.setNbTransactionDone(p.getNbTransactionDone() + 1);
+            p.setEconomicScore(p.getEconomicScore() + p.getNbYacksOrder());
+            p.addBarteringVillage(p.getPosition());
         }
 
     }
@@ -300,6 +280,7 @@ public class Board {
 
     /**
      * Exécution des actions après plannification d'un joueur en particulier
+     *
      * @param i numéro de l'action dans l'ordre de la plannification
      * @param p Player
      */
@@ -344,27 +325,28 @@ public class Board {
     }
 
     /**
-     * Pour les tours 4 et 8 on calcul l'inventaire pour affecter récompense
-     * au premier
+     * Pour les tours 4 et 8 on calcul l'inventaire pour affecter récompense au
+     * premier
      */
     public void afterActions() {
-        
+
         // Calcul de l'inventaire aux tours 4, 8 et 12
         if (nbTurn % 4 == 0) {
             System.out.println("Calcul de l'inventaire...");
             calculateInventory();
         }
-        
+
         // Avance du compteur de tour
         nbTurn++;
-        
+
         // On réinitialise les actions et les villages des ressources
         players.forEach((p) -> {
             p.clearActions();
             p.clearResTakenVillage();
             p.clearDelegationPut();
+            p.clearBartering();
         });
-        
+
         // On switch le premier joueur, il devient dernier à jouer
         Player p = players.get(0);
         players.remove(0);
@@ -416,11 +398,11 @@ public class Board {
     }
 
     public Player winnerPoliticalScore() {
-        
+
         for (Player p : players) {
             p.setPoliticalScore(0);
         }
-        
+
         for (Region r : regions) {
             Player p = getPlayerByColor(r.getMaxDelegationPlayer());
             if (p != null) {
@@ -481,18 +463,18 @@ public class Board {
         }
         return null;
     }
-    
-    public Player winner(){
+
+    public Player winner() {
         Player winner = null;
         Player playerECO = winnerEconnomicScore();
         Player playerREL = winnerReligiousScore();
         Player playerPOL = winnerPoliticalScore();
-        
+
         HashMap<Player, Integer> nbVictory = new HashMap<>();
         players.forEach((p) -> {
             nbVictory.put(p, 0);
         });
-        
+
         if (playerECO != null) {
             nbVictory.replace(playerECO, nbVictory.get(playerECO) + 1);
         }
@@ -513,7 +495,7 @@ public class Board {
         } else if (playerREL != null) {
             winner = playerREL;
         }
-        
+
         return winner;
 
     }
