@@ -36,9 +36,9 @@ public abstract class Play {
     
     protected void evolActions(EvolutionaryAI p) {
         // population size of the parents
-        int mu = 10;
+        int mu = 20;
         // population size of childrens
-        int lambda = 50;
+        int lambda = 1000;
         // tournament size for selection
         int tournamentSize = 2;
         // rates of crossOver and mutation
@@ -46,7 +46,7 @@ public abstract class Play {
         // rates of mutation
         double mutationRate = 1.0;
         // maximum number of generation
-        int maxGeneration = 1000;
+        int maxGeneration = 100;
 
         Population population = new Population();
 
@@ -248,6 +248,7 @@ public abstract class Play {
 
     /**
      * Quand un village n'a plus de resources on en remet dans un autre
+     * @param villagesToIgnore
      */
     public void reFillVillageResource(ArrayList<Village> villagesToIgnore) {
         boolean test = false;
@@ -267,6 +268,7 @@ public abstract class Play {
 
     /**
      * Quand un village n'a plus de commande on en remet dans un autre
+     * @param villagesToIgnore
      */
     public void reFillVillageOrder(ArrayList<Village> villagesToIgnore) {
         boolean test = false;

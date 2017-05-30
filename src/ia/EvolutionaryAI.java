@@ -24,7 +24,6 @@ public class EvolutionaryAI extends Player {
     private int tournamentSize;
     private double crossOverRate;
     private double mutationRate;
-    private int maxGeneration;
     private Random random;
     private SolutionComparator comp = new SolutionComparator();
     private Solution bestSolActions = null;
@@ -37,9 +36,9 @@ public class EvolutionaryAI extends Player {
         super(color);
         random = new Random();
         try {
-            fos = new FileOutputStream("fitness_" + getColor() + ".txt");
+            fos = new FileOutputStream("fitness_" + getColor() + ".csv");
             writer = new BufferedWriter(new OutputStreamWriter(fos, "utf-8"));
-            writer.write("turn,generation,fitness\n");
+            writer.write("turn,generation,best,avg\n");
         } catch (IOException ex) {
             Logger.getLogger(EvolutionaryAI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -143,7 +142,6 @@ public class EvolutionaryAI extends Player {
             this.tournamentSize = tournamentSize;
             this.crossOverRate = crossOverRate;
             this.mutationRate = mutationRate;
-            this.maxGeneration = maxGeneration;
             this.board = board;
 
             Population children = new Population(lambda);
@@ -151,20 +149,19 @@ public class EvolutionaryAI extends Player {
             initialization(parents);
             evalPop(parents);
 
-            int nbGeneration = 0;
+            int nbGeneration = 1;
 
-//            System.out.println(getColor() + " Generation n°" + nbGeneration + " -> BestSolution = " + parents.bestSolution());
-            writer.write(board.getNbTurn() + "," + nbGeneration + "," + parents.bestSolution().getFitness() + '\n');
-            while (nbGeneration < this.maxGeneration) {
+            writer.write(board.getNbTurn() + "," + nbGeneration + "," + parents.bestSolution().getFitness() + "," + parents.averageFitness() + '\n');
+            while (nbGeneration < maxGeneration) {
                 selection(parents, children);
                 randomVariation(children);
                 evalPop(children);
                 replacement(parents, children);
                 nbGeneration++;
-                writer.write(board.getNbTurn() + "," + nbGeneration + "," + parents.bestSolution().getFitness() + '\n');
+                writer.write(board.getNbTurn() + "," + nbGeneration + "," + parents.bestSolution().getFitness() + "," + parents.averageFitness() + '\n');
             }
 
-            System.out.println(getColor() + " -> " + parents.bestSolution());
+            System.out.println(getColor() + " -> " + parents.bestSolution() + " {AVG = " + parents.averageFitness() + "}");
 
             bestSolActions = parents.bestSolution();
             writer.flush();
