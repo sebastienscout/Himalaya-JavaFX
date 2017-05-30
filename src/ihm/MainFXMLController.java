@@ -25,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -36,7 +37,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
 
     @FXML
     private Label turnLabel;
-
+   
     @FXML
     private Label player1ResLabel, player2ResLabel, player3ResLabel, player4ResLabel;
 
@@ -107,7 +108,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
         playerLabels.add(player1ResLabel);
         playerLabels.add(player2ResLabel);
         playerLabels.add(player3ResLabel);
-        playerLabels.add(player4ResLabel);
+        playerLabels.add(player4ResLabel);     
     }
 
     @FXML
@@ -196,7 +197,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
             if (v.getStupa() != null) {
                 Image img = new Image("resources/stupa/" + v.getStupa().getColor() + ".png");
                 ImageView iv1 = new ImageView();
-                iv1.setFitHeight(30.0);
+                iv1.setFitHeight(50.0);
                 iv1.setPreserveRatio(true);
                 iv1.setImage(img);
                 villagesPane.get(i).getChildren().add(iv1);
@@ -206,7 +207,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                 if (player.getPosition() != null && player.getPosition().equals(v)) {
                     Image img = new Image("resources/player/" + player.getColor() + ".png");
                     ImageView iv1 = new ImageView();
-                    iv1.setFitWidth(50.0);
+                    iv1.setFitWidth(60.0);
                     iv1.setPreserveRatio(true);
                     iv1.setImage(img);
                     villagesPane.get(i).getChildren().add(iv1);
@@ -227,7 +228,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                 for (int j = 0; j < nbDelegation; j++) {
                     Image img = new Image("resources/delegation/delegation_" + player.getColor() + ".png");
                     ImageView iv1 = new ImageView();
-                    iv1.setFitHeight(25.0);
+                    iv1.setFitHeight(35.0);
                     iv1.setPreserveRatio(true);
                     iv1.setImage(img);
 

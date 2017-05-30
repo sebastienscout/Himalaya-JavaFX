@@ -11,9 +11,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.MenuFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="120.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.MenuFXMLController">
    <children>
-      <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true">
+      <ImageView fitHeight="720.0" fitWidth="1200.0" pickOnBounds="true">
          <image>
             <Image url="@../resources/menu.jpg" />
          </image>
@@ -21,16 +21,16 @@
             <Rectangle2D />
          </viewport>
       </ImageView>
-      <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
+      <FlowPane alignment="CENTER" layoutX="200.0" layoutY="80.0" prefHeight="200.0" prefWidth="200.0">
          <children>
             <Text fill="#d38585" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="2.0" text="Himalaya" textAlignment="CENTER" wrappingWidth="800.0">
                <font>
-                  <Font name="AR CHRISTY" size="80.0" />
+                  <Font size="100.0" />
                </font>
             </Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu" textAlignment="CENTER" wrappingWidth="800.0">
+            <Text fill="WHITE" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" text="Menu" textAlignment="CENTER" wrappingWidth="800.0">
                <font>
-                  <Font name="AR CHRISTY" size="50.0" />
+                  <Font size="60.0" />
                </font>
             </Text>
             <FlowPane alignment="CENTER" prefHeight="250.0" prefWidth="800.0">
