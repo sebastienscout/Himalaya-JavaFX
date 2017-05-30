@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.MainFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.MainFXMLController">
   <children>
-    <Pane layoutX="0.0" layoutY="0.0" prefHeight="600.0" prefWidth="800.0">
+    <Pane fx:id="flowPaneMain" layoutX="0.0" layoutY="0.0" prefHeight="720.0" prefWidth="1200.0">
       <children>
-        <ImageView fx:id="background" fitHeight="500.0" fitWidth="800.0" pickOnBounds="true" smooth="true" visible="true">
+        <ImageView fx:id="background" fitHeight="600.0" fitWidth="1200.0" pickOnBounds="true" smooth="true" visible="true">
           <rotationAxis>
             <Point3D z="1.0" />
           </rotationAxis>
@@ -23,9 +23,9 @@
                   <Image url="@../resources/board.jpg" />
                </image>
         </ImageView>
-            <FlowPane layoutX="5.0" layoutY="505.0" prefHeight="50.0" prefWidth="645.0">
+            <FlowPane fx:id="flowPaneStat" layoutX="10.0" layoutY="610.0" prefHeight="100.0" prefWidth="955.0">
                <children>
-                  <FlowPane prefHeight="20.0" prefWidth="645.0">
+                  <FlowPane prefHeight="20.0" prefWidth="955.0">
                      <children>
                         <Label fx:id="player1ResLabel">
                            <FlowPane.margin>
@@ -34,7 +34,7 @@
                         </Label>
                      </children>
                   </FlowPane>
-                  <FlowPane prefHeight="20.0" prefWidth="645.0">
+                  <FlowPane prefHeight="20.0" prefWidth="955.0">
                      <children>
                         <Label fx:id="player2ResLabel">
                            <FlowPane.margin>
@@ -42,7 +42,7 @@
                            </FlowPane.margin></Label>
                      </children>
                   </FlowPane>
-                  <FlowPane prefHeight="20.0" prefWidth="645.0">
+                  <FlowPane prefHeight="20.0" prefWidth="955.0">
                      <children>
                         <Label fx:id="player3ResLabel">
                            <FlowPane.margin>
@@ -50,7 +50,7 @@
                            </FlowPane.margin></Label>
                      </children>
                   </FlowPane>
-                  <FlowPane prefHeight="20.0" prefWidth="645.0">
+                  <FlowPane prefHeight="20.0" prefWidth="955.0">
                      <children>
                         <Label fx:id="player4ResLabel">
                            <FlowPane.margin>
@@ -60,47 +60,50 @@
                   </FlowPane>
                </children>
             </FlowPane>
-            <FlowPane alignment="CENTER" layoutX="663.0" layoutY="503.0" prefHeight="90.0" prefWidth="133.0">
+            <FlowPane fx:id="flowPaneTurn" alignment="CENTER" layoutX="980.0" layoutY="610.0" prefHeight="90.0" prefWidth="133.0">
                <children>
                   <Label fx:id="turnLabel" text="Tour 1">
                      <font>
-                        <Font size="22.0" />
+                        <Font size="30.0" />
                      </font>
                      <FlowPane.margin>
                         <Insets bottom="10.0" />
                      </FlowPane.margin>
                   </Label>
-                  <Button fx:id="playTurn" mnemonicParsing="false" onAction="#nextTurnButton" text="Jouer le tour" />
+                  <Button fx:id="playTurn" mnemonicParsing="false" onAction="#nextTurnButton" prefWidth="200.0" text="Jouer le tour">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Button>
                </children>
             </FlowPane>
-            <FlowPane fx:id="village1" layoutX="25.0" layoutY="406.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village2" layoutX="34.0" layoutY="262.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village3" layoutX="3.0" layoutY="135.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village4" layoutX="134.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village6" layoutX="125.0" layoutY="172.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village5" layoutX="209.0" layoutY="74.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village7" layoutX="166.0" layoutY="255.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village8" layoutX="198.0" layoutY="340.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village9" layoutX="343.0" layoutY="373.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village14" layoutX="492.0" layoutY="255.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village15" layoutX="474.0" layoutY="406.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village16" layoutX="587.0" layoutY="348.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village20" layoutX="713.0" layoutY="393.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village17" layoutX="674.0" layoutY="255.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village19" layoutX="663.0" layoutY="135.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village18" layoutX="674.0" layoutY="14.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village13" layoutX="492.0" layoutY="145.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village12" layoutX="512.0" layoutY="45.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village11" layoutX="381.0" layoutY="29.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="village10" layoutX="328.0" layoutY="172.0" prefHeight="90.0" prefWidth="63.0" />
-            <FlowPane fx:id="region2" alignment="CENTER" layoutX="62.0" layoutY="195.0" prefHeight="60.0" prefWidth="71.0" />
-            <FlowPane fx:id="region1" alignment="CENTER" layoutX="162.0" layoutY="38.0" prefHeight="60.0" prefWidth="71.0" />
-            <FlowPane fx:id="region3" alignment="CENTER" layoutX="277.0" layoutY="262.0" prefHeight="90.0" prefWidth="133.0" />
-            <FlowPane fx:id="region4" alignment="CENTER" layoutX="283.0" layoutY="101.0" prefHeight="68.0" prefWidth="90.0" />
-            <FlowPane fx:id="region5" alignment="CENTER" layoutX="428.0" layoutY="105.0" prefHeight="60.0" prefWidth="71.0" />
-            <FlowPane fx:id="region6" alignment="CENTER" layoutX="567.0" layoutY="277.0" prefHeight="60.0" prefWidth="71.0" />
-            <FlowPane fx:id="region7" alignment="CENTER" layoutX="567.0" layoutY="75.0" prefHeight="60.0" prefWidth="71.0" />
-            <FlowPane fx:id="region8" alignment="CENTER" layoutX="684.0" layoutY="315.0" prefHeight="60.0" prefWidth="71.0" />
+            <FlowPane fx:id="village1" layoutX="71.0" layoutY="488.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village2" layoutX="27.0" layoutY="315.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village3" layoutX="10.0" layoutY="149.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village4" layoutX="139.0" layoutY="7.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village6" layoutX="168.0" layoutY="149.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village5" layoutX="369.0" layoutY="69.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village7" layoutX="243.0" layoutY="307.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village8" layoutX="306.0" layoutY="412.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village9" layoutX="537.0" layoutY="430.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village14" layoutX="677.0" layoutY="329.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village15" layoutX="724.0" layoutY="503.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village16" layoutX="902.0" layoutY="430.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village20" layoutX="1080.0" layoutY="488.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village17" layoutX="1013.0" layoutY="307.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village19" layoutX="1080.0" layoutY="157.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village18" layoutX="1003.0" layoutY="14.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village13" layoutX="746.0" layoutY="183.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village12" layoutX="796.0" layoutY="30.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village11" layoutX="553.0" layoutY="7.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="village10" layoutX="506.0" layoutY="239.0" prefHeight="90.0" prefWidth="63.0" />
+            <FlowPane fx:id="region2" alignment="CENTER" layoutX="99.0" layoutY="221.0" prefHeight="60.0" prefWidth="71.0" />
+            <FlowPane fx:id="region1" alignment="CENTER" layoutX="221.0" layoutY="67.0" prefHeight="60.0" prefWidth="71.0" />
+            <FlowPane fx:id="region3" alignment="CENTER" layoutX="432.0" layoutY="315.0" prefHeight="90.0" prefWidth="133.0" />
+            <FlowPane fx:id="region4" alignment="CENTER" layoutX="443.0" layoutY="125.0" prefHeight="68.0" prefWidth="90.0" />
+            <FlowPane fx:id="region5" alignment="CENTER" layoutX="653.0" layoutY="129.0" prefHeight="60.0" prefWidth="71.0" />
+            <FlowPane fx:id="region6" alignment="CENTER" layoutX="724.0" layoutY="427.0" prefHeight="60.0" prefWidth="71.0" />
+            <FlowPane fx:id="region7" alignment="CENTER" layoutX="867.0" layoutY="104.0" prefHeight="60.0" prefWidth="71.0" />
+            <FlowPane fx:id="region8" alignment="CENTER" layoutX="1045.0" layoutY="389.0" prefHeight="60.0" prefWidth="71.0" />
       </children>
     </Pane>
   </children>
