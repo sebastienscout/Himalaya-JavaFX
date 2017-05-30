@@ -134,61 +134,66 @@ public class Board {
     private void transaction(Player p) {
         Village village = p.getPosition();
 
-        //Pour faire une Commande
         if (village.getResources().isEmpty() && village.getOrder() != null) {
+            manageOrder(village, p);
+        } else if (village.getResources().size() > 0 && village.getOrder() == null && p.canTakeResource()) {
+            manageResource(village, p);
+        }
+    }
 
-            ArrayList<Resource> resourceNew = new ArrayList<>();
-            ArrayList<Resource> resourcesCopy = new ArrayList<>();
-            int nbResourcesInOrder = 0;
-            int counterForPlayer = 0;
-
-            nbResourcesInOrder = village.getOrder().getResources().size();
-
-            for (Resource res : p.getResources()) {
-                resourcesCopy.add(res);
+    private void manageResource(Village village, Player p) {
+        Resource resSelected = null;
+        int value = village.getResources().get(0).getValue();
+        for (Resource villResource : village.getResources()) {
+            if (villResource.getValue() <= value) {
+                value = villResource.getValue();
+                resSelected = villResource;
             }
+        }
+        if (resSelected != null) {
+            p.addResource(resSelected);
+            p.addResourceTaken(village);
+            village.removeResource(resSelected);
+        }
+    }
 
-            for (Resource res : village.getOrder().getResources()) {
-                int k = 0;
-                boolean resourceGiven = false;
-                while (k < resourcesCopy.size() && resourceGiven == false) {
-                    if (resourcesCopy.get(k).getType().equals(res.getType())) {
-                        resourcesCopy.remove(res);
-                        resourceNew.add(res);
-                        counterForPlayer++;
-                        resourceGiven = true;
-                    }
-                    k++;
+    private void manageOrder(Village village, Player p) {
+        ArrayList<Resource> resourceNew = new ArrayList<>();
+        ArrayList<Resource> resourcesCopy = new ArrayList<>();
+        int nbResourcesInOrder = 0;
+        int counterForPlayer = 0;
+
+        nbResourcesInOrder = village.getOrder().getResources().size();
+
+        for (Resource res : p.getResources()) {
+            resourcesCopy.add(res);
+        }
+
+        for (Resource res : village.getOrder().getResources()) {
+            int k = 0;
+            boolean resourceGiven = false;
+            while (k < resourcesCopy.size() && resourceGiven == false) {
+                if (resourcesCopy.get(k).getType().equals(res.getType())) {
+                    resourcesCopy.remove(res);
+                    resourceNew.add(res);
+                    counterForPlayer++;
+                    resourceGiven = true;
                 }
+                k++;
+            }
+        }
+
+        //Si le joueur a bien honoré sa commande
+        if (counterForPlayer == nbResourcesInOrder) {
+            //Pour chaque resource on l'enlève au joueur et rajoute dans le sac
+            for (Resource res : resourceNew) {
+                p.removeResource(p.getSpecificResource(res.getType()));
+                this.getBagResources().addResource(res);
             }
 
-            //Si le joueur a bien honoré sa commande
-            if (counterForPlayer == nbResourcesInOrder) {
-                //Pour chaque resource on l'enlève au joueur et rajoute dans le sac 
-                for (Resource res : resourceNew) {
-                    p.removeResource(p.getSpecificResource(res.getType()));
-                    this.getBagResources().addResource(res);
-                }
-
-                p.setCompletedOrder(true, village.getId(), village.getOrder().getValue());
-                getBagOrders().getOrders().add(village.getOrder());
-                village.removeOrder();
-            }
-        } //Pour prendre resources du village
-        else if (village.getResources().size() > 0 && village.getOrder() == null && p.canTakeResource()) {
-            Resource resSelected = null;
-            int value = village.getResources().get(0).getValue();
-            for (Resource villResource : village.getResources()) {
-                if (villResource.getValue() <= value) {
-                    value = villResource.getValue();
-                    resSelected = villResource;
-                }
-            }
-            if (resSelected != null) {
-                p.addResource(resSelected);
-                p.addResourceTaken(village);
-                village.removeResource(resSelected);
-            }
+            p.setCompletedOrder(true, village.getId(), village.getOrder().getValue());
+            getBagOrders().getOrders().add(village.getOrder());
+            village.removeOrder();
         }
     }
 
@@ -289,22 +294,16 @@ public class Board {
             case stone:
                 if (p.getPosition().getDestVillage(Road.stone) != null) {
                     p.move(getVillageById(p.getPosition().getDestVillage(Road.stone)));
-                } else {
-//                    System.out.println("Erreur ! Il n'a pas de route <stone> pour le village " + p.getPosition().getId());
                 }
                 break;
             case soil:
                 if (p.getPosition().getDestVillage(Road.soil) != null) {
                     p.move(getVillageById(p.getPosition().getDestVillage(Road.soil)));
-                } else {
-//                    System.out.println("Erreur ! Il n'a pas de route <soil> pour le village " + p.getPosition().getId());
                 }
                 break;
             case ice:
                 if (p.getPosition().getDestVillage(Road.ice) != null) {
                     p.move(getVillageById(p.getPosition().getDestVillage(Road.ice)));
-                } else {
-//                    System.out.println("Erreur ! Il n'a pas de route <ice> pour le village " + p.getPosition().getId());
                 }
                 break;
             case offering:
@@ -330,24 +329,17 @@ public class Board {
      */
     public void afterActions() {
 
-        // Calcul de l'inventaire aux tours 4, 8 et 12
         if (nbTurn % 4 == 0) {
             System.out.println("Calcul de l'inventaire...");
             calculateInventory();
         }
 
-        // Avance du compteur de tour
         nbTurn++;
 
-        // On réinitialise les actions et les villages des ressources
         players.forEach((p) -> {
             p.clearActions();
-            p.clearResTakenVillage();
-            p.clearDelegationPut();
-            p.clearBartering();
         });
 
-        // On switch le premier joueur, il devient dernier à jouer
         Player p = players.get(0);
         players.remove(0);
         players.add(p);

@@ -2,9 +2,8 @@ package tests;
 
 import core.Action;
 import core.Board;
-import core.Play;
+import ihm.PlayConsole;
 import core.Player;
-import core.Region;
 import core.Village;
 import java.util.ArrayList;
 import org.junit.Before;
@@ -13,14 +12,13 @@ import static org.junit.Assert.*;
 
 public class BoardTest {
 
-    Play play;
+    PlayConsole play;
     Board board;
 
     @Before
     public void setUp() {
-        play = new Play();
+        play = new PlayConsole();
         board = play.getBoard();
-
     }
 
     @Test
@@ -31,7 +29,8 @@ public class BoardTest {
 
     @Test
     public void playerTests() {
-        Player player1 = new Player("rouge", board.getVillageById(6));
+        Player player1 = new Player("rouge");
+        player1.setPosition(board.getVillageById(6));
         board.addPlayer(player1);
 
         assertEquals("rouge", board.getPlayers().get(board.getCurrentPlayer()).getColor());
@@ -54,7 +53,8 @@ public class BoardTest {
 
     @Test
     public void deleguationTest(){
-        Player player1 = new Player("rouge", board.getVillageById(14));
+        Player player1 = new Player("rouge");
+        player1.setPosition(board.getVillageById(14));
         board.addPlayer(player1);
         
         Village village = board.getVillageById(18);
@@ -80,12 +80,13 @@ public class BoardTest {
         board.executeActions();
         
         assertEquals(board.getVillageById(18), player1.getPosition());
-        assertEquals(2, board.getRegionById(regionID).getDelegations().get(player1).intValue());
+        assertEquals(2, board.getRegionById(regionID).getDelegations().get(player1.getColor()).intValue());
     }
 
     @Test
     public void stupaTest() {
-        Player player1 = new Player("rouge", board.getVillageById(14));
+        Player player1 = new Player("rouge");
+        player1.setPosition(board.getVillageById(14));
         board.addPlayer(player1);
         
         Village village = board.getVillageById(18);        
@@ -113,7 +114,8 @@ public class BoardTest {
     @Test
     public void transactionTest() {
         //Création du joueur sur le village 14
-        Player player1 = new Player("rouge", board.getVillageById(14));
+        Player player1 = new Player("rouge");
+        player1.setPosition(board.getVillageById(14));
         board.addPlayer(player1);
 
         //Selection du village 18 (destination avec les actions)
@@ -143,7 +145,8 @@ public class BoardTest {
     @Test
     public void orderTest() {
         //Création du joueur sur le village 14
-        Player player1 = new Player("rouge", board.getVillageById(14));
+        Player player1 = new Player("rouge");
+        player1.setPosition(board.getVillageById(14));
         board.addPlayer(player1);
 
         //Selection du village 18 (destination avec les actions)

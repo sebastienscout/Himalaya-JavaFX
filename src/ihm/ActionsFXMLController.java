@@ -57,19 +57,8 @@ public class ActionsFXMLController implements Initializable {
 
         Integer[] regionsID = {1, 2, 3, 4, 5, 6, 7, 8};
 
-        choiceBoxes.add(action1);
-        choiceBoxes.add(action2);
-        choiceBoxes.add(action3);
-        choiceBoxes.add(action4);
-        choiceBoxes.add(action5);
-        choiceBoxes.add(action6);
-
-        regionBoxes.add(region1);
-        regionBoxes.add(region2);
-        regionBoxes.add(region3);
-        regionBoxes.add(region4);
-        regionBoxes.add(region5);
-        regionBoxes.add(region6);
+        choiceBoxes.addAll(Arrays.asList(action1, action2, action3, action4, action5, action6));
+        regionBoxes.addAll(Arrays.asList(region1, region2, region3, region4, region5, region6));
 
         for (ComboBox box : choiceBoxes) {
             box.setItems(FXCollections.observableArrayList(Arrays.asList(actionChoices)));
@@ -154,46 +143,22 @@ public class ActionsFXMLController implements Initializable {
 
         switch (actionBox.getId()) {
             case "action1":
-                if (actionBox.getValue().equals("Delegation")) {
-                    region1.setDisable(false);
-                } else {
-                    region1.setDisable(true);
-                }
+                region1.setDisable(!actionBox.getValue().equals("Delegation"));
                 break;
             case "action2":
-                if (actionBox.getValue().equals("Delegation")) {
-                    region2.setDisable(false);
-                } else {
-                    region2.setDisable(true);
-                }
+                region2.setDisable(!actionBox.getValue().equals("Delegation"));
                 break;
             case "action3":
-                if (actionBox.getValue().equals("Delegation")) {
-                    region3.setDisable(false);
-                } else {
-                    region3.setDisable(true);
-                }
+                region3.setDisable(!actionBox.getValue().equals("Delegation"));
                 break;
             case "action4":
-                if (actionBox.getValue().equals("Delegation")) {
-                    region4.setDisable(false);
-                } else {
-                    region4.setDisable(true);
-                }
+                region4.setDisable(!actionBox.getValue().equals("Delegation"));
                 break;
             case "action5":
-                if (actionBox.getValue().equals("Delegation")) {
-                    region5.setDisable(false);
-                } else {
-                    region5.setDisable(true);
-                }
+                region5.setDisable(!actionBox.getValue().equals("Delegation"));
                 break;
             case "action6":
-                if (actionBox.getValue().equals("Delegation")) {
-                    region6.setDisable(false);
-                } else {
-                    region6.setDisable(true);
-                }
+                region6.setDisable(!actionBox.getValue().equals("Delegation"));
                 break;
         }
     }

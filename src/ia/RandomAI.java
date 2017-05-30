@@ -9,8 +9,8 @@ public class RandomAI extends Player {
 
     private Board board;
 
-    public RandomAI(String color, Village village) {
-        super(color, village);
+    public RandomAI(String color) {
+        super(color);
     }
 
     public Action getRandomAction() {

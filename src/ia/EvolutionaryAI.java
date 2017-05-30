@@ -33,8 +33,8 @@ public class EvolutionaryAI extends Player {
     private FileOutputStream fos;
     private Writer writer;
 
-    public EvolutionaryAI(String color, Village v) {
-        super(color, v);
+    public EvolutionaryAI(String color) {
+        super(color);
         random = new Random();
         try {
             fos = new FileOutputStream("fitness_" + getColor() + ".txt");

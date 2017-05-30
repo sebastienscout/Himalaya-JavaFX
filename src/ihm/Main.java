@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 
 public class Main extends Application {
 
-
     public static String screenMenuID = "menu";
     public static String screenMenuFile = "MenuFXML.fxml";
     public static String screenMainID = "main";
@@ -35,7 +34,9 @@ public class Main extends Application {
      */
     public static void main(String[] args) {
 //        PlayConsole play = new PlayConsole();
-//        play.addPlayer("Michel", 1);
+//        play.addEvolAI("Rouge");
+//        play.addEvolAI("Bleu");
+//        play.addEvolAI("Vert");
 //        play.run();
 
         launch(args);
