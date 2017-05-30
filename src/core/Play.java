@@ -4,6 +4,7 @@ import ia.EvolutionaryAI;
 import ia.Population;
 import ia.RandomAI;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public abstract class Play {
 
@@ -159,47 +160,27 @@ public abstract class Play {
         Region region8 = new Region(8);
 
         // Add regions to villages
-        village1.addRegion(2);
-        village1.addRegion(3);
-        village2.addRegion(2);
-        village3.addRegion(2);
-        village3.addRegion(1);
-        village4.addRegion(1);
-        village5.addRegion(1);
-        village5.addRegion(4);
-        village6.addRegion(1);
-        village6.addRegion(2);
-        village6.addRegion(4);
-        village7.addRegion(2);
-        village7.addRegion(3);
-        village7.addRegion(4);
-        village8.addRegion(3);
-        village9.addRegion(3);
-        village9.addRegion(6);
-        village10.addRegion(4);
-        village10.addRegion(5);
-        village10.addRegion(3);
-        village11.addRegion(4);
-        village11.addRegion(5);
-        village12.addRegion(5);
-        village12.addRegion(7);
-        village13.addRegion(5);
-        village13.addRegion(6);
-        village13.addRegion(7);
-        village14.addRegion(3);
-        village14.addRegion(5);
-        village14.addRegion(6);
-        village15.addRegion(6);
-        village16.addRegion(6);
-        village16.addRegion(8);
-        village17.addRegion(6);
-        village17.addRegion(7);
-        village17.addRegion(8);
-        village18.addRegion(7);
-        village18.addRegion(8);
-        village19.addRegion(8);
-        village20.addRegion(8);
-
+        village1.getRegions().addAll(Arrays.asList(2,3));
+        village2.getRegions().addAll(Arrays.asList(2));
+        village3.getRegions().addAll(Arrays.asList(2,1));
+        village4.getRegions().addAll(Arrays.asList(1));
+        village5.getRegions().addAll(Arrays.asList(1,4));
+        village6.getRegions().addAll(Arrays.asList(1,2,4));
+        village7.getRegions().addAll(Arrays.asList(2,3,4));
+        village8.getRegions().addAll(Arrays.asList(3));
+        village9.getRegions().addAll(Arrays.asList(3,6));
+        village10.getRegions().addAll(Arrays.asList(4,5,3));
+        village11.getRegions().addAll(Arrays.asList(4,5));
+        village12.getRegions().addAll(Arrays.asList(5,7));
+        village13.getRegions().addAll(Arrays.asList(5,6,7));
+        village14.getRegions().addAll(Arrays.asList(3,5,6));
+        village15.getRegions().addAll(Arrays.asList(6));
+        village16.getRegions().addAll(Arrays.asList(6,8));
+        village17.getRegions().addAll(Arrays.asList(6,7,8));
+        village18.getRegions().addAll(Arrays.asList(7,8));
+        village19.getRegions().addAll(Arrays.asList(8));
+        village20.getRegions().addAll(Arrays.asList(8));
+        
         //Affection villages
         board.addVillage(village1);
         board.addVillage(village2);
