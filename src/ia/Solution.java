@@ -223,7 +223,7 @@ public class Solution {
     /**
      * Permet de déterminer où le joueur va placer les délégations
      *
-     * @param clonePlayer Player cloné
+     * @param b Board
      */
     public int computeOptimalRegion(Board b) {
         HashMap<Integer, Integer> score = new HashMap<>();

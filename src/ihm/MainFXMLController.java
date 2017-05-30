@@ -7,6 +7,7 @@ import ia.EvolutionaryAI;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -25,7 +26,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -37,7 +37,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
 
     @FXML
     private Label turnLabel;
-   
+
     @FXML
     private Label player1ResLabel, player2ResLabel, player3ResLabel, player4ResLabel;
 
@@ -60,7 +60,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
     private ArrayList<FlowPane> villagesPane;
     private ArrayList<FlowPane> regionsPane;
     private ArrayList<Label> playerLabels;
-    
+
     private final long timeAnimation = 500;
 
     /**
@@ -75,40 +75,17 @@ public class MainFXMLController implements Initializable, ControlledScreen {
         regionsPane = new ArrayList<>();
         playerLabels = new ArrayList<>();
 
-        villagesPane.add(village1);
-        villagesPane.add(village2);
-        villagesPane.add(village3);
-        villagesPane.add(village4);
-        villagesPane.add(village5);
-        villagesPane.add(village6);
-        villagesPane.add(village7);
-        villagesPane.add(village8);
-        villagesPane.add(village9);
-        villagesPane.add(village10);
-        villagesPane.add(village11);
-        villagesPane.add(village12);
-        villagesPane.add(village13);
-        villagesPane.add(village14);
-        villagesPane.add(village15);
-        villagesPane.add(village16);
-        villagesPane.add(village17);
-        villagesPane.add(village18);
-        villagesPane.add(village19);
-        villagesPane.add(village20);
+        villagesPane.addAll(Arrays.asList(village1, village2, village3, village4,
+                village5, village6, village7, village8, village9, village10,
+                village11, village12, village13, village14, village15, village16,
+                village17, village18, village19, village20));
 
-        regionsPane.add(region1);
-        regionsPane.add(region2);
-        regionsPane.add(region3);
-        regionsPane.add(region4);
-        regionsPane.add(region5);
-        regionsPane.add(region6);
-        regionsPane.add(region7);
-        regionsPane.add(region8);
-        
-        playerLabels.add(player1ResLabel);
-        playerLabels.add(player2ResLabel);
-        playerLabels.add(player3ResLabel);
-        playerLabels.add(player4ResLabel);     
+        regionsPane.addAll(Arrays.asList(region1,region2,region3,region4,
+                region5,region6,region7,region8));
+
+        playerLabels.addAll(Arrays.asList(player1ResLabel,player2ResLabel, 
+                player3ResLabel, player4ResLabel));
+
     }
 
     @FXML
@@ -146,7 +123,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                     turnLabel.setText("Terminé !");
                     displayScoreScreen();
                     for (Player p : playG.getBoard().getPlayers()) {
-                        if(p instanceof EvolutionaryAI){
+                        if (p instanceof EvolutionaryAI) {
                             ((EvolutionaryAI) p).closeFile();
                         }
                     }
@@ -237,8 +214,8 @@ public class MainFXMLController implements Initializable, ControlledScreen {
             }
         }
     }
-    
-    public void displayPlayersInformations(){
+
+    public void displayPlayersInformations() {
         setPlayersInformation(playG.getBoard().getPlayers().get(0), player1ResLabel);
         setPlayersInformation(playG.getBoard().getPlayers().get(1), player2ResLabel);
         setPlayersInformation(playG.getBoard().getPlayers().get(2), player3ResLabel);
@@ -264,7 +241,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
         iv.setFitWidth(30.0);
         iv.setPreserveRatio(true);
         iv.setImage(img);
-        playerLabel.setText("Joueur " + p.getColor() + " > Ressources : " + p.getResources() 
+        playerLabel.setText("Joueur " + p.getColor() + " > Ressources : " + p.getResources()
                 + " | Nombre de Yacks : " + p.getEconomicScore());
         playerPane.getChildren().add(0, iv);
     }

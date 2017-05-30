@@ -19,7 +19,7 @@ public abstract class Play {
     public void addPlayer(String color) {
         Player player = new Player(color);
         player.setBoard(board);
-        board.addPlayer(player);       
+        board.addPlayer(player);
     }
 
     public void addEvolAI(String color) {
@@ -33,7 +33,7 @@ public abstract class Play {
         ai.setBoard(board);
         board.addPlayer(ai);
     }
-    
+
     protected void evolActions(EvolutionaryAI p) {
         // population size of the parents
         int mu = 20;
@@ -51,12 +51,12 @@ public abstract class Play {
         Population population = new Population();
 
         p.run(population, mu, lambda, tournamentSize, crossOverRate, mutationRate, maxGeneration);
-        
+
         for (Action action : p.getActions()) {
             p.addAction(action);
         }
     }
-    
+
     protected abstract void humanActions(Player p);
 
     protected void randomActions(RandomAI p) {
@@ -160,58 +160,36 @@ public abstract class Play {
         Region region8 = new Region(8);
 
         // Add regions to villages
-        village1.getRegions().addAll(Arrays.asList(2,3));
+        village1.getRegions().addAll(Arrays.asList(2, 3));
         village2.getRegions().addAll(Arrays.asList(2));
-        village3.getRegions().addAll(Arrays.asList(2,1));
+        village3.getRegions().addAll(Arrays.asList(2, 1));
         village4.getRegions().addAll(Arrays.asList(1));
-        village5.getRegions().addAll(Arrays.asList(1,4));
-        village6.getRegions().addAll(Arrays.asList(1,2,4));
-        village7.getRegions().addAll(Arrays.asList(2,3,4));
+        village5.getRegions().addAll(Arrays.asList(1, 4));
+        village6.getRegions().addAll(Arrays.asList(1, 2, 4));
+        village7.getRegions().addAll(Arrays.asList(2, 3, 4));
         village8.getRegions().addAll(Arrays.asList(3));
-        village9.getRegions().addAll(Arrays.asList(3,6));
-        village10.getRegions().addAll(Arrays.asList(4,5,3));
-        village11.getRegions().addAll(Arrays.asList(4,5));
-        village12.getRegions().addAll(Arrays.asList(5,7));
-        village13.getRegions().addAll(Arrays.asList(5,6,7));
-        village14.getRegions().addAll(Arrays.asList(3,5,6));
+        village9.getRegions().addAll(Arrays.asList(3, 6));
+        village10.getRegions().addAll(Arrays.asList(4, 5, 3));
+        village11.getRegions().addAll(Arrays.asList(4, 5));
+        village12.getRegions().addAll(Arrays.asList(5, 7));
+        village13.getRegions().addAll(Arrays.asList(5, 6, 7));
+        village14.getRegions().addAll(Arrays.asList(3, 5, 6));
         village15.getRegions().addAll(Arrays.asList(6));
-        village16.getRegions().addAll(Arrays.asList(6,8));
-        village17.getRegions().addAll(Arrays.asList(6,7,8));
-        village18.getRegions().addAll(Arrays.asList(7,8));
+        village16.getRegions().addAll(Arrays.asList(6, 8));
+        village17.getRegions().addAll(Arrays.asList(6, 7, 8));
+        village18.getRegions().addAll(Arrays.asList(7, 8));
         village19.getRegions().addAll(Arrays.asList(8));
         village20.getRegions().addAll(Arrays.asList(8));
-        
+
         //Affection villages
-        board.addVillage(village1);
-        board.addVillage(village2);
-        board.addVillage(village3);
-        board.addVillage(village4);
-        board.addVillage(village5);
-        board.addVillage(village6);
-        board.addVillage(village7);
-        board.addVillage(village8);
-        board.addVillage(village9);
-        board.addVillage(village10);
-        board.addVillage(village11);
-        board.addVillage(village12);
-        board.addVillage(village13);
-        board.addVillage(village14);
-        board.addVillage(village15);
-        board.addVillage(village16);
-        board.addVillage(village17);
-        board.addVillage(village18);
-        board.addVillage(village19);
-        board.addVillage(village20);
+        board.getVillages().addAll(Arrays.asList(village1, village2, village3, village4,
+                village5, village6, village7, village8, village9, village10,
+                village11, village12, village13, village14, village15, village16,
+                village17, village18, village19, village20));
 
         //Affectation Régions
-        board.addRegion(region1);
-        board.addRegion(region2);
-        board.addRegion(region3);
-        board.addRegion(region4);
-        board.addRegion(region5);
-        board.addRegion(region6);
-        board.addRegion(region7);
-        board.addRegion(region8);
+        board.getRegions().addAll(Arrays.asList(region1, region2, region3, region4,
+                region5, region6, region7, region8));
 
     }
 
