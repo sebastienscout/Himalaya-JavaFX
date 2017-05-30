@@ -46,7 +46,7 @@ public class EvolutionaryAI extends Player {
 
     private void evalPop(Population population) {
         for (Solution individual : population.getIndividuals()) {
-            individual.calculateFitness(board);
+            individual.computeFitness(board);
         }
     }
 

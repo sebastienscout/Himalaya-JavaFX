@@ -38,7 +38,7 @@ public abstract class Play {
         // population size of the parents
         int mu = 20;
         // population size of childrens
-        int lambda = 1000;
+        int lambda = 100;
         // tournament size for selection
         int tournamentSize = 2;
         // rates of crossOver and mutation
@@ -46,7 +46,7 @@ public abstract class Play {
         // rates of mutation
         double mutationRate = 1.0;
         // maximum number of generation
-        int maxGeneration = 100;
+        int maxGeneration = 20;
 
         Population population = new Population();
 

@@ -33,13 +33,13 @@ public class Main extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        PlayConsole play = new PlayConsole();
-        play.addEvolAI("Rouge");
-        play.addEvolAI("Bleu");
-        play.addEvolAI("Vert");
-        play.run();
+//        PlayConsole play = new PlayConsole();
+//        play.addEvolAI("Rouge");
+//        play.addEvolAI("Bleu");
+//        play.addEvolAI("Vert");
+//        play.run();
 
-//        launch(args);
+        launch(args);
     }
 
 }

@@ -23,7 +23,7 @@ public class Solution {
     private final int malus = 100;
     private final int weightStupa = 20;
     private final int weightDelegation = 10;
-    private final int weightBartering = 5;
+    private final int weightBartering = 8;
 
     public Solution() {
         this.actions = null;
@@ -41,7 +41,7 @@ public class Solution {
         }
     }
 
-    public void calculateFitness(Board b) {
+    public void computeFitness(Board b) {
 
         cloneBoard = new Board(b);
         clonePlayer = new Player(p);
@@ -71,7 +71,7 @@ public class Solution {
         fitness = computeResourcesFitness();
         fitness += calculWeightStupas(b) * weightStupa * (p.getNbStupa() - clonePlayer.getNbStupa());
         fitness += (p.getNbDelegation() - clonePlayer.getNbDelegation()) * weightDelegation;
-        fitness += (clonePlayer.getEconomicScore() - p.getEconomicScore()) * weightBartering;
+        fitness += (clonePlayer.getEconomicScore() - p.getEconomicScore()) * computeWeightBartering(b);
 
         //Malus
         int nbTrans = clonePlayer.getNbTransactionDone();
@@ -216,8 +216,18 @@ public class Solution {
         return coeff;
     }
 
-    public int computeWeightBartering(Board b) {
-        return 0;
+    public double computeWeightBartering(Board b) {
+        double coeff = 1.0;
+
+        if (b.winnerEconnomicScore() != null) {
+            if (p.equals(b.winnerReligiousScore())) {
+                coeff = 0.5;
+            } else {
+                coeff = b.winnerEconnomicScore().getReligiousScore() - p.getEconomicScore();
+            }
+        }
+
+        return coeff;
     }
 
     /**
