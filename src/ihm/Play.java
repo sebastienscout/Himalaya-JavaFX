@@ -7,7 +7,6 @@ import core.Region;
 import core.Road;
 import core.Village;
 import ia.EvolutionaryAI;
-import ia.Population;
 import ia.RandomAI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,29 +38,13 @@ public abstract class Play {
         ai.setBoard(board);
         board.addPlayer(ai);
     }
-    
+
     public abstract void run();
-    
+
     protected abstract void humanActions(Player p);
 
     protected void evolActions(EvolutionaryAI p) {
-        // population size of the parents
-        int mu = 20;
-        // population size of childrens
-        int lambda = 100;
-        // tournament size for selection
-        int tournamentSize = 2;
-        // rates of crossOver and mutation
-        double crossOverRate = 0.8;
-        // rates of mutation
-        double mutationRate = 1.0;
-        // maximum number of generation
-        int maxGeneration = 20;
-
-        Population population = new Population();
-
-        p.run(population, mu, lambda, tournamentSize, crossOverRate, mutationRate, maxGeneration);
-
+        p.run();
         for (Action action : p.getActions()) {
             p.addAction(action);
         }
@@ -203,6 +186,7 @@ public abstract class Play {
 
     /**
      * Quand un village n'a plus de resources on en remet dans un autre
+     *
      * @param villagesToIgnore
      */
     public void refillVillagesResources(ArrayList<Village> villagesToIgnore) {
@@ -223,6 +207,7 @@ public abstract class Play {
 
     /**
      * Quand un village n'a plus de commande on en remet dans un autre
+     *
      * @param villagesToIgnore
      */
     public void refillVillagesOrders(ArrayList<Village> villagesToIgnore) {
