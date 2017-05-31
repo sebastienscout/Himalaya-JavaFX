@@ -96,8 +96,6 @@ public class MainFXMLController implements Initializable, ControlledScreen {
         playG.run();
         playG.setBackground(background);
 
-        playG.getBoard().prepareActions();
-
         Task<Void> sleeper = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -105,7 +103,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                     for (int i = 0; i < 6; i++) {
                         for (Player p : playG.getBoard().getPlayers()) {
                             Thread.sleep(timeAnimation);
-                            playG.getBoard().executeAction(i, p);
+                            playG.getBoard().executeAction(i, p, true);
                             Platform.runLater(() -> displayElementsMap());
                             Platform.runLater(() -> displayPlayersInformations());
                         }

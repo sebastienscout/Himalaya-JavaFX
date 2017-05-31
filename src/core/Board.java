@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 
 public class Board {
 
@@ -267,20 +269,23 @@ public class Board {
      *
      * @param p Player
      */
-    public void bartering(Player p) {
+    public void bartering(Player p, boolean graphic) {
         if (p.canBartering()) {
             p.setNbTransactionDone(p.getNbTransactionDone() + 1);
             p.setEconomicScore(p.getEconomicScore() + p.getNbYacksOrder());
             p.addBarteringVillage(p.getPosition());
+
+            if (graphic) {
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Troc");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Le joueur " + p.getColor() + " choisi de faire un troc : " + p.getNbYacksOrder() + " yacks.");
+                    alert.showAndWait();
+                });
+            }
         }
 
-    }
-
-    public void prepareActions() {
-        for (Player p : players) {
-            p.setCompletedOrder(false, 0, 0);
-            p.setNbTransactionDone(0);
-        }
     }
 
     /**
@@ -289,7 +294,7 @@ public class Board {
      * @param i numéro de l'action dans l'ordre de la plannification
      * @param p Player
      */
-    public void executeAction(int i, Player p) {
+    public void executeAction(int i, Player p, boolean graphic) {
         switch (p.getAction(i).getType()) {
             case stone:
                 if (p.getPosition().getDestVillage(Road.stone) != null) {
@@ -315,7 +320,7 @@ public class Board {
             case pause:
                 break;
             case bartering:
-                bartering(p);
+                bartering(p, graphic);
                 break;
             case delegation:
                 delegation(p, p.getAction(i));
@@ -338,6 +343,8 @@ public class Board {
 
         players.forEach((p) -> {
             p.clearActions();
+            p.setCompletedOrder(false, 0, 0);
+            p.setNbTransactionDone(0);
         });
 
         Player p = players.get(0);
@@ -350,14 +357,11 @@ public class Board {
      */
     public void executeActions() {
 
-        // Initialisation des joueurs avant les actions
-        prepareActions();
-
         System.out.println("**** Execution des actions ****");
         // Actions
         for (int i = 0; i < 6; i++) {
             for (Player p : players) {
-                executeAction(i, p);
+                executeAction(i, p, false);
             }
         }
 

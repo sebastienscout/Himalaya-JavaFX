@@ -62,7 +62,7 @@ public class Solution {
             if (action.getType() == Action.Type.delegation) {
                 action.setId(computeOptimalRegion(b));
             }
-            cloneBoard.executeAction(i, clonePlayer);
+            cloneBoard.executeAction(i, clonePlayer, false);
         }
 
         clonePlayer.clearActions();

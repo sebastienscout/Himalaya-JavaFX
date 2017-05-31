@@ -22,6 +22,8 @@ public class EvolutionaryAI extends Player {
 
     private int mu;
     private int tournamentSize;
+    private int lambda;
+    private int maxGeneration;
     private double crossOverRate;
     private double mutationRate;
     private Random random;
@@ -35,8 +37,22 @@ public class EvolutionaryAI extends Player {
     public EvolutionaryAI(String color) {
         super(color);
         random = new Random();
+
+        // population size of the parents
+        mu = 20;
+        // population size of childrens
+        lambda = 1000;
+        // tournament size for selection
+        tournamentSize = 2;
+        // rates of crossOver and mutation
+        crossOverRate = 0.8;
+        // rates of mutation
+        mutationRate = 1.0;
+        // maximum number of generation
+        maxGeneration = 25;
+
         try {
-            fos = new FileOutputStream("fitness_" + getColor() + ".csv");
+            fos = new FileOutputStream("fitness_" + color + ".csv");
             writer = new BufferedWriter(new OutputStreamWriter(fos, "utf-8"));
             writer.write("turn,generation,best,avg\n");
         } catch (IOException ex) {
@@ -134,16 +150,11 @@ public class EvolutionaryAI extends Player {
         parents.setIndividuals(newIndiv);
     }
 
-    public void run(Population parents, int mu, int lambda, int tournamentSize, double crossOverRate, double mutationRate, int maxGeneration) {
+    public void run() {
 
         try {
 
-            this.mu = mu;
-            this.tournamentSize = tournamentSize;
-            this.crossOverRate = crossOverRate;
-            this.mutationRate = mutationRate;
-            this.board = board;
-
+            Population parents = new Population();
             Population children = new Population(lambda);
 
             initialization(parents);
@@ -161,7 +172,7 @@ public class EvolutionaryAI extends Player {
                 writer.write(board.getNbTurn() + "," + nbGeneration + "," + parents.bestSolution().getFitness() + "," + parents.averageFitness() + '\n');
             }
 
-            System.out.println(getColor() + " -> " + parents.bestSolution() + " {AVG = " + parents.averageFitness() + "}");
+            System.out.println(color + " -> " + parents.bestSolution() + " {AVG = " + parents.averageFitness() + "}");
 
             bestSolActions = parents.bestSolution();
             writer.flush();
@@ -182,18 +193,43 @@ public class EvolutionaryAI extends Player {
 
     @Override
     public int calculateInitPosition() {
-        HashMap<Integer, Integer> values = new HashMap<>();
-        for (Village village : board.getVillages()) {
-            if (village.getResources().size() > 0 && !(board.getChoiceBegining().contains(village.getId()))) {
-                int value = 0;
-                for (Resource resource : village.getResources()) {
-                    value += resource.getValue();
+
+        double bestFitness = 0;
+        int bestVillage = 1;
+
+        for (Village v : board.getVillages()) {
+            if (!board.getChoiceBegining().contains(v.getId())) {
+
+                Population parents = new Population();
+                Population children = new Population(lambda);
+
+                Player cloneTestPosition = new Player(this);
+                cloneTestPosition.setPosition(v);
+
+                parents.resize(mu);
+
+                for (Solution individual : parents.getIndividuals()) {
+                    individual.init(cloneTestPosition);
                 }
-                values.put(village.getId(), value);
+                evalPop(parents);
+                int nbGeneration = 1;
+
+                while (nbGeneration < 10) {
+                    selection(parents, children);
+                    randomVariation(children);
+                    evalPop(children);
+                    replacement(parents, children);
+                    nbGeneration++;
+                }
+
+                if (parents.bestSolution().getFitness() > bestFitness) {
+                    bestFitness = parents.bestSolution().getFitness();
+                    bestVillage = v.getId();
+                    System.out.println(color + " Best village = " + bestVillage + " [" + bestFitness + "]");
+                }
             }
         }
-
-        return Collections.max(values.entrySet(), Map.Entry.comparingByValue()).getKey();
+        return bestVillage;
     }
 
     @Override
