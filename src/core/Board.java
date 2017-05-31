@@ -208,8 +208,6 @@ public class Board {
     private void delegation(Player p, Action action) {
         // Verification commande completée, et moins de 2 actions
         if (p.canPutDelegation()) {
-            p.setNbTransactionDone(p.getNbTransactionDone() + 1);
-
             // Id de la region contenu dans l'action delegation
             Region choice = getRegionById(action.getId());
             Integer nbDeleg = 0;
@@ -242,8 +240,6 @@ public class Board {
     private void offering(Player p) {
         // Verification commande completée, et moins de 2 actions
         if (p.canPutStupa()) {
-            p.setNbTransactionDone(p.getNbTransactionDone() + 1);
-
             // Verification : pas de stupa deja placée
             if (p.getPosition().getStupa() == null) {
                 p.putStupa();
@@ -271,7 +267,6 @@ public class Board {
      */
     public void bartering(Player p, boolean graphic) {
         if (p.canBartering()) {
-            p.setNbTransactionDone(p.getNbTransactionDone() + 1);
             p.setEconomicScore(p.getEconomicScore() + p.getNbYacksOrder());
             p.addBarteringVillage(p.getPosition());
 
@@ -342,11 +337,10 @@ public class Board {
         nbTurn++;
 
         players.forEach((p) -> {
-            p.clearActions();
-            p.setCompletedOrder(false, 0, 0);
-            p.setNbTransactionDone(0);
+            p.clearEndOfTurn();
         });
 
+        // Players swap
         Player p = players.get(0);
         players.remove(0);
         players.add(p);

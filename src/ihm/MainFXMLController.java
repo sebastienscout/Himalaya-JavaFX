@@ -93,8 +93,8 @@ public class MainFXMLController implements Initializable, ControlledScreen {
 
         playTurn.setDisable(true);
 
-        playG.run();
         playG.setBackground(background);
+        playG.run();
 
         Task<Void> sleeper = new Task<Void>() {
             @Override
@@ -117,7 +117,9 @@ public class MainFXMLController implements Initializable, ControlledScreen {
         sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
+                
                 playG.getBoard().afterActions();
+                
                 if (playG.getBoard().getNbTurn() == 13) {
                     turnLabel.setText("Terminé !");
                     displayScoreScreen();
