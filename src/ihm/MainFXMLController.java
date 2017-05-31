@@ -117,7 +117,9 @@ public class MainFXMLController implements Initializable, ControlledScreen {
         sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
+                
                 playG.getBoard().afterActions();
+                
                 if (playG.getBoard().getNbTurn() == 13) {
                     turnLabel.setText("Terminé !");
                     displayScoreScreen();

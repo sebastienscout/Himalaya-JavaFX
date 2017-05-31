@@ -43,15 +43,14 @@ public class Solution {
 
         cloneBoard = new Board(b);
         clonePlayer = new Player(p);
+        
         clonePlayer.setPosition(cloneBoard.getVillageById(p.getPosition().getId()));
+        
         cloneBoard.addPlayer(clonePlayer);
 
         for (Action action : actions) {
             clonePlayer.addAction(action);
         }
-
-        clonePlayer.setCompletedOrder(false, 0, 0);
-        clonePlayer.setNbTransactionDone(0);
 
         // Actions
         for (int i = 0; i < 6; i++) {
@@ -63,7 +62,7 @@ public class Solution {
             cloneBoard.executeAction(i, clonePlayer, false);
         }
 
-        clonePlayer.clearActions();
+        clonePlayer.clearEndOfTurn();
 
         // Compute fitness
         fitness = computeResourcesFitness();
