@@ -93,8 +93,8 @@ public class MainFXMLController implements Initializable, ControlledScreen {
 
         playTurn.setDisable(true);
 
-        playG.run();
         playG.setBackground(background);
+        playG.run();
 
         playG.getBoard().prepareActions();
 
