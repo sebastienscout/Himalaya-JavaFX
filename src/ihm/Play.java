@@ -1,5 +1,11 @@
-package core;
+package ihm;
 
+import core.Action;
+import core.Board;
+import core.Player;
+import core.Region;
+import core.Road;
+import core.Village;
 import ia.EvolutionaryAI;
 import ia.Population;
 import ia.RandomAI;
@@ -13,7 +19,7 @@ public abstract class Play {
     public Play() {
         board = new Board();
         initVillagesAndRegions();
-        initFirstTurn();
+        refillVillages();
     }
 
     public void addPlayer(String color) {
@@ -33,6 +39,10 @@ public abstract class Play {
         ai.setBoard(board);
         board.addPlayer(ai);
     }
+    
+    public abstract void run();
+    
+    protected abstract void humanActions(Player p);
 
     protected void evolActions(EvolutionaryAI p) {
         // population size of the parents
@@ -56,8 +66,6 @@ public abstract class Play {
             p.addAction(action);
         }
     }
-
-    protected abstract void humanActions(Player p);
 
     protected void randomActions(RandomAI p) {
         for (int i = 0; i < 6; i++) {
@@ -194,41 +202,10 @@ public abstract class Play {
     }
 
     /**
-     * Initialisation au premier tour Remplissage des villages de resources et
-     * commandes
-     */
-    private void initFirstTurn() {
-        int nbVillagesToAffectation = 5;
-        int randVillage;
-        int i = 1;
-        Village village;
-        while (i <= nbVillagesToAffectation) {
-            randVillage = (int) (Math.random() * 20 + 1);
-            village = board.getVillageById(randVillage);
-            if (village.getOrder() == null && village.getResources().isEmpty()) {
-                for (int j = 1; j <= nbVillagesToAffectation; j++) {
-                    village.addResource(board.getBagResources().takeRandom());
-                }
-                i++;
-            }
-        }
-
-        i = 1;
-        while (i <= nbVillagesToAffectation) {
-            randVillage = (int) (Math.random() * 20 + 1);
-            village = board.getVillageById(randVillage);
-            if (village.getResources().isEmpty() && village.getOrder() == null) {
-                village.setOrder(board.getBagOrders().takeRandom());
-                i++;
-            }
-        }
-    }
-
-    /**
      * Quand un village n'a plus de resources on en remet dans un autre
      * @param villagesToIgnore
      */
-    public void reFillVillageResource(ArrayList<Village> villagesToIgnore) {
+    public void refillVillagesResources(ArrayList<Village> villagesToIgnore) {
         boolean test = false;
         //Tant qu'on a pas de village
         while (!test) {
@@ -248,7 +225,7 @@ public abstract class Play {
      * Quand un village n'a plus de commande on en remet dans un autre
      * @param villagesToIgnore
      */
-    public void reFillVillageOrder(ArrayList<Village> villagesToIgnore) {
+    public void refillVillagesOrders(ArrayList<Village> villagesToIgnore) {
         boolean test = false;
         //Tant qu'on a pas de village
         while (!test) {
@@ -263,7 +240,7 @@ public abstract class Play {
     }
 
     //Test si il manque une commande ou moins de 5 villages avec resources
-    public void testVillages() {
+    public void refillVillages() {
 
         int nbVillagesWithResources = 0;
         int nbVillagesWithOrders = 0;
@@ -277,6 +254,19 @@ public abstract class Play {
             }
         }
 
+        ArrayList<Village> villagesIgnored = villagesToIgnore();
+
+        while (nbVillagesWithResources < max) {
+            refillVillagesResources(villagesIgnored);
+            nbVillagesWithResources++;
+        }
+        while (nbVillagesWithOrders < max) {
+            refillVillagesOrders(villagesIgnored);
+            nbVillagesWithOrders++;
+        }
+    }
+
+    private ArrayList<Village> villagesToIgnore() {
         ArrayList<Village> villagesToIgnore = new ArrayList<>();
         for (Village village : board.getVillages()) {
             if (!village.getResources().isEmpty() || village.getOrder() != null) {
@@ -286,16 +276,7 @@ public abstract class Play {
         for (Player player : board.getPlayers()) {
             villagesToIgnore.add(player.getPosition());
         }
-
-        while (nbVillagesWithResources < max) {
-            System.out.println("Village a remplir  : " + (max - nbVillagesWithResources));
-            reFillVillageResource(villagesToIgnore);
-            nbVillagesWithResources++;
-        }
-        while (nbVillagesWithOrders < max) {
-            reFillVillageOrder(villagesToIgnore);
-            nbVillagesWithOrders++;
-        }
+        return villagesToIgnore;
     }
 
     public Board getBoard() {

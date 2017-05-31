@@ -1,6 +1,5 @@
 package ihm;
 
-import core.Play;
 import core.Player;
 import ia.EvolutionaryAI;
 import ia.RandomAI;
@@ -25,12 +24,12 @@ public class PlayGraphic extends Play {
         super();
     }
     
-    public void run(ImageView background) {
-        
+    public void setBackground(ImageView background){
         this.background = background;
+    }
+    
+    public void run() {
         
-        testVillages();
-
         board.getPlayers().forEach((p) -> {
             if (p instanceof EvolutionaryAI) {
                 //Actions pour l'IA evolutionnaire

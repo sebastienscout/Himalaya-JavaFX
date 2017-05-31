@@ -80,10 +80,10 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                 village11, village12, village13, village14, village15, village16,
                 village17, village18, village19, village20));
 
-        regionsPane.addAll(Arrays.asList(region1,region2,region3,region4,
-                region5,region6,region7,region8));
+        regionsPane.addAll(Arrays.asList(region1, region2, region3, region4,
+                region5, region6, region7, region8));
 
-        playerLabels.addAll(Arrays.asList(player1ResLabel,player2ResLabel, 
+        playerLabels.addAll(Arrays.asList(player1ResLabel, player2ResLabel,
                 player3ResLabel, player4ResLabel));
 
     }
@@ -93,7 +93,8 @@ public class MainFXMLController implements Initializable, ControlledScreen {
 
         playTurn.setDisable(true);
 
-        playG.run(background);
+        playG.run();
+        playG.setBackground(background);
 
         playG.getBoard().prepareActions();
 
@@ -128,8 +129,9 @@ public class MainFXMLController implements Initializable, ControlledScreen {
                         }
                     }
                 } else {
-                    playG.testVillages();
+                    playG.refillVillages();
                     Platform.runLater(() -> displayElementsMap());
+                    Platform.runLater(() -> displayPlayersInformations());
                     turnLabel.setText("Tour " + Integer.toString(playG.getBoard().getNbTurn()));
                     playTurn.setDisable(false);
                 }
@@ -162,11 +164,11 @@ public class MainFXMLController implements Initializable, ControlledScreen {
             Village v = playG.getBoard().getVillages().get(i);
             if (v.getResources().size() > 0) {
                 Label testVillageLabel = new Label("Ressources\n" + v.getResources().toString());
-                testVillageLabel.setStyle("-fx-background-color: rgba(255,255,255,.8);");
+                testVillageLabel.setStyle("-fx-background-color: rgba(150,200,150,.8);");
                 villagesPane.get(i).getChildren().add(testVillageLabel);
             } else if (v.getOrder() != null) {
                 Label testVillageLabel = new Label("Commande (" + v.getOrder().getValue() + ")\n" + v.getOrder().getResources().toString());
-                testVillageLabel.setStyle("-fx-background-color: rgba(255,255,255,.8);");
+                testVillageLabel.setStyle("-fx-background-color: rgba(255,200,150,.8);");
                 villagesPane.get(i).getChildren().add(testVillageLabel);
             }
 
@@ -250,7 +252,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
     @Override
     public void initScreen() {
 
-        playG.testVillages();
+        playG.refillVillages();
 
         displayElementsMap();
         displayPlayersInformations();

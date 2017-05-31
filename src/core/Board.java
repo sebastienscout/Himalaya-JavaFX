@@ -293,17 +293,17 @@ public class Board {
         switch (p.getAction(i).getType()) {
             case stone:
                 if (p.getPosition().getDestVillage(Road.stone) != null) {
-                    p.move(getVillageById(p.getPosition().getDestVillage(Road.stone)));
+                    p.setPosition(getVillageById(p.getPosition().getDestVillage(Road.stone)));
                 }
                 break;
             case soil:
                 if (p.getPosition().getDestVillage(Road.soil) != null) {
-                    p.move(getVillageById(p.getPosition().getDestVillage(Road.soil)));
+                    p.setPosition(getVillageById(p.getPosition().getDestVillage(Road.soil)));
                 }
                 break;
             case ice:
                 if (p.getPosition().getDestVillage(Road.ice) != null) {
-                    p.move(getVillageById(p.getPosition().getDestVillage(Road.ice)));
+                    p.setPosition(getVillageById(p.getPosition().getDestVillage(Road.ice)));
                 }
                 break;
             case offering:

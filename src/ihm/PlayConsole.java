@@ -1,7 +1,6 @@
 package ihm;
 
 import core.Action;
-import core.Play;
 import core.Player;
 import core.Village;
 import ia.EvolutionaryAI;
@@ -27,30 +26,34 @@ public class PlayConsole extends Play {
 
         //Les 12 tours
         while (board.getNbTurn() <= nbTurnMax) {
-            testVillages();
+            refillVillages();
             //displayInfoBoard();
 
-            board.getPlayers().forEach((p) -> {
-
-                displayLine();
-                displayPlayerInfos(p);
-
-                if (p instanceof EvolutionaryAI) {
-                    //Actions pour l'IA evolutionnaire
-                    evolActions((EvolutionaryAI) p);
-                } else if (p instanceof RandomAI) {
-                    //Actions pour l'IA random
-                    randomActions((RandomAI) p);
-                } else {
-                    //Actions pour le joueur humain
-                    humanActions(p);
-                }
-            });
+            selectActions();
 
             board.executeActions();
         }
 
         displayWinner();
+    }
+
+    private void selectActions() {
+        board.getPlayers().forEach((p) -> {
+            
+            displayLine();
+            displayPlayerInfos(p);
+            
+            if (p instanceof EvolutionaryAI) {
+                //Actions pour l'IA evolutionnaire
+                evolActions((EvolutionaryAI) p);
+            } else if (p instanceof RandomAI) {
+                //Actions pour l'IA random
+                randomActions((RandomAI) p);
+            } else {
+                //Actions pour le joueur humain
+                humanActions(p);
+            }
+        });
     }
 
     private void displayPlayerInfos(Player p) {

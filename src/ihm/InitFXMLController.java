@@ -58,11 +58,11 @@ public class InitFXMLController implements Initializable {
 
         if (allFieldsOK) {
 
-            board.getPlayers().get(0).move(board.getVillageById(Integer.parseInt(p1TextField.getText())));
-            board.getPlayers().get(1).move(board.getVillageById(Integer.parseInt(p2TextField.getText())));
-            board.getPlayers().get(2).move(board.getVillageById(Integer.parseInt(p3TextField.getText())));
+            board.getPlayers().get(0).setPosition(board.getVillageById(Integer.parseInt(p1TextField.getText())));
+            board.getPlayers().get(1).setPosition(board.getVillageById(Integer.parseInt(p2TextField.getText())));
+            board.getPlayers().get(2).setPosition(board.getVillageById(Integer.parseInt(p3TextField.getText())));
             if (board.getPlayers().size() == 4) {
-                board.getPlayers().get(3).move(board.getVillageById(Integer.parseInt(p4TextField.getText())));
+                board.getPlayers().get(3).setPosition(board.getVillageById(Integer.parseInt(p4TextField.getText())));
             }
 
             Stage stage = (Stage) ((Node) evt.getSource()).getScene().getWindow();

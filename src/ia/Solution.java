@@ -45,7 +45,7 @@ public class Solution {
 
         cloneBoard = new Board(b);
         clonePlayer = new Player(p);
-        clonePlayer.move(cloneBoard.getVillageById(p.getPosition().getId()));
+        clonePlayer.setPosition(cloneBoard.getVillageById(p.getPosition().getId()));
         cloneBoard.addPlayer(clonePlayer);
 
         for (Action action : actions) {
@@ -223,7 +223,7 @@ public class Solution {
             if (p.equals(b.winnerReligiousScore())) {
                 coeff = 0.5;
             } else {
-                coeff = b.winnerEconnomicScore().getReligiousScore() - p.getEconomicScore();
+                coeff = b.winnerEconnomicScore().getEconomicScore() - p.getEconomicScore();
             }
         }
 
