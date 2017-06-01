@@ -173,9 +173,9 @@ public class EvolutionaryAI extends Player {
                 writer.write(board.getNbTurn() + "," + nbGeneration + "," + parents.bestSolution().getFitness() + "," + parents.averageFitness() + '\n');
             }
             
-            writerSimulation.write("Tour " + board.getNbTurn() + " :\n");
+            writerSimulation.write("Tour " + board.getNbTurn() + " : ");
             writerSimulation.write(parents.bestSolution().getActions().subList(0, 5).toString() + '\n');
-            writerSimulation.write("Prevision tour " + (board.getNbTurn() + 1) + " :\n");
+            writerSimulation.write("Prevision tour " + (board.getNbTurn() + 1) + " : ");
             writerSimulation.write(parents.bestSolution().getActions().subList(6, 11).toString() + '\n');
 
             System.out.println(color + " -> " + parents.bestSolution() + " {AVG = " + parents.averageFitness() + "}");

@@ -238,25 +238,21 @@ public class Board {
      * @param p
      */
     private void offering(Player p) {
-        // Verification commande completée, et moins de 2 actions
         if (p.canPutStupa()) {
-            // Verification : pas de stupa deja placée
-            if (p.getPosition().getStupa() == null) {
-                p.putStupa();
-                int nbPoints = 0;
-                switch (p.getPosition().getType()) {
-                    case house:
-                        nbPoints = 1;
-                        break;
-                    case temple:
-                        nbPoints = 2;
-                        break;
-                    case monastery:
-                        nbPoints = 3;
-                        break;
-                }
-                p.setReligiousScore(p.getReligiousScore() + nbPoints);
+            p.putStupa();
+            int nbPoints = 0;
+            switch (p.getPosition().getType()) {
+                case house:
+                    nbPoints = 1;
+                    break;
+                case temple:
+                    nbPoints = 2;
+                    break;
+                case monastery:
+                    nbPoints = 3;
+                    break;
             }
+            p.setReligiousScore(p.getReligiousScore() + nbPoints);
         }
     }
 
