@@ -70,4 +70,8 @@ public class Region {
         return null;
     }
 
+    public void removeDelegation(String looserReligious) {
+        delegations.put(looserReligious, 0);
+    }
+
 }

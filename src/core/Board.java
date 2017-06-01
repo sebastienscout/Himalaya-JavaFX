@@ -514,7 +514,9 @@ public class Board{
             }
         }
         System.out.println("Joueur " + looserReligious.getColor() + " éliminé");
-        looserReligious.getDelegations().clear();
+        for (Region r : regions) {
+            r.removeDelegation(looserReligious.getColor());
+        }
         winnerPoliticalScore();
         winners.remove(looserReligious);
         
