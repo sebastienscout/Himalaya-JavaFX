@@ -174,7 +174,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
 
             //Gestions des stupas
             if (v.getStupa() != null) {
-                Image img = new Image("resources/stupa/" + v.getStupa().getColor() + ".png");
+                Image img = new Image("resources/stupa/" + v.getStupa() + ".png");
                 ImageView iv1 = new ImageView();
                 iv1.setFitHeight(50.0);
                 iv1.setPreserveRatio(true);

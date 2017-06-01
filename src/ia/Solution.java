@@ -21,9 +21,9 @@ public class Solution {
     private Player clonePlayer;
 
     private final int malus = 100;
-    private final int weightStupa = 20;
+    private final int weightStupa = 15;
     private final int weightDelegation = 10;
-    private final int weightBartering = 8;
+    private final int weightBartering = 5;
 
     public Solution() {
         this.actions = null;
@@ -80,12 +80,12 @@ public class Solution {
 
         // Compute fitness
         fitness = computeResourcesFitness();
-        fitness += calculWeightStupas(b) * weightStupa * (p.getNbStupa() - clonePlayer.getNbStupa());
-        fitness += (p.getNbDelegation() - clonePlayer.getNbDelegation()) * weightDelegation;
-        fitness += (clonePlayer.getEconomicScore() - p.getEconomicScore()) * computeWeightBartering(b);
+        fitness += computeCoefStupas(b) * weightStupa * (p.getNbStupa() - clonePlayer.getNbStupa());
+        fitness += computeCoefDelegation(b) * weightDelegation * (p.getNbDelegation() - clonePlayer.getNbDelegation());
+        fitness += computeCoefBartering(b) * weightBartering * (clonePlayer.getEconomicScore() - p.getEconomicScore()) ;
 
         //Malus
-        int nbTrans = clonePlayer.getNbTransactionDone();
+        int nbTrans = clonePlayer.getNbRewardsTaken();
         if (clonePlayer.hasCompletedOrder()) {
             fitness -= (2 - nbTrans) * malus;
         }
@@ -215,7 +215,7 @@ public class Solution {
         actions.set(i, newAction);
     }
 
-    public double calculWeightStupas(Board b) {
+    public double computeCoefStupas(Board b) {
 
         double coeff = 1.0;
 
@@ -230,14 +230,28 @@ public class Solution {
         return coeff;
     }
 
-    public double computeWeightBartering(Board b) {
+    public double computeCoefBartering(Board b) {
         double coeff = 1.0;
 
         if (b.winnerEconnomicScore() != null) {
-            if (p.equals(b.winnerReligiousScore())) {
+            if (p.equals(b.winnerEconnomicScore())) {
                 coeff = 0.5;
             } else {
                 coeff = b.winnerEconnomicScore().getEconomicScore() - p.getEconomicScore();
+            }
+        }
+
+        return coeff;
+    }
+
+    public double computeCoefDelegation(Board b) {
+        double coeff = 1.0;
+
+        if (b.winnerPoliticalScore() != null) {
+            if (p.equals(b.winnerPoliticalScore())) {
+                coeff = 0.5;
+            } else {
+                coeff = b.winnerPoliticalScore().getPoliticalScore() - p.getPoliticalScore();
             }
         }
 
