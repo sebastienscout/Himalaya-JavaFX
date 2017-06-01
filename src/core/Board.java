@@ -7,7 +7,7 @@ import java.util.Map;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
-public class Board {
+public class Board{
 
     private ArrayList<Player> players;
     private ArrayList<Village> villages;
@@ -238,25 +238,22 @@ public class Board {
      * @param p
      */
     private void offering(Player p) {
-        // Verification commande completée, et moins de 2 actions
         if (p.canPutStupa()) {
-            // Verification : pas de stupa deja placée
-            if (p.getPosition().getStupa() == null) {
-                p.putStupa();
-                int nbPoints = 0;
-                switch (p.getPosition().getType()) {
-                    case house:
-                        nbPoints = 1;
-                        break;
-                    case temple:
-                        nbPoints = 2;
-                        break;
-                    case monastery:
-                        nbPoints = 3;
-                        break;
-                }
-                p.setReligiousScore(p.getReligiousScore() + nbPoints);
+            p.putStupa();
+            int nbPoints = 0;
+            switch (p.getPosition().getType()) {
+                case house:
+                    nbPoints = 1;
+                    break;
+                case temple:
+                    nbPoints = 2;
+                    break;
+                case monastery:
+                    nbPoints = 3;
+                    break;
             }
+            p.setReligiousScore(p.getReligiousScore() + nbPoints);
+
         }
     }
 
@@ -460,11 +457,19 @@ public class Board {
         Player playerREL = winnerReligiousScore();
         Player playerPOL = winnerPoliticalScore();
 
+        if (players.size() == 3) {
+            winner = determineWinner3Players(playerECO, playerPOL, playerREL, winner);
+        } else if (players.size() == 4) {
+            winner = determineWinner4Players(winner);
+        }
+        return winner;
+    }
+
+    private Player determineWinner3Players(Player playerECO, Player playerPOL, Player playerREL, Player winner) {
         HashMap<Player, Integer> nbVictory = new HashMap<>();
         players.forEach((p) -> {
             nbVictory.put(p, 0);
         });
-
         if (playerECO != null) {
             nbVictory.replace(playerECO, nbVictory.get(playerECO) + 1);
         }
@@ -474,7 +479,6 @@ public class Board {
         if (playerREL != null) {
             nbVictory.replace(playerREL, nbVictory.get(playerREL) + 1);
         }
-
         Map.Entry<Player, Integer> maxVictoryPlayer = Collections.max(nbVictory.entrySet(), Map.Entry.comparingByValue());
         if (maxVictoryPlayer.getValue() >= 2) {
             winner = maxVictoryPlayer.getKey();
@@ -485,9 +489,69 @@ public class Board {
         } else if (playerREL != null) {
             winner = playerREL;
         }
-
         return winner;
+    }
 
+    private Player determineWinner4Players(Player winner) {
+        ArrayList<Player> winners = new ArrayList<>();
+        for (Player player : players) {
+            winners.add(player);
+        }
+        
+        //PHASE 1
+        Player looserReligious = winners.get(0);
+        for (Player p : winners) {
+            if(compareReligiousScore(p, looserReligious) == 0){
+                if(compareNbStupas(p, looserReligious) == -1){
+                    looserReligious = p;
+                }else if(compareNbStupas(p, looserReligious) == 0){
+                    if(compareEconomicScore(p, looserReligious) == -1){
+                        looserReligious = p;
+                    }
+                }
+            }else if(compareReligiousScore(p, looserReligious) == -1){
+                looserReligious = p;
+            }
+        }
+        System.out.println("Joueur " + looserReligious.getColor() + " éliminé");
+        looserReligious.getDelegations().clear();
+        winnerPoliticalScore();
+        winners.remove(looserReligious);
+        
+        //PHASE 2
+        Player looserPolitical = winners.get(0);
+        for (Player p : winners) {
+            if(comparePoliticalScore(p, looserPolitical) == 0){
+                if(compareNbStupas(p, looserPolitical) == -1){
+                    looserPolitical = p;
+                }else if(compareNbDelegation(p, looserPolitical) == 0){
+                    if(compareEconomicScore(p, looserPolitical) == -1){
+                        looserPolitical = p;
+                    }
+                }
+            }else if(comparePoliticalScore(p, looserPolitical) == -1){
+                looserPolitical = p;
+            }
+        }
+        System.out.println("Joueur " + looserPolitical.getColor() + " éliminé");
+        winners.remove(looserPolitical);
+        
+        //PHASE 3
+        winner = winners.get(0);
+        for (Player p : winners) {
+            if(compareEconomicScore(p, winner) == 0){
+                if(comparePoliticalScore(p, looserReligious) == 1){
+                    winner = p;
+                }else if(comparePoliticalScore(p, winner) == 0){
+                    if(compareReligiousScore(p, winner) == 1){
+                        winner = p;
+                    }
+                }
+            }else if(compareEconomicScore(p, winner) == 1){     
+                winner = p;
+            }
+        }
+        return winner;
     }
 
     void setPlayers(ArrayList<Player> players) {
@@ -504,4 +568,66 @@ public class Board {
         }
         return p;
     }
+
+    
+    public int compareReligiousScore(Player p1, Player p2) {
+        if (p1.getReligiousScore() > p2.getReligiousScore()) {
+            return 1;
+        } else {
+            if (p1.getReligiousScore() == p2.getReligiousScore()) {
+                return 0;
+            } else {
+                return -1;
+            }
+        }
+    }
+    
+    public int compareNbStupas(Player p1, Player p2) {
+        if (p1.getNbStupa()> p2.getNbStupa()) {
+            return 1;
+        } else {
+            if (p1.getNbStupa() == p2.getNbStupa()) {
+                return 0;
+            } else {
+                return -1;
+            }
+        }
+    }
+    
+    public int compareEconomicScore(Player p1, Player p2) {
+        if (p1.getEconomicScore()> p2.getEconomicScore()) {
+            return 1;
+        } else {
+            if (p1.getEconomicScore() == p2.getEconomicScore()) {
+                return 0;
+            } else {
+                return -1;
+            }
+        }
+    }
+    
+    public int comparePoliticalScore(Player p1, Player p2) {
+        if (p1.getPoliticalScore() > p2.getPoliticalScore()) {
+            return 1;
+        } else {
+            if (p1.getPoliticalScore() == p2.getPoliticalScore()) {
+                return 0;
+            } else {
+                return -1;
+            }
+        }
+    }
+    
+    public int compareNbDelegation(Player p1, Player p2) {
+        if (p1.getNbDelegation()> p2.getNbDelegation()) {
+            return 1;
+        } else {
+            if (p1.getNbDelegation() == p2.getNbDelegation()) {
+                return 0;
+            } else {
+                return -1;
+            }
+        }
+    }
+    
 }

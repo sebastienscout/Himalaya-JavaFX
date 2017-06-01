@@ -37,6 +37,7 @@ public class Main extends Application {
 //        play.addEvolAI("Rouge");
 //        play.addEvolAI("Bleu");
 //        play.addEvolAI("Vert");
+//        play.addEvolAI("Violet");
 //        play.run();
 
         launch(args);
