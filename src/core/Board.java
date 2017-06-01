@@ -334,7 +334,7 @@ public class Board{
         nbTurn++;
 
         players.forEach((p) -> {
-            p.clearEndOfTurn();
+            p.clearEndOfTurn(true);
         });
 
         // Players swap

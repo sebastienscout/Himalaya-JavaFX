@@ -15,7 +15,7 @@ public class Solution {
 
     private double fitness;
     private ArrayList<Action> actions;
-    private int size = 6;
+    private int size = 12;
     private Player p;
     private Board cloneBoard;
     private Player clonePlayer;
@@ -42,6 +42,8 @@ public class Solution {
     }
 
     public void computeFitness(Board b) {
+        
+        fitness = 0;
 
         cloneBoard = new Board(b);
         clonePlayer = new Player(p);
@@ -63,20 +65,38 @@ public class Solution {
             }
             cloneBoard.executeAction(i, clonePlayer, false);
         }
+        
+        //Malus
+        if (clonePlayer.hasCompletedOrder()) {
+            fitness -= (2 - clonePlayer.getNbRewardsTaken()) * malus;
+        }
+
+        clonePlayer.clearEndOfTurn(false);
+
+        if (cloneBoard.getNbTurn() < 12) {
+
+            for (int i = 6; i < 12; i++) {
+                Action action = clonePlayer.getAction(i);
+                testAction(action);
+                if (action.getType() == Action.Type.delegation) {
+                    action.setId(computeOptimalRegion(b));
+                }
+                cloneBoard.executeAction(i, clonePlayer, false);
+            }
+        }
 
         // Compute fitness
-        fitness = computeResourcesFitness();
+        fitness += computeResourcesFitness();
         fitness += computeCoefStupas(b) * weightStupa * (p.getNbStupa() - clonePlayer.getNbStupa());
         fitness += computeCoefDelegation(b) * weightDelegation * (p.getNbDelegation() - clonePlayer.getNbDelegation());
         fitness += computeCoefBartering(b) * weightBartering * (clonePlayer.getEconomicScore() - p.getEconomicScore()) ;
 
         //Malus
-        int nbTrans = clonePlayer.getNbRewardsTaken();
         if (clonePlayer.hasCompletedOrder()) {
-            fitness -= (2 - nbTrans) * malus;
+            fitness -= (2 - clonePlayer.getNbRewardsTaken()) * malus;
         }
 
-        clonePlayer.clearEndOfTurn();
+        clonePlayer.clearEndOfTurn(true);
 
     }
 
