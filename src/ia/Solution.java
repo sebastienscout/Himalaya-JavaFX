@@ -15,7 +15,7 @@ public class Solution {
 
     private double fitness;
     private ArrayList<Action> actions;
-    private int size = 6;
+    private int size = 12;
     private Player p;
     private Board cloneBoard;
     private Player clonePlayer;
@@ -45,9 +45,9 @@ public class Solution {
 
         cloneBoard = new Board(b);
         clonePlayer = new Player(p);
-        
+
         clonePlayer.setPosition(cloneBoard.getVillageById(p.getPosition().getId()));
-        
+
         cloneBoard.addPlayer(clonePlayer);
 
         for (Action action : actions) {
@@ -64,7 +64,19 @@ public class Solution {
             cloneBoard.executeAction(i, clonePlayer, false);
         }
 
-        clonePlayer.clearEndOfTurn();
+        clonePlayer.clearEndOfTurn(false);
+
+        if (cloneBoard.getNbTurn() < 12) {
+
+            for (int i = 6; i < 12; i++) {
+                Action action = clonePlayer.getAction(i);
+                testAction(action);
+                if (action.getType() == Action.Type.delegation) {
+                    action.setId(computeOptimalRegion(b));
+                }
+                cloneBoard.executeAction(i, clonePlayer, false);
+            }
+        }
 
         // Compute fitness
         fitness = computeResourcesFitness();
@@ -77,6 +89,9 @@ public class Solution {
         if (clonePlayer.hasCompletedOrder()) {
             fitness -= (2 - nbTrans) * malus;
         }
+
+        clonePlayer.clearEndOfTurn(true);
+
     }
 
     public void testAction(Action action) {

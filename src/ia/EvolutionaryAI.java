@@ -3,7 +3,6 @@ package ia;
 import core.Action;
 import core.Board;
 import core.Player;
-import core.Resource;
 import core.Village;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -11,9 +10,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +28,9 @@ public class EvolutionaryAI extends Player {
     private Board board;
 
     private FileOutputStream fos;
+    private FileOutputStream fosSimulation;
     private Writer writer;
+    private Writer writerSimulation;
 
     public EvolutionaryAI(String color) {
         super(color);
@@ -55,6 +53,9 @@ public class EvolutionaryAI extends Player {
             fos = new FileOutputStream("fitness_" + color + ".csv");
             writer = new BufferedWriter(new OutputStreamWriter(fos, "utf-8"));
             writer.write("turn,generation,best,avg\n");
+            
+            fosSimulation = new FileOutputStream("simulation_" + color + ".txt");
+            writerSimulation = new BufferedWriter(new OutputStreamWriter(fosSimulation, "utf-8"));
         } catch (IOException ex) {
             Logger.getLogger(EvolutionaryAI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -171,11 +172,17 @@ public class EvolutionaryAI extends Player {
                 nbGeneration++;
                 writer.write(board.getNbTurn() + "," + nbGeneration + "," + parents.bestSolution().getFitness() + "," + parents.averageFitness() + '\n');
             }
+            
+            writerSimulation.write("Tour " + board.getNbTurn() + " :\n");
+            writerSimulation.write(parents.bestSolution().getActions().subList(0, 5).toString() + '\n');
+            writerSimulation.write("Prevision tour " + (board.getNbTurn() + 1) + " :\n");
+            writerSimulation.write(parents.bestSolution().getActions().subList(6, 11).toString() + '\n');
 
             System.out.println(color + " -> " + parents.bestSolution() + " {AVG = " + parents.averageFitness() + "}");
 
             bestSolActions = parents.bestSolution();
             writer.flush();
+            writerSimulation.flush();
 
         } catch (Exception ex) {
             Logger.getLogger(EvolutionaryAI.class.getName()).log(Level.SEVERE, null, ex);
