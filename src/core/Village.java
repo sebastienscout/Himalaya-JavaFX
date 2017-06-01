@@ -15,7 +15,7 @@ public class Village {
     private HashMap<Road, Integer> roads;
     private Order order;
     private Type type;
-    private Player stupa;
+    private String stupa;
     private ArrayList<Integer> regions;
 
     public Village(int id, Type type) {
@@ -47,7 +47,7 @@ public class Village {
         }
 
         this.type = village.type;
-        this.stupa = null;
+        this.stupa = village.stupa;
 
         this.regions = village.regions;
     }
@@ -64,11 +64,11 @@ public class Village {
         regions.add(region);
     }
 
-    public Player getStupa() {
+    public String getStupa() {
         return stupa;
     }
 
-    public void setStupa(Player stupa) {
+    public void setStupa(String stupa) {
         this.stupa = stupa;
     }
 
