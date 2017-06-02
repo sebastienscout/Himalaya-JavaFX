@@ -262,7 +262,7 @@ public class Board{
      *
      * @param p Player
      */
-    public void bartering(Player p, boolean graphic) {
+    private void bartering(Player p, boolean graphic) {
         if (p.canBartering()) {
             p.setEconomicScore(p.getEconomicScore() + p.getNbYacksOrder());
             p.addBarteringVillage(p.getPosition());
@@ -453,19 +453,19 @@ public class Board{
 
     public Player winner() {
         Player winner = null;
-        Player playerECO = winnerEconnomicScore();
-        Player playerREL = winnerReligiousScore();
-        Player playerPOL = winnerPoliticalScore();
-
+        
         if (players.size() == 3) {
-            winner = determineWinner3Players(playerECO, playerPOL, playerREL, winner);
+            winner = determineWinner3Players(winner);
         } else if (players.size() == 4) {
             winner = determineWinner4Players(winner);
         }
         return winner;
     }
 
-    private Player determineWinner3Players(Player playerECO, Player playerPOL, Player playerREL, Player winner) {
+    private Player determineWinner3Players(Player winner) {
+        Player playerECO = winnerEconnomicScore();
+        Player playerREL = winnerReligiousScore();
+        Player playerPOL = winnerPoliticalScore();
         HashMap<Player, Integer> nbVictory = new HashMap<>();
         players.forEach((p) -> {
             nbVictory.put(p, 0);
@@ -570,9 +570,8 @@ public class Board{
         }
         return p;
     }
-
-    
-    public int compareReligiousScore(Player p1, Player p2) {
+   
+    private int compareReligiousScore(Player p1, Player p2) {
         if (p1.getReligiousScore() > p2.getReligiousScore()) {
             return 1;
         } else {
@@ -584,7 +583,7 @@ public class Board{
         }
     }
     
-    public int compareNbStupas(Player p1, Player p2) {
+    private int compareNbStupas(Player p1, Player p2) {
         if (p1.getNbStupa()> p2.getNbStupa()) {
             return 1;
         } else {
@@ -596,7 +595,7 @@ public class Board{
         }
     }
     
-    public int compareEconomicScore(Player p1, Player p2) {
+    private int compareEconomicScore(Player p1, Player p2) {
         if (p1.getEconomicScore()> p2.getEconomicScore()) {
             return 1;
         } else {
@@ -608,7 +607,7 @@ public class Board{
         }
     }
     
-    public int comparePoliticalScore(Player p1, Player p2) {
+    private int comparePoliticalScore(Player p1, Player p2) {
         if (p1.getPoliticalScore() > p2.getPoliticalScore()) {
             return 1;
         } else {
@@ -620,7 +619,7 @@ public class Board{
         }
     }
     
-    public int compareNbDelegation(Player p1, Player p2) {
+    private int compareNbDelegation(Player p1, Player p2) {
         if (p1.getNbDelegation()> p2.getNbDelegation()) {
             return 1;
         } else {
