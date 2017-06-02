@@ -64,6 +64,7 @@ public class PlayConsole extends Play {
         System.out.println("Position : Village " + p.getPosition().getId());
         System.out.println("Ressources : " + p.getResources());
         System.out.println("Nombre de yacks : " + p.getEconomicScore());
+        System.out.println("Nombre stupas : " + p.getNbStupa());
         System.out.print("Délégation [");
         p.getDelegations().keySet().forEach((region) -> {
             Integer regionID = region;

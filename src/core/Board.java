@@ -7,7 +7,7 @@ import java.util.Map;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
-public class Board {
+public class Board{
 
     private ArrayList<Player> players;
     private ArrayList<Village> villages;
@@ -253,6 +253,7 @@ public class Board {
                     break;
             }
             p.setReligiousScore(p.getReligiousScore() + nbPoints);
+
         }
     }
 
@@ -261,7 +262,7 @@ public class Board {
      *
      * @param p Player
      */
-    public void bartering(Player p, boolean graphic) {
+    private void bartering(Player p, boolean graphic) {
         if (p.canBartering()) {
             p.setEconomicScore(p.getEconomicScore() + p.getNbYacksOrder());
             p.addBarteringVillage(p.getPosition());
@@ -452,15 +453,23 @@ public class Board {
 
     public Player winner() {
         Player winner = null;
+        
+        if (players.size() == 3) {
+            winner = determineWinner3Players(winner);
+        } else if (players.size() == 4) {
+            winner = determineWinner4Players(winner);
+        }
+        return winner;
+    }
+
+    private Player determineWinner3Players(Player winner) {
         Player playerECO = winnerEconnomicScore();
         Player playerREL = winnerReligiousScore();
         Player playerPOL = winnerPoliticalScore();
-
         HashMap<Player, Integer> nbVictory = new HashMap<>();
         players.forEach((p) -> {
             nbVictory.put(p, 0);
         });
-
         if (playerECO != null) {
             nbVictory.replace(playerECO, nbVictory.get(playerECO) + 1);
         }
@@ -470,7 +479,6 @@ public class Board {
         if (playerREL != null) {
             nbVictory.replace(playerREL, nbVictory.get(playerREL) + 1);
         }
-
         Map.Entry<Player, Integer> maxVictoryPlayer = Collections.max(nbVictory.entrySet(), Map.Entry.comparingByValue());
         if (maxVictoryPlayer.getValue() >= 2) {
             winner = maxVictoryPlayer.getKey();
@@ -481,9 +489,71 @@ public class Board {
         } else if (playerREL != null) {
             winner = playerREL;
         }
-
         return winner;
+    }
 
+    private Player determineWinner4Players(Player winner) {
+        ArrayList<Player> winners = new ArrayList<>();
+        for (Player player : players) {
+            winners.add(player);
+        }
+        
+        //PHASE 1
+        Player looserReligious = winners.get(0);
+        for (Player p : winners) {
+            if(compareReligiousScore(p, looserReligious) == 0){
+                if(compareNbStupas(p, looserReligious) == -1){
+                    looserReligious = p;
+                }else if(compareNbStupas(p, looserReligious) == 0){
+                    if(compareEconomicScore(p, looserReligious) == -1){
+                        looserReligious = p;
+                    }
+                }
+            }else if(compareReligiousScore(p, looserReligious) == -1){
+                looserReligious = p;
+            }
+        }
+        System.out.println("Joueur " + looserReligious.getColor() + " éliminé");
+        for (Region r : regions) {
+            r.removeDelegation(looserReligious.getColor());
+        }
+        winnerPoliticalScore();
+        winners.remove(looserReligious);
+        
+        //PHASE 2
+        Player looserPolitical = winners.get(0);
+        for (Player p : winners) {
+            if(comparePoliticalScore(p, looserPolitical) == 0){
+                if(compareNbStupas(p, looserPolitical) == -1){
+                    looserPolitical = p;
+                }else if(compareNbDelegation(p, looserPolitical) == 0){
+                    if(compareEconomicScore(p, looserPolitical) == -1){
+                        looserPolitical = p;
+                    }
+                }
+            }else if(comparePoliticalScore(p, looserPolitical) == -1){
+                looserPolitical = p;
+            }
+        }
+        System.out.println("Joueur " + looserPolitical.getColor() + " éliminé");
+        winners.remove(looserPolitical);
+        
+        //PHASE 3
+        winner = winners.get(0);
+        for (Player p : winners) {
+            if(compareEconomicScore(p, winner) == 0){
+                if(comparePoliticalScore(p, looserReligious) == 1){
+                    winner = p;
+                }else if(comparePoliticalScore(p, winner) == 0){
+                    if(compareReligiousScore(p, winner) == 1){
+                        winner = p;
+                    }
+                }
+            }else if(compareEconomicScore(p, winner) == 1){     
+                winner = p;
+            }
+        }
+        return winner;
     }
 
     void setPlayers(ArrayList<Player> players) {
@@ -500,4 +570,65 @@ public class Board {
         }
         return p;
     }
+   
+    private int compareReligiousScore(Player p1, Player p2) {
+        if (p1.getReligiousScore() > p2.getReligiousScore()) {
+            return 1;
+        } else {
+            if (p1.getReligiousScore() == p2.getReligiousScore()) {
+                return 0;
+            } else {
+                return -1;
+            }
+        }
+    }
+    
+    private int compareNbStupas(Player p1, Player p2) {
+        if (p1.getNbStupa()> p2.getNbStupa()) {
+            return 1;
+        } else {
+            if (p1.getNbStupa() == p2.getNbStupa()) {
+                return 0;
+            } else {
+                return -1;
+            }
+        }
+    }
+    
+    private int compareEconomicScore(Player p1, Player p2) {
+        if (p1.getEconomicScore()> p2.getEconomicScore()) {
+            return 1;
+        } else {
+            if (p1.getEconomicScore() == p2.getEconomicScore()) {
+                return 0;
+            } else {
+                return -1;
+            }
+        }
+    }
+    
+    private int comparePoliticalScore(Player p1, Player p2) {
+        if (p1.getPoliticalScore() > p2.getPoliticalScore()) {
+            return 1;
+        } else {
+            if (p1.getPoliticalScore() == p2.getPoliticalScore()) {
+                return 0;
+            } else {
+                return -1;
+            }
+        }
+    }
+    
+    private int compareNbDelegation(Player p1, Player p2) {
+        if (p1.getNbDelegation()> p2.getNbDelegation()) {
+            return 1;
+        } else {
+            if (p1.getNbDelegation() == p2.getNbDelegation()) {
+                return 0;
+            } else {
+                return -1;
+            }
+        }
+    }
+    
 }
