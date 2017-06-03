@@ -13,9 +13,9 @@ import java.util.Map;
 
 public class Solution {
 
-    private double fitness;
+    private int fitness;
     private ArrayList<Action> actions;
-    private int size = 12;
+    private int size = 9;
     private Player p;
     private Board cloneBoard;
     private Player clonePlayer;
@@ -42,8 +42,6 @@ public class Solution {
     }
 
     public void computeFitness(Board b) {
-        
-        fitness = 0;
 
         cloneBoard = new Board(b);
         clonePlayer = new Player(p);
@@ -55,6 +53,8 @@ public class Solution {
         for (Action action : actions) {
             clonePlayer.addAction(action);
         }
+        
+        fitness = 0;
 
         // Actions
         for (int i = 0; i < 6; i++) {
@@ -65,7 +65,7 @@ public class Solution {
             }
             cloneBoard.executeAction(i, clonePlayer, false);
         }
-        
+
         //Malus
         if (clonePlayer.hasCompletedOrder()) {
             fitness -= (2 - clonePlayer.getNbRewardsTaken()) * malus;
@@ -74,8 +74,7 @@ public class Solution {
         clonePlayer.clearEndOfTurn(false);
 
         if (cloneBoard.getNbTurn() < 12) {
-
-            for (int i = 6; i < 12; i++) {
+            for (int i = 6; i < size; i++) {
                 Action action = clonePlayer.getAction(i);
                 testAction(action);
                 if (action.getType() == Action.Type.delegation) {
@@ -89,15 +88,12 @@ public class Solution {
         fitness += computeResourcesFitness();
         fitness += computeCoefStupas(b) * weightStupa * (p.getNbStupa() - clonePlayer.getNbStupa());
         fitness += computeCoefDelegation(b) * weightDelegation * (p.getNbDelegation() - clonePlayer.getNbDelegation());
-        fitness += computeCoefBartering(b) * weightBartering * (clonePlayer.getEconomicScore() - p.getEconomicScore()) ;
+        fitness += computeCoefBartering(b) * weightBartering * (clonePlayer.getEconomicScore() - p.getEconomicScore());
 
         //Malus
         if (clonePlayer.hasCompletedOrder()) {
             fitness -= (2 - clonePlayer.getNbRewardsTaken()) * malus;
         }
-
-        clonePlayer.clearEndOfTurn(true);
-
     }
 
     public void testAction(Action action) {
@@ -105,24 +101,25 @@ public class Solution {
         switch (action.getType()) {
             case transaction:
                 if (clonePlayer.getPosition().getResources().isEmpty() && clonePlayer.getPosition().getOrder() == null) {
-                    action.setType(Action.Type.pause);
+                    this.fitness -= malus;
+                }
+                if(!clonePlayer.getPosition().getResources().isEmpty() && !clonePlayer.canTakeResource()){
+                    this.fitness -= malus;
                 }
                 break;
             case bartering:
                 if (!clonePlayer.canBartering()) {
-                    action.setType(Action.Type.pause);
+                    this.fitness -= malus;
                 }
-
                 break;
             case offering:
                 if (!clonePlayer.canPutStupa()) {
-                    action.setType(Action.Type.pause);
+                    this.fitness -= malus;
                 }
                 break;
-
             case delegation:
                 if (!clonePlayer.canPutDelegation()) {
-                    action.setType(Action.Type.pause);
+                    this.fitness -= malus;
                 }
                 break;
         }

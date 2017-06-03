@@ -39,7 +39,7 @@ public class EvolutionaryAI extends Player {
         // population size of the parents
         mu = 20;
         // population size of childrens
-        lambda = 1000;
+        lambda = 500;
         // tournament size for selection
         tournamentSize = 2;
         // rates of crossOver and mutation
@@ -176,7 +176,7 @@ public class EvolutionaryAI extends Player {
             writerSimulation.write("Tour " + board.getNbTurn() + " : ");
             writerSimulation.write(parents.bestSolution().getActions().subList(0, 5).toString() + '\n');
             writerSimulation.write("Prevision tour " + (board.getNbTurn() + 1) + " : ");
-            writerSimulation.write(parents.bestSolution().getActions().subList(6, 11).toString() + '\n');
+            writerSimulation.write(parents.bestSolution().getActions().subList(6, parents.bestSolution().getActions().size()).toString() + '\n');
 
             System.out.println(color + " -> " + parents.bestSolution() + " {AVG = " + parents.averageFitness() + "}");
 
