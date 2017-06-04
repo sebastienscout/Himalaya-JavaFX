@@ -1,4 +1,41 @@
 \section{Résultats et perspectives}
-	\subsection{Résultat final}
-	
-	\subsection{Améliorations possibles}
+
+\subsection{Résultat final}
+\subsection{Le moteur}
+L'ensemble des fonctionnalités (listées ci-dessous) ont été réalisées, testées avec des tests unitaires et implémentées avec succès dans l'IHM. (Voir l'UML du moteur à la fin du projet figure \ref{fig:UMLCore2}).
+\begin{itemize}
+	\item Un plateau de jeu avec 20 villages, un sac de 60 ressources, un sac de 40 commandes, trois ou quatre joueurs et les différentes routes qui connectent les villages entre eux
+	\item Des villages qui peuvent contenir des ressources (5 au maximum) ou une commande (avec 3 ressources maximum), des régions voisines, deux ou trois routes qui connectent à d'autres villages et un type :
+	\begin{itemize}
+		\item Un monastère
+		\item Un temple
+		\item Une maison
+	\end{itemize}
+	\item Des routes qui ont un type : Glace, Terre ou Pierre
+	\item Des récompenses de commande : 
+	\begin{itemize}
+		\item Prendre le nombre de Yacks indiqué sur la commande pour augmenter le score économique
+		\item Placer un stupa sur le village pour augmenter le score religieux
+		\item Placer une, deux ou trois délégations (en fonction du type de village) sur une région voisine
+	\end{itemize}
+	\item Des régions qui peuvent avoir des délégations de plusieurs joueurs
+	\item Des actions qui sont planifiées avant chaque tour, 6 actions parmi : 
+	\begin{itemize}
+		\item Emprunter une route de glace
+		\item Emprunter une route de terre
+		\item Emprunter une route de pierre
+		\item Effectuer une transaction (prendre des ressources sur le village ou effectuer la commande)
+		\item Prendre une récompense (parmi les 3 citées ci-dessus)
+		\item Faire une pause
+	\end{itemize}
+	Toutes les interactions entre les Actions et le reste sont gérées dans le plateau du jeu.
+\end{itemize} 
+\subsection{L'Interface Homme Machine}
+Pour l'IHM, deux parties ont été développées : une partie console et une partie graphique.
+Nous nous intéresserons plus sur la partie graphique. On a donc développé cette partie avec \fx. Pour chaque page il y a un fichier \fxml où tous les composants graphiques sont définit et un fichier controller en \java pour toutes les interactions. Cependant pour gérer la gestion de navigation entre les plusieurs pages nous avons développé une classe ("framework") permettant une bonne gestion de navigation des pages.
+\subsection{L'intelligence artificielle }
+Après la réalisation de l'intelligence artificielle, nous avons testé et analysé ses performances avec l'aide du logiciel RStudio (voir figure \ref{fig:analyse1}). On peut remarquer que sur les 12 tours la fitness augmente très rapidement et stagne après. Le nombre de générations n'est donc pas élevé pour prouver la meilleure solution. Cependant, on a pu remarque qu'à un certain nombre de générations assez élevé, on trouve une meilleure solution, mais cela reste des cas rares et ne n'est pas assez retable en thermes de performance.
+
+\subsection{Améliorations possibles}
+En général pour le jeu lui-même les améliorations possibles sont de prendre en compte les règles avancées avec par exemple les évènements qui peuvent survenir pendant la partie et changer la situation. Et peut-être dans la construction du moteur des changements pour plus de performances sont possibles.
+L'intelligence artificielle se base actuellement sur un algorithme évolutionnaire, cependant on pourrait améliorer le calcul de la fitness, réajuster les poids des différentes récompenses, mais également améliorer les calculs des coefficients. Mais également implémenter un algorithme génétique qui permettrait d'améliorer le calcul de la fitness en sélection par rang.
