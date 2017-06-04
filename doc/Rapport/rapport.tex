@@ -1,12 +1,12 @@
-\documentclass[french]{article}
+\documentclass[french]{scrartcl}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage[a4paper]{geometry}
+\usepackage{subcaption}
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{xcolor}
-\usepackage{hyperref}
 \usepackage{hyperref}
 \usepackage{babel}
 
@@ -42,26 +42,45 @@
 \newcommand{\fx}{\emph{JavaFX} }
 \newcommand{\java}{\emph{Java} }
 \newcommand{\himalaya}{\emph{Himalaya} }
-
-% Title Page
-
-\title{{\Huge Himalaya} \\ Rapport de projet}
-\author{Sébastien Schouteeten \& Alexis Jouin}
+\newcommand{\reference}[1]{(Voir Figure \ref{fig:#1},  page \pageref{fig:#1}) }
 
 % Begin document
 
 \begin{document}
-\begin{figure}
-	\centering
-	\includegraphics[width=0.5\linewidth]{images/ulco}
-\end{figure}
-
-\maketitle
-
-\begin{figure}
-	\centering
-	\includegraphics[width=0.8\linewidth]{images/himalaya}
-\end{figure}
+	
+% Title Page
+\begin{titlepage}
+	\begin{center}
+		\vspace*{2cm}
+		
+		\Huge
+		\textbf{Himalaya}
+		
+		\line(1,0){200}
+		
+		\vspace{0.5cm}
+		\LARGE
+		Rapport de projet
+		
+		\vspace{4.5cm}
+		
+		\large
+		Alexis Jouin \& Sébastien Schouteeten
+		
+		\vspace{0.5cm}
+		Master 1 ISIDIS
+		
+		\vfill
+		
+		\includegraphics[width=0.5\textwidth]{images/ulco}
+		
+		\vspace{0.8cm}
+		
+		\Large
+		Années 2016 - 2017
+		
+	\end{center}
+\end{titlepage}
 
 \newpage
 
@@ -84,6 +103,9 @@ Nous tenons à remercier notre enseignant tuteur, Monsieur Cyril Fonlupt, pour s
 
 \include{includes/elaboration_projet}
 
+
+\include{includes/intelligence_artificielle}
+
 \newpage
 \include{includes/resultat_projet}
 
@@ -92,8 +114,5 @@ Nous tenons à remercier notre enseignant tuteur, Monsieur Cyril Fonlupt, pour s
 
 \newpage
 \include{includes/annexes_projet}
-
-
-
 
 \end{document}          

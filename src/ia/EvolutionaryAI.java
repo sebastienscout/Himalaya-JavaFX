@@ -39,7 +39,7 @@ public class EvolutionaryAI extends Player {
         // population size of the parents
         mu = 20;
         // population size of childrens
-        lambda = 500;
+        lambda = 1000;
         // tournament size for selection
         tournamentSize = 2;
         // rates of crossOver and mutation

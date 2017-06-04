@@ -1,0 +1,75 @@
+\section{L'intelligence artificielle}
+
+\subsection{L'algorithme}
+	
+	\subsubsection{Les paramètres de l'algorithme}
+	
+		L'algorithme évolutionnaire utilise plusieurs paramètres durant son exécution.
+		Nous avons fait varier ses différents paramètres pour voir leur impact, pour des valeurs plus ou moins importantes,
+		sur la fitness généralement obtenue, et les actions effectuées par l'IA.
+		
+		Nous avons fixé la taille de la population des parents (mu) à 20, pour garder à chaque génération les 20 meilleures
+		solutions. Ce paramètre ne doit pas être trop élevé pour éviter les mauvaises solutions d'être prise dans la sélection.
+		Il doit également ne pas être trop faible sinon les solutions vont devenir trop diverses.
+		
+		Concernant la taille de la population des enfants (lambda), nous l'avons fixé à 500, car cela permet de garder une diversité et d'explorer de nouvelles solutions possible.
+		
+		Le paramètre suivant est la taille du tournoi pour la sélection. Le nombre ne doit pas être trop élevé sinon
+		on risque d'obtenir une nouvelle population d'individus identiques à la population de parents.
+		
+		Le taux de crossing over et le taux de mutation sont les paramètres qui vont influer sur les variations
+		que vont subir la population d'enfants obtenue. Le taux conservé pour le crossing over est de 80\%, et le taux
+		retenu pour la mutation est de 100\%. Le taux de mutation fixé à 100\% permet d'assurer à la population d'enfants
+		d'être un minimum différente de la population des parents.
+		
+		Il reste enfin à déterminer le nombre de génération a effectuer pour une exécution de l'algorithme.
+		Le nombre de générations maximum que nous avons retenu est 25, en effet, la fitness n'évolue que très 
+		rarement au delà de la 25\ieme{} génération. De plus, si le nombre de génération est trop élevé, cela
+		ralenti grandement l'exécution de l'algorithme.
+	
+	\subsubsection{Présentation d'une solution}
+	
+		Une solution est un individu d'une population de l'algorithme. Chacune d'entre elle représente une suite de
+		9 actions, l'IA va effectuer les 6 premières actions de la solution durant le tour. En effet, une solution est
+		calculée grâce à une simulation du prochain tour à jouer, ainsi que 3 actions supplémentaires. Cela va permettre à
+		l'IA d'obtenir la meilleure position de départ possible sur le tour suivant.
+
+\subsection{La fitness}
+			
+	\subsubsection{Calcul de la fitness}
+	
+		\vbox{
+			\lstinputlisting[language=Java, frame=tb, caption= {Pseudo-code: Calcul de la fitness}]{code/algo_fitness.java}
+			
+		}
+		
+		Pour calculer la fitness, une copie du plateau de jeu ainsi que de tous ses composants est faite.
+		Uniquement l'IA évolutionnaire est copiée sur le nouveau plateau, les autres joueurs n'y apparaissent pas. Une simulation est alors réalisée: le tour est lancé sur le plateau copié, et la copie de l'IA réalise ses 9 actions. Au bout de 6 actions (un tour normal),
+		on ajoute un malus à la fitness si le joueur a honoré une commande mais n'a pas pris 2 récompenses.
+		
+		Une fois le malus additionné, le restant des actions est réalisé, permettant d'améliorer la position de l'IA à
+		la fin du tour, et d'anticiper les actions du prochain tour.
+		Anticiper la position de l'IA permet d'éviter que celle-ci ne fasse pas d'action inutile à la fin de son tour,
+		comme par exemple des allers-retours ou s'éloigner des villages intéressants.
+		
+		La fitness est ensuite calculée sur les différents domaines (politique, religieux et économique), ainsi que sur
+		le nombre de ressources ramassées. A chaque domaine calculé est ajouté un coefficient, qui est obtenue en
+		comparant le score de l'IA avec celui des autres joueurs. Les coefficients sont égaux pour tous les joueurs en début de partie, ils sont plus élevé dans le ou les domaines ou l'IA perd au niveau du score. Inversement,
+		le coefficient va diminuer de moitié si l'IA est en tête dans le domaine correspondant.
+		
+		Chaque domaine se voit également associé un poids qui permet, pour l'IA, d'avoir une grande amélioration de
+		fitness dans le cas où celle-ci réaliserai une commande et ferai augmenter son score dans un ou plusieurs domaines.
+		
+	\subsubsection{Détermination de la position initiale}
+	
+		La position initiale de l'IA évolutionnaire est déterminée en réalisant, pour chaque village qui n'est pas
+		encore choisit par un joueur, un run de l'algorithme génétique. On considère que le village en cours d'analyse est la position du joueur. La meilleur fitness obtenue est enregistrée. On compare ensuite toutes les fitness
+		et on garde la meilleure: le village correspondant à cette meilleur fitness est choisit comme position de départ de l'IA.
+		
+	\subsubsection{Choix de la région optimale pour les délégations}
+	
+		Lorsque l'IA choisit d'honorer une commande et d'ensuite poser des délégations, un calcul est réalisé pour déterminer la région qui va lui rapporter le plus de points.
+		
+		Un calcul de rentabilité est effectué pour chaque région avoisinante, il s'agit de faire la différence entre le nombre de délégations que l'IA peut poser avec le nombre de délégations déjà présente sur cette région.
+		Grâce à ce calcul, l'IA va poser des délégations seulement si une région n'en possède pas, ou si elle peut battre le joueur qui la contrôle.
+		
