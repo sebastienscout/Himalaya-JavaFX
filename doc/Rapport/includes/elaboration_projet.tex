@@ -30,40 +30,37 @@
 		la méthode la plus rapide pour mettre en place une interface fonctionnelle en \java.
 		En effet, \fx est maintenant la bibliothèque de création d'interface graphique officielle du langage \java.
 		
-		Nous avons réaliser un menu, qui permet de sélectionner les joueurs et leur type
-		(Humain, IA aléatoire ou Évolutionnaire). Il est possible, depuis ce menu, de
-		passer en mode 3 ou 4 joueurs.
+		Nous avons réaliser un menu \reference{menu}, qui permet de sélectionner les joueurs et leur type (Humain, IA aléatoire ou Évolutionnaire). Il est possible, depuis ce menu, de passer en mode 3 ou 4 joueurs.
+		
+		Juste avant de pouvoir jouer, le jeu demande aux joueurs de choisir leur position de départ \reference{pos_init}.
 		
 		Durant le déroulement du jeu, nous affichons le plateau ainsi que les ressources
 		possédées pour chaque joueur, ainsi que les commandes et ressources proposées sur
 		les villages. Les pions des joueurs ainsi que les délégations et stupas qu'ils ont posé
-		apparaissent également sur le plateau de jeu.
+		apparaissent également sur le plateau de jeu \reference{etat_jeu}.
 		
-		La sélection des actions est effectuée dans une nouvelle fenêtre, dans laquelle
+		La sélection des actions est effectuée dans une nouvelle fenêtre \reference{actions}, dans laquelle
 		le joueur va pouvoir sélectionner les 6 actions qu'il veut effectuer, ainsi que
 		la choix de la région s'il choisit de poser une délégation.
 		
 		A la fin de la partie, une fenêtre s'ouvre et affiche les scores de chaque joueur
-		dans chacun des domaines (Politique, Religieux et Économique), ainsi que le vainqueur.
-	
-	\subsubsection{Création des algorithmes pour l'intelligence artificielle}
+		dans chacun des domaines (Politique, Religieux et Économique), ainsi que le vainqueur \reference{resultats}.
+			
+	\subsubsection{Création des intelligences artificielles}
 	
 		Nous avons tout d'abord réalisé une IA aléatoire, dans un but de rapidité et de test.
 		En effet, celle-ci nous a permis de réaliser une partie, et de vérifier que les différentes actions 
-		s'effectues correctement.
+		s'effectues correctement. Elle choisit 6 actions de manière aléatoire.
 		Cette IA a été utile pour tester l'affichage de l'interface graphique, et sa
-		mise à jour durant l'exécution des différents tours : les actions sont effectuées une
-		à une, pour permettre de bien suivre le déroulement du jeu.
+		mise à jour durant l'exécution des tours : les actions sont effectuées une
+		à une, avec une courte pause entre chaque, pour permettre de bien suivre le déroulement du jeu.
 		
 		Nous avons ensuite commencer le développement de l'IA basée sur un algorithme évolutionnaire.
-		
-		Cette IA utilise l'algorithme évolutionnaire pour deux choses différentes:
+		Cette dernière utilise l'algorithme évolutionnaire pour réaliser deux choses différentes:
 		\begin{itemize}
-			\item Le choix de la position de départ.
-			\item La planification des actions à réaliser durant le tour.
+			\item Choisir sa position de départ.
+			\item Planifier les actions qu'elle va réaliser durant le tour.
 		\end{itemize}
-	
-		\lstinputlisting[language=Java, frame=tb, caption= {Déroulement de l'algorithme évolutionnaire}]{code/algo_evol.java}
 		
 		L'algorithme va réaliser, pour chaque génération, une suite d'actions:
 		\begin{enumerate}
@@ -73,25 +70,4 @@
 			\item Effectuer un remplacement: on garde les meilleurs individus pour composer la nouvelle population de parents.
 		\end{enumerate}
 		
-\subsection{L'intelligence artificielle}
-
-	\subsubsection{Les paramètres de l'algorithme}
-	
-		L'algorithme évolutionnaire utilise plusieurs paramètres durant son exécution.
-		Nous avons fait varier ses différents paramètres pour voir leur impact, pour des valeurs plus ou moins importantes,
-		sur la fitness généralement obtenue, et les actions effectuées par l'IA.
-				
-		Nous avons fixé la taille de la population des parents (mu) à 20, pour garder à chaque génération les 20 meilleures
-		solutions. Ce paramètre ne doit pas être trop élevé pour éviter les mauvaises solutions d'être prise dans la sélection.
-		Il doit également ne pas être trop faible sinon les solutions vont devenir trop diverses.
-		
-		Concernant la taille de la population des enfants (lambda), nous l'avons fixé à 500, car cela permet de garder une diversité
-		et d'explorer de nouvelles solutions possible.
-				
-	\subsubsection{Présentation d'une solution}
-	
-	\subsubsection{Calcul de la fitness}
-	
-	
-	
-		
+		\lstinputlisting[language=Java, frame=tb, caption= {Déroulement de l'algorithme évolutionnaire}]{code/algo_evol.java}
