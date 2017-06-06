@@ -8,6 +8,13 @@
 %\usecolortheme{beaver}
 \setbeamertemplate{headline}{} 
 
+% Commands
+\newcommand{\fx}{\emph{JavaFX} }
+\newcommand{\java}{\emph{Java} }
+\newcommand{\fxml}{\emph{FXML} }
+\newcommand{\himalaya}{\emph{Himalaya} }
+\newcommand{\reference}[1]{(Voir Figure \ref{fig:#1},  page \pageref{fig:#1}) }
+
 \begin{document}
 	\title{\textbf{Projet Himalaya}}
 	\subtitle{Soutenance de projet\\
@@ -21,66 +28,24 @@
 	
 	\institute{Université du Littoral Côte d'Opale}
 	
-	\section*{Plan}
+	\section{Plan}
 	\begin{frame} 
 		\frametitle{Plan}
 		\tableofcontents
 	\end{frame}
 
-	\section{Introduction}
-	\begin{frame}
-		\frametitle{Introduction}
-		\begin{block}{Motivation}
-			Limiter au maximum ces distorsions
-		\end{block}
-	\end{frame}
+	\include{includes/section_intro}
 
-	\section{Présentation du projet}
-	\begin{frame}
-		\frametitle{Présentation}
-		\begin{block}{Motivation}
-			Limiter au maximum ces distorsions
-		\end{block}	
-	\end{frame}
+	\include{includes/section_presentation}
 	
-	\section{Le jeu Himalaya}
-	\begin{frame}
-		\frametitle{Le jeu Himalaya}
-		\begin{block}{Motivation}
-			Limiter au maximum ces distorsions
-		\end{block}	
-	\end{frame}
+	\include{includes/section_regle}
 	
-	\section{Développement du moteur et de l'interface}
-	\begin{frame}
-		\frametitle{Développement du moteur et de l'interface}
-		\begin{block}{Motivation}
-			Limiter au maximum ces distorsions
-		\end{block}	
-	\end{frame}
+	\include{includes/section_core+IHM}
 	
-	\section{L'intelligence artificielle}
-	\begin{frame}
-		\frametitle{L'intelligence artificielle}
-		\begin{block}{Motivation}
-			Limiter au maximum ces distorsions
-		\end{block}	
-	\end{frame}
+	\include{includes/section_IA}
 	
-	\section{Résultats obtenus et perspectives}
-	\begin{frame}
-		\frametitle{Résultats obtenus et perspectives}
-		\begin{block}{Motivation}
-			Limiter au maximum ces distorsions
-		\end{block}	
-	\end{frame}
+	\include{includes/section_resultats}
 	
-	\section{Conclusion}
-	\begin{frame}
-		\frametitle{Conclusion}
-		\begin{block}{Motivation}
-			Limiter au maximum ces distorsions
-		\end{block}	
-	\end{frame}
+	\include{includes/section_conclusion}
 	
 \end{document}
