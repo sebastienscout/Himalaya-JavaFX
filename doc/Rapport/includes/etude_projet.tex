@@ -1,10 +1,10 @@
 \section{Étude du projet}
 \subsection{Contraintes et situations initiales}
-Le projet initial à réaliser est un bot en \java pour le jeu de société \himalaya. Le moteur du jeu a déjà été réalisé par l'Université de Nice. Cependant, pour des raisons techniques et pratiques nous avons dû repartir de zéro afin de construire un moteur de jeu plus adapté pour une interface graphique (avec \fx) et les intelligences artificielles. Nous nous sommes tout de même inspirés du travail réalisé précédemment. 
-Les contraintes du projet ont été avant tout, la compréhension de toutes les règles du jeu avec toutes les variables à prendre en compte. Nous avons donc avant même de coder, réalisé une synthèse des règles afin de mieux les comprendre et déterminer les fonctionnalités à développer dans le moteur. Ensuite des premières versions de MCD ont été réalisé pour avoir un bon visuel de l'ensemble des objets et relation entre eux (voir figure \ref{fig:UMLCore1}) et à partir de cela nous avons donc construit entièrement le moteur du jeu ce qui nous a demandé beaucoup de temps.
+Le projet initial est un bot en \java pour le jeu de société \himalaya. Le moteur du jeu a déjà été réalisé par l'Université de Nice. Cependant, pour des raisons techniques et pratiques nous avons dû repartir de zéro afin de construire un moteur de jeu plus adapté pour une interface graphique (avec \fx) et les intelligences artificielles. Nous nous sommes tout de même inspirés du travail réalisé précédemment. 
+Les contraintes du projet ont été avant tout, la compréhension des règles du jeu avec toutes les variables à prendre en compte. Nous avons donc avant même de coder, réalisé une synthèse des règles afin de mieux les comprendre et déterminer les fonctionnalités à développer dans le moteur. Ensuite, des premières versions de MCD ont été réalisées pour avoir un bon visuel de l'ensemble des objets et relation entre eux (voir figure \ref{fig:UMLCore1}) et à partir de cela nous avons donc construit entièrement le moteur du jeu ce qui nous a exigé beaucoup de temps.
 
 \subsection{Résumé des règles}
-L’Himalaya est un jeu de plateau de stratégie. Le plateau est constitué de plusieurs villages eux-mêmes regroupés dans plusieurs régions (voir figure \ref{fig:plateau} et figure \ref{fig:board_region}). Sur 5 villages (aléatoire), on pourra y trouver 5 ressources (aléatoire). Il y a 5 types de ressources : 
+L’Himalaya est un jeu de plateau stratégique. Le plateau est constitué de plusieurs villages eux-mêmes regroupés dans plusieurs régions (voir figure \ref{fig:plateau} et figure \ref{fig:board_region}). Sur 5 villages (aléatoire), on peut y trouver 5 ressources (aléatoire). Il y a 5 types de ressources : 
 \begin{itemize}
 	\item Sel (valeur 1)
 	\item Orge (valeur 2)
@@ -12,17 +12,18 @@ L’Himalaya est un jeu de plateau de stratégie. Le plateau est constitué de p
 	\item Jade (valeur 4)
 	\item Or (valeur 5)
 \end{itemize}
-Sur 5 autres villages (aléatoire), on pourra y trouver 5 commandes. Le but ici va être de récupérer la commande en se déplaçant sur le village et honorer la commande. Pour l’honorer, il faut donner les ressources demandées par la commande. Quand la commande est honorée, le joueur a le choix entre plusieurs récompenses : 
+Sur 5 autres villages (aléatoire), on peut trouver 5 commandes. Le but ici va être de récupérer la commande en se déplaçant sur le village et honorer la commande. Pour l’honorer, il faut donner les ressources demandées par la commande. Quand la commande est honorée, le joueur a le choix entre plusieurs récompenses : 
 \begin{itemize}
 	\item Augmenter son score d’influence politique
 	\item Augmenter son score d’influence économique
 	\item Augmenter son score d’influence religieux 
 \end{itemize}
-Comme nous pouvons le remarquer, il y a 3 types de scores. Une partie dure 12 tours, et à la fin des 12 tours on compare les scores : 
+I y a 3 types de scores. Une partie dure 12 tours. À la fin des 12 tours, on compare les scores. Version 4 joueurs : 
 \begin{itemize}
 	\item Le joueur qui a le moins d’influences religieuses est éliminé d’office
 	\item Ensuite celui qui a le moins d’influence politique est éliminé à son tour
-	\item S’il y a égalité, c’est le joueur qui a le plus de points économiques qui gagne. Pour plus de précisions sur les règles, vous trouverez ci-joint la synthèse des règles 
+	\item S’il y a égalité, c’est le joueur qui a le plus de points économiques qui gagne. 
+	Pour plus de précisions sur les règles, vous trouverez ci-joint la synthèse des règles 
 \end{itemize}
 
 \subsection{Pourquoi \fx ?}

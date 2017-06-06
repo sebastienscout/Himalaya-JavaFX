@@ -1,73 +1,73 @@
 \section{Élaboration du projet}
 
 \subsection{Les différentes phases du projet}
-	\subsubsection{Création du moteur du jeu}
-		
-		Nous avons débuté le projet par la création du moteur du jeu.
-		Ce moteur a été pensé à l'avance avec la réalisation de l'\emph{UML},
-		représentant les classes \java.
-		Nous nous sommes également aidés du code source du jeu qui nous a été fourni
-		en début de projet.
-		
-		Le moteur du jeu est réalisé de manière à pouvoir être utilisé aussi bien en
-		console (terminal), qu'avec une interface graphique.
-		
-		Durant la réalisation du moteur, nous avons mis en place des tests unitaires,
-		dans le but de pouvoir tester notre code, et vérifier qu'aucune des
-		fonctionnalités précédentes n'est altérée par les nouvelles.
-		
-		Nous avons réalisé une classe \emph{Player.java} qui représente un joueur humain,
-		et nous avons créé ses classes filles pour utiliser les intelligences artificielles.
-		
-	\subsubsection{Création de l'interface}
-	
-		Une fois le moteur terminé et les tests unitaires finis, nous avons réalisé une interface en console.
-		Cette dernière nous a permis de réaliser des tests avec une vraie personne qui joue, et de 
-		commencer à mettre en place une intelligence artificielle.
-		
-		Par la suite, nous avons commencé à travailler sur une interface graphique
-		du jeu. Nous avons choisi d'utiliser \fx pour réaliser cette étape, car c'est
-		la méthode la plus rapide pour mettre en place une interface fonctionnelle en \java.
-		En effet, \fx est maintenant la bibliothèque de création d'interfaces graphiques officielle du langage \java.
-		
-		Nous avons réalisé un menu \reference{menu}, qui permet de sélectionner les joueurs et leur type (Humain, IA aléatoire ou Évolutionnaire). Il est possible, depuis ce menu, de passer en mode 3 ou 4 joueurs.
-		
-		Juste avant de pouvoir jouer, le jeu demande aux joueurs de choisir leur position de départ \reference{pos_init}.
-		
-		Durant le déroulement du jeu, nous affichons le plateau ainsi que les ressources
-		possédées pour chaque joueur, ainsi que les commandes et ressources proposées sur
-		les villages. Les pions des joueurs ainsi que les délégations et stupas qu'ils ont posés
-		apparaissent également sur le plateau de jeu \reference{etat_jeu}.
-		
-		La sélection des actions est effectuée dans une nouvelle fenêtre \reference{actions}, dans laquelle
-		le joueur va pouvoir sélectionner les 6 actions qu'il veut effectuer, ainsi que
-		la choix de la région s'il choisit de poser une délégation.
-		
-		À la fin de la partie, une fenêtre s'ouvre et affiche les scores de chaque joueur
-		dans chacun des domaines (Politique, Religieux et Économique), ainsi que le vainqueur \reference{resultats}.
-			
-	\subsubsection{Création des intelligences artificielles}
-	
-		Nous avons tout d'abord réalisé une IA aléatoire, dans un but de rapidité et de test.
-		En effet, celle-ci nous a permis de réaliser une partie, et de vérifier que les différentes actions 
-		s'effectuent correctement. Elle choisit 6 actions de manière aléatoire.
-		Cette IA a été utile pour tester l'affichage de l'interface graphique, et sa
-		mise à jour durant l'exécution des tours : les actions sont effectuées une
-		à une, avec une courte pause entre chaque, pour permettre de bien suivre le déroulement du jeu.
-		
-		Nous avons ensuite commencé le développement de l'IA basée sur un algorithme évolutionnaire.
-		Cette dernière utilise l'algorithme évolutionnaire pour réaliser deux choses différentes:
-		\begin{itemize}
-			\item Choisir sa position de départ.
-			\item Planifier les actions qu'elle va réaliser durant le tour.
-		\end{itemize}
-		
-		L'algorithme va réaliser, pour chaque génération, une suite d'actions:
-		\begin{enumerate}
-			\item Une sélection: on sélectionne les individus qui vont participer à la reproduction.
-			\item Des mutations de la population des enfants: mutation ou crossing-over, suivant un ratio donné.
-			\item Évaluer la population des enfants, en calculant leur fitness.
-			\item effectuer un remplacement: on garde les meilleurs individus pour composer la nouvelle population de parents.
-		\end{enumerate}
-		
-		\lstinputlisting[language=Java, frame=tb, caption= {Déroulement de l'algorithme évolutionnaire}]{code/algo_evol.java}
+\subsubsection{Création du moteur du jeu}
+
+Nous avons débuté le projet par la création du moteur du jeu.
+Ce moteur a été pensé à l'avance avec la réalisation de l'\emph{UML},
+représentant les classes \java.
+Nous nous sommes également aidés du code source du jeu qui nous a été fourni
+en début de projet.
+
+Le moteur du jeu est réalisé de manière à pouvoir être utilisé aussi bien en
+console (terminal), qu'avec une interface graphique.
+
+Durant la réalisation du moteur, nous avons mis en place des tests unitaires,
+dans le but de pouvoir tester notre code, et vérifier qu'aucune des
+fonctionnalités précédentes n'est altérée par les nouvelles.
+
+Nous avons réalisé une classe \emph{Player.java} qui représente un joueur humain,
+et nous avons créé ses classes filles pour utiliser les intelligences artificielles.
+
+\subsubsection{Création de l'interface}
+
+Une fois le moteur terminé et les tests unitaires finis, nous avons réalisé une interface en console.
+Cette dernière nous a permis de réaliser des tests avec une vraie personne qui joue, et de 
+commencer à mettre en place une intelligence artificielle.
+
+Par la suite, nous avons commencé à travailler sur une interface graphique
+du jeu. Nous avons choisi d'utiliser \fx pour réaliser cette étape, car c'est
+la méthode la plus rapide pour mettre en place une interface fonctionnelle en \java.
+En effet, \fx est maintenant la bibliothèque de création d'interfaces graphiques officielle du langage \java.
+
+Nous avons réalisé un menu \reference{menu}, qui permet de sélectionner les joueurs et leur type (Humain, IA aléatoire ou Évolutionnaire). Il est possible, depuis ce menu, de passer en mode 3 ou 4 joueurs.
+
+Juste avant de pouvoir jouer, le jeu demande aux joueurs de choisir leur position de départ \reference{pos_init}.
+
+Durant le déroulement du jeu, nous affichons le plateau ainsi que les ressources
+possédées pour chaque joueur, ainsi que les commandes et ressources proposées sur
+les villages. Les pions des joueurs ainsi que les délégations et stupas qu'ils ont posés
+apparaissent également sur le plateau de jeu \reference{etat_jeu}.
+
+La sélection des actions est effectuée dans une nouvelle fenêtre \reference{actions}, dans laquelle
+le joueur va pouvoir sélectionner les 6 actions qu'il veut effectuer, ainsi que
+le choix de la région s'il choisit de poser une délégation.
+
+À la fin de la partie, une fenêtre s'ouvre et affiche les scores de chaque joueur
+dans chacun des domaines (Politique, Religieux et Économique), ainsi que le vainqueur \reference{resultats}.
+
+\subsubsection{Création des intelligences artificielles}
+
+Nous avons tout d'abord réalisé une IA aléatoire, dans un but de rapidité et de test.
+En effet, celle-ci nous a permis de réaliser une partie, et de vérifier que les différentes actions 
+s'effectuent correctement. Elle choisit 6 actions de manière aléatoire.
+Cette IA a été utile pour tester l'affichage de l'interface graphique, et sa
+mise à jour durant l'exécution des tours : les actions sont effectuées une
+à une, avec une courte pause entre chaque, pour permettre de bien suivre le déroulement du jeu.
+
+Nous avons ensuite commencé le développement de l'IA basée sur un algorithme évolutionnaire.
+Cette dernière utilise l'algorithme évolutionnaire pour réaliser deux choses différentes:
+\begin{itemize}
+	\item Choisir sa position de départ.
+	\item Planifier les actions qu'elle va réaliser durant le tour.
+\end{itemize}
+
+L'algorithme va réaliser, pour chaque génération, une suite d'actions:
+\begin{enumerate}
+	\item Une sélection: on sélectionne les individus qui vont participer à la reproduction.
+	\item Des mutations de la population des enfants: mutation ou crossing-over, suivant un ratio donné.
+	\item Évaluer la population des enfants, en calculant leur fitness.
+	\item effectuer un remplacement: on garde les meilleurs individus pour composer la nouvelle population de parents.
+\end{enumerate}
+
+\lstinputlisting[language=Java, frame=tb, caption= {Déroulement de l'algorithme évolutionnaire}]{code/algo_evol.java}
