@@ -8,8 +8,9 @@ main = function(){
   ggplot(blue, aes(x=generation, y=avg)) +  facet_wrap(~turn) +
     geom_line( colour = "blue") +
     geom_line(data=red, aes(x=generation, y = avg, colour="red")) +
-    geom_line(data=green, aes(x=generation, y = avg, colour="green"))
+    geom_line(data=green, aes(x=generation, y = avg, colour="green")) +
+    theme(legend.position="none")
 }
 
-blanc <- read.table("fitness_Blanc.csv", header = TRUE, sep = ",")
-ggplot(blanc, aes(x=generation, y=best)) + facet_wrap(~turn)+ geom_line( colour = "black") + ylim(-15, 40)
+blanc <- read.table("fitness_Rouge.csv", header = TRUE, sep = ",")
+ggplot(blanc, aes(x=generation, y=avg)) + facet_wrap(~turn)+ geom_line( colour = "black")# + ylim(-15, 40)

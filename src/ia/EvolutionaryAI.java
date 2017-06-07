@@ -174,7 +174,7 @@ public class EvolutionaryAI extends Player {
             }
             
             writerSimulation.write("Tour " + board.getNbTurn() + " : ");
-            writerSimulation.write(parents.bestSolution().getActions().subList(0, 5).toString() + '\n');
+            writerSimulation.write(parents.bestSolution().getActions().subList(0, 6).toString() + '\n');
             writerSimulation.write("Prevision tour " + (board.getNbTurn() + 1) + " : ");
             writerSimulation.write(parents.bestSolution().getActions().subList(6, parents.bestSolution().getActions().size()).toString() + '\n');
 
