@@ -1,7 +1,71 @@
 \section{L'intelligence artificielle}
-	\begin{frame}
-		\frametitle{L'intelligence artificielle}
-		\begin{block}{Motivation}
-			Limiter au maximum ces distorsions
-		\end{block}	
+
+\begin{frame}
+	\frametitle{L'intelligence artificielle}
+	\framesubtitle{Présentation de l'algorithme}
+	
+	\begin{block}{Les paramètres}
+		\begin{itemize}
+			\item Population des parents (mu) = 20
+			\item Population des enfants (lambda) = 500
+			\item Taille du tournoi pour la sélection = ???
+			\item Taux de crossing-over = 0.8
+			\item Taux de mutation = 1.0
+			\item Nombre de générations maximum = 25
+		\end{itemize}
+	\end{block}	
+	
+	\begin{exampleblock}{Individu d'une population}
+		\begin{itemize}
+			\item Suite des 9 meilleurs actions
+			\item L'IA réalise les 6 premières actions
+		\end{itemize}
+	\end{exampleblock}	
+\end{frame}
+
+\begin{frame}
+	\frametitle{L'intelligence artificielle}
+	\framesubtitle{Calcul de la fitness}
+	
+	\begin{block}{Calcul de la fitness}
+		\begin{itemize}
+			\item Copie du plateau de jeu, et de tous ses composants
+			\item Pas de copie des joueurs
+			\item Réalisation d'une simulation du tour pour calculer la fitness
+		\end{itemize}
+	\end{block}
+
+	\begin{block}{Évaluation des coefficients}
+		\begin{itemize}
+			\item Coefficients égaux au départ
+			\item Adaptation au score du joueur
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{L'intelligence artificielle}
+	\framesubtitle{Calcul de la fitness}
+	\lstinputlisting[language=Java, caption= {Pseudo-code: Calcul de la fitness}]{code/algo_fitness.java}
+\end{frame}
+
+\begin{frame}
+	\frametitle{L'intelligence artificielle}
+	\framesubtitle{Calcul de position et optimisation des régions}
+	
+	\begin{block}{Position initiale}
+		\begin{itemize}
+			\item Run de l'algorithme pour chaque village disponible
+			\item Choisir la meilleur fitness
+			\item Ajouter le village à la liste des indisponibles
+		\end{itemize}
+	\end{block}	
+	
+	\begin{exampleblock}{Région optimale des délégations}
+		\begin{itemize}
+			\item Liste des régions possibles
+			\item Calcul de rentabilité: prise de région, vide ou occupée
+			\item Prise en compte des délégations présentes du joueur
+		\end{itemize}
+	\end{exampleblock}	
 \end{frame}

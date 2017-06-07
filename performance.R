@@ -10,3 +10,6 @@ main = function(){
     geom_line(data=red, aes(x=generation, y = avg, colour="red")) +
     geom_line(data=green, aes(x=generation, y = avg, colour="green"))
 }
+
+blanc <- read.table("fitness_Blanc.csv", header = TRUE, sep = ",")
+ggplot(blanc, aes(x=generation, y=best)) + facet_wrap(~turn)+ geom_line( colour = "black") + ylim(-15, 40)
