@@ -20,7 +20,7 @@ public class Solution {
     private Board cloneBoard;
     private Player clonePlayer;
 
-    private final int malus = 100;
+    private final int malus = 30;
     private final int weightStupa = 15;
     private final int weightDelegation = 10;
     private final int weightBartering = 5;

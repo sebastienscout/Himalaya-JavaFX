@@ -34,10 +34,9 @@ public class Main extends Application {
      */
     public static void main(String[] args) {
 //        PlayConsole play = new PlayConsole();
-//        play.addEvolAI("Rouge");
-//        play.addEvolAI("Bleu");
-//        play.addEvolAI("Vert");
-//        play.addEvolAI("Violet");
+//        play.addEvolAI("Blanc");
+//        play.addRandomAI("Bleu");
+//        play.addRandomAI("Vert");
 //        play.run();
 
         launch(args);
