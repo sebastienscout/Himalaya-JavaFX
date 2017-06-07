@@ -4,7 +4,7 @@
 	\frametitle{L'intelligence artificielle}
 	\framesubtitle{Présentation de l'algorithme}
 	
-	\begin{block}{Les paramètres}
+	\begin{block}<1->{Les paramètres}
 		\begin{itemize}
 			\item Population des parents (mu) = 20
 			\item Population des enfants (lambda) = 500
@@ -15,7 +15,7 @@
 		\end{itemize}
 	\end{block}	
 	
-	\begin{exampleblock}{Individu d'une population}
+	\begin{exampleblock}<2>{Individu d'une population}
 		\begin{itemize}
 			\item Suite des 9 meilleurs actions
 			\item L'IA réalise les 6 premières actions
@@ -27,7 +27,7 @@
 	\frametitle{L'intelligence artificielle}
 	\framesubtitle{Calcul de la fitness}
 	
-	\begin{block}{Calcul de la fitness}
+	\begin{block}<1->{Calcul de la fitness}
 		\begin{itemize}
 			\item Copie du plateau de jeu, et de tous ses composants
 			\item Pas de copie des joueurs
@@ -36,7 +36,7 @@
 		\end{itemize}
 	\end{block}
 
-	\begin{block}{Évaluation des coefficients}
+	\begin{block}<2>{Évaluation des coefficients}
 		\begin{itemize}
 			\item Coefficients égaux au départ
 			\item Adaptation au score du joueur
@@ -54,18 +54,18 @@
 	\frametitle{L'intelligence artificielle}
 	\framesubtitle{Calcul de position et optimisation des régions}
 	
-	\begin{block}{Position initiale}
+	\begin{block}<1->{Position initiale}
 		\begin{itemize}
 			\item Run de l'algorithme pour chaque village disponible
-			\item Choisir la meilleur fitness
+			\item Choisir la meilleure fitness
 			\item Ajouter le village à la liste des indisponibles
 		\end{itemize}
 	\end{block}	
 	
-	\begin{exampleblock}{Région optimale des délégations}
+	\begin{exampleblock}<2>{Région optimale des délégations}
 		\begin{itemize}
 			\item Liste des régions possibles
-			\item Calcul de rentabilité: prise de région, vide ou occupée
+			\item Calcul de rentabilité : prise de région, vide ou occupée
 			\item Prise en compte des délégations présentes du joueur
 		\end{itemize}
 	\end{exampleblock}	
