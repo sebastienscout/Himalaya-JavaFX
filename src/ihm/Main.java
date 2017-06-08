@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 
 public class Main extends Application {
 
+
     public static String screenMenuID = "menu";
     public static String screenMenuFile = "MenuFXML.fxml";
     public static String screenMainID = "main";
@@ -25,7 +26,6 @@ public class Main extends Application {
         root.getChildren().addAll(mainContainer);
         Scene scene = new Scene(root, Color.TRANSPARENT);
         stage.setScene(scene);
-        stage.setTitle("Himalaya - Le jeu");
         stage.show();
     }
 
@@ -34,9 +34,7 @@ public class Main extends Application {
      */
     public static void main(String[] args) {
 //        PlayConsole play = new PlayConsole();
-//        play.addEvolAI("Blanc");
-//        play.addRandomAI("Bleu");
-//        play.addRandomAI("Vert");
+//        play.addPlayer("Michel", 1);
 //        play.run();
 
         launch(args);

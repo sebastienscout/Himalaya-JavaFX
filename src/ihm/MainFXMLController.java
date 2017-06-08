@@ -61,7 +61,7 @@ public class MainFXMLController implements Initializable, ControlledScreen {
     private ArrayList<FlowPane> regionsPane;
     private ArrayList<Label> playerLabels;
 
-    private final long timeAnimation = 200;
+    private final long timeAnimation = 500;
 
     /**
      * Initializes the controller class.
