@@ -1,13 +1,15 @@
 package ihm;
 
+import java.io.File;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 
 public class Main extends Application {
-
 
     public static String screenMenuID = "menu";
     public static String screenMenuFile = "MenuFXML.fxml";
@@ -27,6 +29,14 @@ public class Main extends Application {
         Scene scene = new Scene(root, Color.TRANSPARENT);
         stage.setScene(scene);
         stage.show();
+        
+        //Music Theme Himalya
+        File filestring = new File("src/resources/music/music_menu.mp3");
+        Media file = new Media(filestring.toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(file);
+        mediaPlayer.autoPlayProperty();
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
     }
 
     /**

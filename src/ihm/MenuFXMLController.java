@@ -1,9 +1,17 @@
 package ihm;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -13,6 +21,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.util.Duration;
 
 public class MenuFXMLController extends StackPane implements Initializable, ControlledScreen {
 
@@ -48,7 +60,7 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
         String[] typeChoices = {
             "Humain", "IA Aléatoire", "IA Evolutionnaire"
         };
-        
+
         choiceColors.addAll(Arrays.asList(playerColor1, playerColor2, playerColor3, playerColor4));
         choiceTypes.addAll(Arrays.asList(playerType1, playerType2, playerType3, playerType4));
         inputs.addAll(choiceColors);
@@ -63,6 +75,14 @@ public class MenuFXMLController extends StackPane implements Initializable, Cont
         }
 
         playG = new PlayGraphic();
+
+        //Music Theme Himalya
+        File filestring = new File("src/resources/music/music_menu.mp3");
+        Media file = new Media(filestring.toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(file);
+        mediaPlayer.autoPlayProperty();
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
 
     }
 
